@@ -1,12 +1,7 @@
 #pragma once
-#include "sound/SoundSource.h"
-
-class Enemy;
-class Background;
-class Hougan;
-class Player :public IGameObject
+class Player:public IGameObject
 {
-public:
+private:
 	Player();
 	~Player();
 	bool Start();
@@ -24,23 +19,12 @@ public:
 	};
 	AnimationClip animationClips[enAnimationClip_Num];
 	CharacterController characterController;
-	Quaternion playerRotation;
-	ModelRender playerRender;
-	ModelRender houganRender;
-	Vector3 playerPosition;
-	Vector3 houganPosition;
-	Vector3 cameraPosition;
-	Vector3 playerMoveSpeed;
-	Vector3 m_forward;
-	Hougan* m_hougan;
-	Background* m_background;
-	Enemy* m_enemy;
-	SoundSource* gunshotSE;
-	SoundSource* dryfireSE;
-	SoundSource* enemydeathSE;
-	float cooltimer = 0;
-	bool cooltime = true;
-	bool hougantime = true;
+	Quaternion rotation;
+	ModelRender render;
+	Vector3 position;
+	Vector3 bulletDirection;
+	Vector3 moveSpeed;
+	Vector3 forward;
 	int playerState = 0;
-	int houganState = 0;
 };
+

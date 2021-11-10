@@ -12,11 +12,6 @@
       <Filter>system</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="BackGround.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="GameCamera.cpp" />
-    <ClCompile Include="GameOver.cpp" />
-    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Title.cpp" />
   </ItemGroup>
@@ -26,11 +21,6 @@
       <Filter>system</Filter>
     </ClInclude>
     <ClInclude Include="Game.h" />
-    <ClInclude Include="BackGround.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="GameCamera.h" />
-    <ClInclude Include="GameOver.h" />
-    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Title.h" />
   </ItemGroup>

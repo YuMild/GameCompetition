@@ -1,31 +1,23 @@
 #pragma once
-class Title
-{
-};
-
-#pragma once
-
-#include "sound/SoundSource.h"
-
 class Title : public IGameObject
 {
-public:
+private:
 	Title();
 	~Title();
+	bool Start();
 	void Update();
 	void Render(RenderContext& rc);
 
-	SpriteRender titleRender;
-	SpriteRender cursorRender;
-	SpriteRender gamestartRender;
-	SpriteRender helpRender;
+	//‰æ‘œ
+	SpriteRender title;
+	SpriteRender cursor;
+	SpriteRender start;
+	SpriteRender help;
 
-	Vector3 cursorposition;
-	Vector3 gamestartposition;
-	Vector3 helpposition;
+	Vector3 cursorPosition;
+	Vector3 startPosition;
+	Vector3 helpPosition;
 
-	int titleState;
-
-	SoundSource* titleBGM;
-	SoundSource* pikoSE;
+	int titleState = 0;
 };
+
