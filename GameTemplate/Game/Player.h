@@ -1,7 +1,12 @@
 #pragma once
+
 class Player:public IGameObject
 {
-private:
+public:
+	Vector3 GetPosition() const
+	{
+		return position;
+	}
 	Player();
 	~Player();
 	bool Start();
@@ -17,6 +22,8 @@ private:
 		enAnimationClip_Jump,
 		enAnimationClip_Num,
 	};
+
+private:
 	AnimationClip animationClips[enAnimationClip_Num];
 	CharacterController characterController;
 	Quaternion rotation;

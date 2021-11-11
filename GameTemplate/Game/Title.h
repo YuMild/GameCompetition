@@ -1,23 +1,19 @@
 #pragma once
+
+#include "sound/SoundSource.h"
+
 class Title : public IGameObject
 {
-private:
+public:
 	Title();
 	~Title();
 	bool Start();
 	void Update();
 	void Render(RenderContext& rc);
 
+private:
 	//âÊëú
 	SpriteRender title;
-	SpriteRender cursor;
-	SpriteRender start;
-	SpriteRender help;
-
-	Vector3 cursorPosition;
-	Vector3 startPosition;
-	Vector3 helpPosition;
-
-	int titleState = 0;
+	//âπê∫
+	SoundSource* titleBGM;
 };
-
