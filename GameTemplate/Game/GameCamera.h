@@ -13,6 +13,7 @@ public:
 	void Update();
 
 private:
+	Vector3 position;
 	Player* player;
 	Vector3 toCameraPos = Vector3::One;
 	SpringCamera springCamera;

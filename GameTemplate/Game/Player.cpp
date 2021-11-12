@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Player.h"
 
+#include "Bullet.h"
+
 Player::Player() {
 
 }
@@ -18,6 +20,8 @@ bool Player::Start() {
 	animationClips[enAnimationClip_Jump].Load("Assets/animData/jump.tka");
 	animationClips[enAnimationClip_Jump].SetLoopFlag(false);
 	render.Init("Assets/modelData/unityChan.tkm", animationClips, enAnimationClip_Num, enModelUpAxisY);
+
+	characterController.Init(20.0f, 5.0f, position);//当たり判定
 
 	render.SetPosition(position);
 	position.x = 0.0f;
@@ -40,6 +44,7 @@ void Player::Update(){
 }
 
 void Player::Render(RenderContext& rc) {
+
 	render.Draw(rc);
 }
 
@@ -47,19 +52,19 @@ void Player::Move() {
 
 	//キャラコン
 	Vector3 stickL;//スティックの入力
-	stickL.x = g_pad[0]->GetLStickXF();
 	stickL.y = g_pad[0]->GetLStickYF();
+	stickL.x = g_pad[0]->GetLStickXF();
 	Vector3 forward = g_camera3D->GetForward();//前後
 	Vector3 right = g_camera3D->GetRight();//左右
 	forward.y = 0.0f;//上には動かないように
 	right.y = 0.0f;
 	forward.Normalize();
 	right.Normalize();
-	forward *= stickL.y * 30.0f;//前後
-	right *= stickL.x * 30.0f;//左右
+	forward *= stickL.y * 150.0f;//前後
+	right *= stickL.x * 150.0f;//左右
 
 	moveSpeed.x = 0.0f;
-	moveSpeed.y = 0.0f;
+	moveSpeed.z = 0.0f;
 
 	moveSpeed += right + forward;
 
@@ -72,6 +77,28 @@ void Player::Move() {
 
 	position = characterController.Execute(moveSpeed, 1.0f / 30.0f);
 	render.SetPosition(position);
+
+	//発射クールタイム
+	cooltimer += g_gameTime->GetFrameDeltaTime();
+
+	if (cooltimer > 1.0f) {//発射してから1秒
+		magazine = true;//再度発射できるようになる
+	}
+
+	//砲丸の発射
+	if (g_pad[0]->IsTrigger(enButtonLB1)) {//クールタイムが0の時
+		if (magazine == true) {
+			bullet = NewGO<Bullet>(0, "bullet");//砲丸を生み出す
+			gunShotSE = NewGO<SoundSource>(5);
+			gunShotSE->Init(5);
+			gunShotSE->Play(false);
+		}
+		else if (magazine == false) {//クールタイムが0じゃない時
+			dryFireSE = NewGO<SoundSource>(6);
+			dryFireSE->Init(6);
+			dryFireSE->Play(false);
+		}
+	}
 }
 
 void Player::Rotation() {

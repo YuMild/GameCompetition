@@ -12,7 +12,7 @@ Title::~Title() {
 
 bool Title::Start() {
 	//‰æ‘œ
-	title.Init("Assets/sprite/title.dds", 1280.0f, 720.0f);
+	render.Init("Assets/sprite/title.dds", 1280.0f, 720.0f);
 	//‰¹º
 	g_soundEngine->ResistWaveFileBank(0, "Assets/sound/title.wav");
 	titleBGM = NewGO<SoundSource>(0);
@@ -31,5 +31,5 @@ void Title::Update() {
 }
 
 void Title::Render(RenderContext& rc) {
-
+	render.Draw(rc);
 }

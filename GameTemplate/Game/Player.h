@@ -1,5 +1,7 @@
 #pragma once
 
+class Bullet;
+
 class Player:public IGameObject
 {
 public:
@@ -29,9 +31,16 @@ private:
 	Quaternion rotation;
 	ModelRender render;
 	Vector3 position;
+	Vector3 cameraPosition;
 	Vector3 bulletDirection;
 	Vector3 moveSpeed;
 	Vector3 forward;
+	Bullet* bullet;
+	SoundSource* gunShotSE;
+	SoundSource* dryFireSE;
+	SoundSource* enemyDeathSE;
+	bool magazine = true;
+	float cooltimer = 0;
 	int playerState = 0;
 };
 
