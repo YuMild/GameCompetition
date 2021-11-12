@@ -21,6 +21,7 @@ private:
 	Vector3 position;
 	Vector3 moveSpeed;
 	Vector3 direction;
+	EffectEmitter* fireBallEF;
 	Player* player;
 	//タイマー。
 	float deletetimer = 0.0f;

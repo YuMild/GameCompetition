@@ -23,12 +23,13 @@ bool Player::Start() {
 
 	characterController.Init(20.0f, 5.0f, position);//当たり判定
 
-	render.SetPosition(position);
-	position.x = 0.0f;
-	position.y = 35.0f;
-	position.z = 0.0f;
+	render.SetPosition(position);//初期値だから実は書かなくてもいい
+	position.x = 0.0f;//初期値だから実は書かなくてもいい
+	position.y = 0.0f;//初期値だから実は書かなくてもいい
+	position.z = 0.0f;//初期値だから実は書かなくてもいい
 
-	render.SetScale({ 1.0f,1.0f,1.0f });
+	render.SetScale({ 1.0f,1.0f,1.0f });//初期値だから実は書かなくてもいい
+
 	render.Update();
 
 	return true;
@@ -78,22 +79,24 @@ void Player::Move() {
 	position = characterController.Execute(moveSpeed, 1.0f / 30.0f);
 	render.SetPosition(position);
 
-	//発射クールタイム
+	//クールタイマー
 	cooltimer += g_gameTime->GetFrameDeltaTime();
 
-	if (cooltimer > 1.0f) {//発射してから1秒
-		magazine = true;//再度発射できるようになる
+	if (cooltimer > 1.0f) {//射出してから1秒
+		magazine = true;//クールタイムを非活性化
 	}
 
 	//砲丸の発射
-	if (g_pad[0]->IsTrigger(enButtonLB1)) {//クールタイムが0の時
+	if (g_pad[0]->IsTrigger(enButtonLB1)) {//クールタイム非活性化時
 		if (magazine == true) {
 			bullet = NewGO<Bullet>(0, "bullet");//砲丸を生み出す
 			gunShotSE = NewGO<SoundSource>(5);
 			gunShotSE->Init(5);
 			gunShotSE->Play(false);
+			cooltimer = 0;//クールタイマーのリセット
+			magazine = false;//クールタイムを活性化
 		}
-		else if (magazine == false) {//クールタイムが0じゃない時
+		else if (magazine == false) {//クールタイム活性化時
 			dryFireSE = NewGO<SoundSource>(6);
 			dryFireSE->Init(6);
 			dryFireSE->Play(false);

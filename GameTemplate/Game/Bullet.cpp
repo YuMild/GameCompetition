@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Background.h"
 #include "sound/SoundEngine.h"
+#include "graphics/effect/EffectEmitter.h"
 
 Bullet::Bullet() {
 }
@@ -13,20 +14,32 @@ bool Bullet::Start() {
 
 	player = FindGO<Player>("player");
 	render.Init("Assets/modelData/bullet.tkm");//レンダー
-	render.SetScale({ 0.35f,0.35f,0.35f });//サイズ
+	render.SetScale({ 0.5f,0.5f,0.5f });//サイズ
 	position = player->GetPosition();//プレイヤーの場所に生まれる
-	position.y += 0.0f;//プレイヤーの20f上に生まれる
+	position.y += 50.0f;//プレイヤーの50f上に生まれる
 
+	//エフェクトファイル
+	EffectEngine::GetInstance()->ResistEffect(0, u"Assets/effect/fireball.efk");
+
+	//方向
 	direction = g_camera3D->GetForward();
 	direction.y = 0.0f;
 	direction.Normalize();
 
-	moveSpeed = direction * 5.0f;
+	fireBallEF = NewGO<EffectEmitter>(0);
+	fireBallEF->Init(0);
+	
+	fireBallEF->SetScale(Vector3::One * 20.0f);
+	fireBallEF->Play();
+
+	moveSpeed = direction * 20.0f;
 
 	return true;
 }
 
 void Bullet::Update() {
+
+	fireBallEF->SetPosition(position);
 
 	Move();//Move関数を更新する
 	deletetimer += g_gameTime->GetFrameDeltaTime();
@@ -44,7 +57,7 @@ void Bullet::Render(RenderContext& rc) {
 }
 
 void Bullet::Move() {
-	direction += moveSpeed;//砲丸のスピード(重要)
-	render.SetPosition(direction);//描画する位置
+	position += moveSpeed;//砲丸のスピード(重要)
+	render.SetPosition(position);//描画する位置
 	render.Update();//描画の更新
 }

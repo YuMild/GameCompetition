@@ -6,7 +6,7 @@ bool BackGround::Start() {
 	render.SetScale({ 1.0f,1.0f,1.0f });
 
 	position.x = 0.0f;
-	position.y = -500.0f;
+	position.y = -200.0f;
 	position.z = 0.0f;
 
 	render.SetPosition(position);
