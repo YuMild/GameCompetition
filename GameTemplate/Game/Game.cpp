@@ -3,6 +3,7 @@
 
 #include "BackGround.h"
 #include "GameCamera.h"
+#include "Map.h"
 #include "Player.h"
 
 Game::Game() {
@@ -15,10 +16,12 @@ Game::~Game() {
 
 bool Game::Start()
 {
+	
 	backGround = NewGO<BackGround>(0, "backGround");
-	player = NewGO<Player>(0, "player");
 	gameCamera = NewGO<GameCamera>(0, "gameCamera");
-
+	map = NewGO<Map>(0, "map");
+	player = NewGO<Player>(0, "player");
+	
 	return true;
 }
 

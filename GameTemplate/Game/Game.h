@@ -4,6 +4,7 @@
 
 class BackGround;
 class GameCamera;
+class Map;
 class Player;
 
 class Game : public IGameObject
@@ -20,6 +21,7 @@ private:
 
 	BackGround* backGround;
 	GameCamera* gameCamera;
+	Map* map;
 	Player* player;
 };
 
