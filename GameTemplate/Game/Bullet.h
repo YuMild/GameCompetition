@@ -14,15 +14,15 @@ public:
 	void Move();
 	Vector3 GetMoveSpeed() const
 	{
-		return moveSpeed;
+		return m_moveSpeed;
 	}
 private:
-	ModelRender render;
-	Vector3 position;
-	Vector3 moveSpeed;
-	Vector3 direction;
-	EffectEmitter* fireBallEF;
-	Player* player;
+	ModelRender m_render;
+	Vector3 m_position;
+	Vector3 m_moveSpeed;
+	Vector3 m_direction;
+	EffectEmitter* m_fireBallEF;
+	Player* m_player;
 	//タイマー。
-	float deletetimer = 0.0f;
+	float m_deletetimer = 0.0f;
 };

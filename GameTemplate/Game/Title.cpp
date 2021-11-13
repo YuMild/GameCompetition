@@ -12,12 +12,12 @@ Title::~Title() {
 
 bool Title::Start() {
 	//‰æ‘œ
-	render.Init("Assets/sprite/title.dds", 1920.0f, 1080.0f);
+	m_render.Init("Assets/sprite/title.dds", 1920.0f, 1080.0f);
 	//‰¹º
 	g_soundEngine->ResistWaveFileBank(0, "Assets/sound/title.wav");
-	titleBGM = NewGO<SoundSource>(0);
-	titleBGM->Init(0);
-	titleBGM->Play(true);
+	m_titleBGM = NewGO<SoundSource>(0);
+	m_titleBGM->Init(0);
+	m_titleBGM->Play(true);
 	return true;
 }
 
@@ -26,10 +26,10 @@ void Title::Update() {
 	{
 		NewGO<Game>(0, "game");
 		DeleteGO(this);
-		DeleteGO(titleBGM);
+		DeleteGO(m_titleBGM);
 	}
 }
 
 void Title::Render(RenderContext& rc) {
-	render.Draw(rc);
+	m_render.Draw(rc);
 }

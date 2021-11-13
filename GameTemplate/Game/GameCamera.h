@@ -13,8 +13,8 @@ public:
 	void Update();
 
 private:
-	Vector3 position;
-	Player* player;
-	Vector3 toCameraPos = Vector3::One;
-	SpringCamera springCamera;
+	Vector3 m_position;
+	Player* m_player;
+	Vector3 m_toCameraPos = Vector3::One;
+	SpringCamera m_springCamera;
 };

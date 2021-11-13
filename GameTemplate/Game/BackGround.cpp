@@ -2,17 +2,17 @@
 #include "BackGround.h"
 
 bool BackGround::Start() {
-	render.Init("Assets/modelData/stage.tkm");
-	render.SetScale({ 1.0f,1.0f,1.0f });
+	m_render.Init("Assets/modelData/stage.tkm");
+	m_render.SetScale({ 1.0f,1.0f,1.0f });
 
-	position.x = 0.0f;
-	position.y = -200.0f;
-	position.z = 0.0f;
+	m_position.x = 0.0f;
+	m_position.y = -200.0f;
+	m_position.z = 0.0f;
 
-	render.SetPosition(position);
-	render.Update();
+	m_render.SetPosition(m_position);
+	m_render.Update();
 
-	physicsStaticObject.CreateFromModel(render.GetModel(), render.GetModel().GetWorldMatrix());
+	m_physicsStaticObject.CreateFromModel(m_render.GetModel(), m_render.GetModel().GetWorldMatrix());
 
 	return true;
 }
@@ -22,5 +22,5 @@ void BackGround::Update() {
 }
 
 void BackGround::Render(RenderContext& rc) {
-	render.Draw(rc);
+	m_render.Draw(rc);
 }

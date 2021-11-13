@@ -7,8 +7,8 @@ public:
 	void Render(RenderContext& rc);
 
 private:
-	Vector3 position;
-	ModelRender render;
-	PhysicsStaticObject physicsStaticObject;
+	Vector3 m_position;
+	ModelRender m_render;
+	PhysicsStaticObject m_physicsStaticObject;
 };
 

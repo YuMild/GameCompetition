@@ -13,31 +13,31 @@ Player::~Player() {
 
 bool Player::Start() {
 	//アニメーションファイル
-	animationClips[enAnimationClip_Idle].Load("Assets/animData/idle.tka");
-	animationClips[enAnimationClip_Idle].SetLoopFlag(true);
-	animationClips[enAnimationClip_Walk].Load("Assets/animData/walk.tka");
-	animationClips[enAnimationClip_Walk].SetLoopFlag(true);
-	animationClips[enAnimationClip_Jump].Load("Assets/animData/jump.tka");
-	animationClips[enAnimationClip_Jump].SetLoopFlag(false);
-	render.Init("Assets/modelData/unityChan.tkm", animationClips, enAnimationClip_Num, enModelUpAxisY);
+	m_animationClips[enAnimationClip_Idle].Load("Assets/animData/idle.tka");
+	m_animationClips[enAnimationClip_Idle].SetLoopFlag(true);
+	m_animationClips[enAnimationClip_Walk].Load("Assets/animData/walk.tka");
+	m_animationClips[enAnimationClip_Walk].SetLoopFlag(true);
+	m_animationClips[enAnimationClip_Jump].Load("Assets/animData/jump.tka");
+	m_animationClips[enAnimationClip_Jump].SetLoopFlag(false);
+	m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
 
-	characterController.Init(20.0f, 5.0f, position);//当たり判定
+	m_characterController.Init(20.0f, 5.0f, m_position);//当たり判定
 
-	render.SetPosition(position);//初期値だから実は書かなくてもいい
-	position.x = 0.0f;//初期値だから実は書かなくてもいい
-	position.y = 0.0f;//初期値だから実は書かなくてもいい
-	position.z = 0.0f;//初期値だから実は書かなくてもいい
+	m_render.SetPosition(m_position);//初期値だから実は書かなくてもいい
+	m_position.x = 0.0f;//初期値だから実は書かなくてもいい
+	m_position.y = 0.0f;//初期値だから実は書かなくてもいい
+	m_position.z = 0.0f;//初期値だから実は書かなくてもいい
 
-	render.SetScale({ 1.0f,1.0f,1.0f });//初期値だから実は書かなくてもいい
+	m_render.SetScale({ 1.0f,1.0f,1.0f });//初期値だから実は書かなくてもいい
 
-	render.Update();
+	m_render.Update();
 
 	return true;
 }
 
 void Player::Update(){
 
-	render.Update();
+	m_render.Update();
 	Move();
 	ManageState();
 	PlayAnimation();
@@ -46,7 +46,7 @@ void Player::Update(){
 
 void Player::Render(RenderContext& rc) {
 
-	render.Draw(rc);
+	m_render.Draw(rc);
 }
 
 void Player::Move() {
@@ -64,52 +64,52 @@ void Player::Move() {
 	forward *= stickL.y * 150.0f;//前後
 	right *= stickL.x * 150.0f;//左右
 
-	moveSpeed.x = 0.0f;
-	moveSpeed.z = 0.0f;
+	m_moveSpeed.x = 0.0f;
+	m_moveSpeed.z = 0.0f;
 
-	moveSpeed += right + forward;
+	m_moveSpeed += right + forward;
 
-	if (characterController.IsOnGround()) {//キャラが地面に立っている時
-		moveSpeed.y = 0.0f;//上には動かない
+	if (m_characterController.IsOnGround()) {//キャラが地面に立っている時
+		m_moveSpeed.y = 0.0f;//上には動かない
 	}
 	else {
-		moveSpeed.y -= 2.5f;//落下スピード
+		m_moveSpeed.y -= 2.5f;//落下スピード
 	}
 
-	position = characterController.Execute(moveSpeed, 1.0f / 30.0f);
-	render.SetPosition(position);
+	m_position = m_characterController.Execute(m_moveSpeed, 1.0f / 30.0f);
+	m_render.SetPosition(m_position);
 
 	//クールタイマー
-	cooltimer += g_gameTime->GetFrameDeltaTime();
+	m_cooltimer += g_gameTime->GetFrameDeltaTime();
 
-	if (cooltimer > 1.0f) {//射出してから1秒
-		magazine = true;//クールタイムを非活性化
+	if (m_cooltimer > 1.0f) {//射出してから1秒
+		m_magazine = true;//クールタイムを非活性化
 	}
 
 	//砲丸の発射
 	if (g_pad[0]->IsTrigger(enButtonLB1)) {//クールタイム非活性化時
-		if (magazine == true) {
-			bullet = NewGO<Bullet>(0, "bullet");//砲丸を生み出す
-			gunShotSE = NewGO<SoundSource>(5);
-			gunShotSE->Init(5);
-			gunShotSE->Play(false);
-			cooltimer = 0;//クールタイマーのリセット
-			magazine = false;//クールタイムを活性化
+		if (m_magazine == true) {
+			m_bullet = NewGO<Bullet>(0, "bullet");//砲丸を生み出す
+			m_gunShotSE = NewGO<SoundSource>(5);
+			m_gunShotSE->Init(5);
+			m_gunShotSE->Play(false);
+			m_cooltimer = 0;//クールタイマーのリセット
+			m_magazine = false;//クールタイムを活性化
 		}
-		else if (magazine == false) {//クールタイム活性化時
-			dryFireSE = NewGO<SoundSource>(6);
-			dryFireSE->Init(6);
-			dryFireSE->Play(false);
+		else if (m_magazine == false) {//クールタイム活性化時
+			m_dryFireSE = NewGO<SoundSource>(6);
+			m_dryFireSE->Init(6);
+			m_dryFireSE->Play(false);
 		}
 	}
 }
 
 void Player::Rotation() {
 	//プレイヤーの回転
-	if (fabsf(moveSpeed.x) >= 0.001f || fabsf(moveSpeed.z) >= 0.001f) {
-		rotation.SetRotationYFromDirectionXZ(moveSpeed);
-		forward = Vector3::AxisZ;//分かんない
-		rotation.Apply(forward);//プレイヤーが向いている方向(?)
+	if (fabsf(m_moveSpeed.x) >= 0.001f || fabsf(m_moveSpeed.z) >= 0.001f) {
+		m_rotation.SetRotationYFromDirectionXZ(m_moveSpeed);
+		m_forward = Vector3::AxisZ;//分かんない
+		m_rotation.Apply(m_forward);//プレイヤーが向いている方向(?)
 	}
 
 	Vector3 forward = g_camera3D->GetForward();
@@ -117,36 +117,36 @@ void Player::Rotation() {
 	forward.Normalize();
 	Quaternion rotation;
 	rotation.SetRotationY(atan2f(forward.x, forward.z));
-	render.SetRotation(rotation);
+	m_render.SetRotation(rotation);
 }
 
 void Player::ManageState() {
 	//プレイヤーの状態
-	if (characterController.IsOnGround() == false) {
+	if (m_characterController.IsOnGround() == false) {
 		//プレイヤーが地面の上に立っていない時
-		playerState = 1;//ジャンプアニメーションを再生する
+		m_playerState = 1;//ジャンプアニメーションを再生する
 		return;
 	}
-	if (fabsf(moveSpeed.x) >= 0.001f || fabsf(moveSpeed.z) >= 0.001f) {
+	if (fabsf(m_moveSpeed.x) >= 0.001f || fabsf(m_moveSpeed.z) >= 0.001f) {
 		//プレイヤーがxzの方向に動いている時
-		playerState = 2;//歩行アニメーションを再生する
+		m_playerState = 2;//歩行アニメーションを再生する
 	}
 	else {//上以外の時
-		playerState = 0;//立ちアニメーションを再生する
+		m_playerState = 0;//立ちアニメーションを再生する
 	}
 }
 
 void Player::PlayAnimation() {
 	//プレイヤーの状態の描画
-	switch (playerState) {
+	switch (m_playerState) {
 	case 0://プレイヤーが地面の上で静止している時
-		render.PlayAnimation(enAnimationClip_Idle);
+		m_render.PlayAnimation(enAnimationClip_Idle);
 		break;
 	case 1://プレイヤーが地面の上に立っていない時
-		render.PlayAnimation(enAnimationClip_Jump);
+		m_render.PlayAnimation(enAnimationClip_Jump);
 		break;
 	case 2://プレイヤーがxzの方向に動いている時
-		render.PlayAnimation(enAnimationClip_Walk);
+		m_render.PlayAnimation(enAnimationClip_Walk);
 		break;
 	}
 }

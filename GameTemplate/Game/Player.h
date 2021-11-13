@@ -7,7 +7,7 @@ class Player:public IGameObject
 public:
 	Vector3 GetPosition() const
 	{
-		return position;
+		return m_position;
 	}
 	Player();
 	~Player();
@@ -26,21 +26,21 @@ public:
 	};
 
 private:
-	AnimationClip animationClips[enAnimationClip_Num];
-	CharacterController characterController;
-	Quaternion rotation;
-	ModelRender render;
-	Vector3 position;
-	Vector3 cameraPosition;
-	Vector3 bulletDirection;
-	Vector3 moveSpeed;
-	Vector3 forward;
-	Bullet* bullet;
-	SoundSource* gunShotSE;
-	SoundSource* dryFireSE;
-	SoundSource* enemyDeathSE;
-	bool magazine = true;
-	float cooltimer = 0;
-	int playerState = 0;
+	AnimationClip m_animationClips[enAnimationClip_Num];
+	CharacterController m_characterController;
+	Quaternion m_rotation;
+	ModelRender m_render;
+	Vector3 m_position;
+	Vector3 m_cameraPosition;
+	Vector3 m_bulletDirection;
+	Vector3 m_moveSpeed;
+	Vector3 m_forward;
+	Bullet* m_bullet;
+	SoundSource* m_gunShotSE;
+	SoundSource* m_dryFireSE;
+	SoundSource* m_enemyDeathSE;
+	bool m_magazine = true;
+	float m_cooltimer = 0;
+	int m_playerState = 0;
 };
 

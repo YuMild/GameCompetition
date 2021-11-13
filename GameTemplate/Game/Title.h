@@ -13,7 +13,7 @@ public:
 
 private:
 	//‰æ‘œ
-	SpriteRender render;
+	SpriteRender m_render;
 	//‰¹º
-	SoundSource* titleBGM;
+	SoundSource* m_titleBGM;
 };
