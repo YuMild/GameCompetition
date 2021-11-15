@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Map.h"
 
+#include "Enemy.h"
 #include "Player.h"
 
 namespace

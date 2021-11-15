@@ -6,7 +6,7 @@ bool BackGround::Start() {
 	m_render.SetScale({ 1.0f,1.0f,1.0f });
 
 	m_position.x = 0.0f;
-	m_position.y = -200.0f;
+	m_position.y = -170.0f;
 	m_position.z = 0.0f;
 
 	m_render.SetPosition(m_position);

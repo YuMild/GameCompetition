@@ -1,7 +1,13 @@
 #pragma once
+
+class Player;
+
 class Enemy:public IGameObject
 {
 public:
+	Vector3 GetPosition()const {
+		return m_position;
+	}
 	Enemy();
 	~Enemy();
 	bool Start();
@@ -14,6 +20,7 @@ public:
 		enAnimationClip_Walk,
 		enAnimationClip_Num,
 	};
+
 private:
 	AnimationClip m_animationClips[enAnimationClip_Num];
 	Quaternion m_rotation;

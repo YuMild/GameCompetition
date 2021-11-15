@@ -41,8 +41,10 @@ bool Enemy::Start() {
 			break;
 		}
 	}
+	m_position.y = -20.0f;
+
 	m_render.SetPosition(m_position);//場所
-	m_render.SetScale({ 0.5f,0.5f,0.5f });//サイズ
+	m_render.SetScale({ 0.7f,0.7f,0.7f });//サイズ
 	m_render.Update();//上の情報を更新する
 
 	m_player = FindGO<Player>("player");

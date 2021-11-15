@@ -1,5 +1,6 @@
 #pragma once
 
+class Enemy;
 class Player;
 
 class Map : public IGameObject
@@ -18,6 +19,7 @@ private:
 	SpriteRender m_enemyMap;
 	SpriteRender m_playerMap;
 
+	Enemy* m_enemy;
 	Player* m_player;
 };
 
