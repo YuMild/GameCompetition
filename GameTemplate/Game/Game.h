@@ -17,6 +17,7 @@ public:
 	bool Start();
 	void Update();
 	void Render(RenderContext& rc);
+	void ManageState();
 
 private:
 	ModelRender m_modelRender;

@@ -1,9 +1,8 @@
 #pragma once
 
-class Enemy;
 class Player;
 
-class Map : public IGameObject
+class Map :public IGameObject
 {
 public:
 	Map();
@@ -13,13 +12,13 @@ public:
 	void Render(RenderContext& rc);
 
 private:
-	const bool WorldPositionConvertToMapPosition(Vector3 worldCenterPosition, Vector3 worldPosition, Vector3& mapPosition);
-	SpriteRender m_map;
 	SpriteRender m_mapFrame;
-	SpriteRender m_enemyMap;
+	SpriteRender m_mapBackGround;
 	SpriteRender m_playerMap;
+	SpriteRender m_enemyMap;
 
-	Enemy* m_enemy;
+	Vector3 m_playerMapPosition;
+
 	Player* m_player;
 };
 

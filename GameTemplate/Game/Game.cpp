@@ -82,9 +82,16 @@ void Game::Update()
 			DeleteGO(this);
 		}
 	}
+
+	ManageState();
 }
 
 void Game::Render(RenderContext& rc)
+{
+	
+}
+
+void Game::ManageState() 
 {
 	switch (m_hp) {
 	case 0:

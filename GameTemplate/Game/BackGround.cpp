@@ -3,7 +3,7 @@
 
 bool BackGround::Start() {
 	m_render.Init("Assets/modelData/stage.tkm");
-	m_render.SetScale({ 1.0f,1.0f,1.0f });
+	m_render.SetScale({ 3.0f,3.0f,3.0f });
 
 	m_position.x = 0.0f;
 	m_position.y = -170.0f;

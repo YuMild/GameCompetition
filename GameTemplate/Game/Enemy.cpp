@@ -68,7 +68,7 @@ void Enemy::Move() {
 	diff.Normalize();
 	m_target = m_player->GetPosition();
 	m_moveSpeed = diff * 10.0f;
-	m_position += m_moveSpeed * 5.0f / 30.0f;
+	m_position += m_moveSpeed * 15.0f / 30.0f;
 	m_render.SetPosition(m_position);
 }
 
