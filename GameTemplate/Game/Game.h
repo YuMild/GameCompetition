@@ -26,6 +26,7 @@ private:
 	GameOver* m_gameOver;
 	Map* m_map;
 	Player* m_player;
+	SkyCube* m_skyCube;
 	SoundSource* m_damage1SE;
 	SoundSource* m_damage2SE;
 	SoundSource* m_damage3SE;

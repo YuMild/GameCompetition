@@ -1,12 +1,17 @@
 #pragma once
 
+class Bullet;
 class Player;
+class Shine;
 
 class Enemy:public IGameObject
 {
 public:
-	Vector3 GetPosition()const {
+	Vector3 GetPosition() const {
 		return m_position;
+	}
+	bool GetEnemyCanMove() const{
+		return m_enemyCanMove;
 	}
 	Enemy();
 	~Enemy();
@@ -28,8 +33,10 @@ private:
 	SpriteRender m_enemyMap;
 	Vector3 m_position;
 	Vector3 m_moveSpeed;
-	Vector3 m_target;
 	Vector3 m_forward;
+	Bullet* m_bullet;
 	Player* m_player;
+	SoundSource* m_enemyDeathSE;
+	bool m_enemyCanMove = true;
 };
 

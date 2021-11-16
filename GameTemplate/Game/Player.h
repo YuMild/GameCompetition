@@ -1,6 +1,7 @@
 #pragma once
 
 class Bullet;
+class Shine;
 
 class Player:public IGameObject
 {
@@ -8,6 +9,10 @@ public:
 	Vector3 GetPosition() const
 	{
 		return m_position;
+	}
+	Vector3 GetDirection() const
+	{
+		return m_forward;
 	}
 	Player();
 	~Player();
@@ -36,11 +41,15 @@ private:
 	Vector3 m_moveSpeed;
 	Vector3 m_forward;
 	Bullet* m_bullet;
-	SoundSource* m_gunShotSE;
+	Shine* m_shine;
+	EffectEmitter* m_shineEF;
+	SoundSource* m_shineSE;
 	SoundSource* m_dryFireSE;
 	SoundSource* m_enemyDeathSE;
-	bool m_magazine = true;
-	float m_cooltimer = 0;
+	bool m_bulletMagazine = true;
+	bool m_shineMagazine = true;
+	float m_bulletCoolTimer = 0;
+	float m_shineCoolTimer = 0;
 	int m_playerState = 0;
 };
 

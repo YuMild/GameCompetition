@@ -20,6 +20,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Shine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -35,5 +36,6 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Shine.h" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,10 @@ class Player;
 class Bullet :public IGameObject
 {
 public:
+	Vector3 GetPosition() const
+	{
+		return m_position;
+	}
 	Bullet();
 	~Bullet();
 	bool Start();
@@ -20,9 +24,12 @@ private:
 	ModelRender m_render;
 	Vector3 m_position;
 	Vector3 m_moveSpeed;
-	Vector3 m_direction;
+	Vector3 m_forward;
+	Vector3 collisionPosition;
+	CollisionObject* collisionObject;
 	EffectEmitter* m_fireBallEF;
+	SoundSource* m_gunShotSE;
 	Player* m_player;
 	//タイマー。
-	float m_deletetimer = 0.0f;
+	float m_deleteTimer = 0.0f;
 };

@@ -2,6 +2,7 @@
 #include "Player.h"
 
 #include "Bullet.h"
+#include "Shine.h"
 
 Player::Player() {
 
@@ -21,16 +22,18 @@ bool Player::Start() {
 	m_animationClips[enAnimationClip_Jump].SetLoopFlag(false);
 	m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
 
-	m_characterController.Init(20.0f, 5.0f, m_position);//当たり判定
+	//当たり判定
+	m_characterController.Init(20.0f, 5.0f, m_position);
 
+	//描画
 	m_render.SetPosition(m_position);//初期値だから実は書かなくてもいい
 	m_position.x = 0.0f;//初期値だから実は書かなくてもいい
 	m_position.y = 0.0f;//初期値だから実は書かなくてもいい
 	m_position.z = 0.0f;//初期値だから実は書かなくてもいい
-
 	m_render.SetScale({ 1.0f,1.0f,1.0f });//初期値だから実は書かなくてもいい
-
 	m_render.Update();
+
+	EffectEngine::GetInstance()->ResistEffect(0, u"Assets/effect/shine.efk");
 
 	return true;
 }
@@ -79,27 +82,43 @@ void Player::Move() {
 	m_position = m_characterController.Execute(m_moveSpeed, 1.0f / 30.0f);
 	m_render.SetPosition(m_position);
 
-	//クールタイマー
-	m_cooltimer += g_gameTime->GetFrameDeltaTime();
+	//通常攻撃
 
-	if (m_cooltimer > 1.0f) {//射出してから1秒
-		m_magazine = true;//クールタイムを非活性化
+	m_bulletCoolTimer += g_gameTime->GetFrameDeltaTime();
+
+	if (m_bulletCoolTimer > 1.0f) {//射出してから1秒
+		m_bulletMagazine = true;//クールタイムを非活性化
 	}
-
-	//砲丸の発射
+	
 	if (g_pad[0]->IsTrigger(enButtonLB1)) {//クールタイム非活性化時
-		if (m_magazine == true) {
-			m_bullet = NewGO<Bullet>(0, "bullet");//砲丸を生み出す
-			m_gunShotSE = NewGO<SoundSource>(5);
-			m_gunShotSE->Init(5);
-			m_gunShotSE->Play(false);
-			m_cooltimer = 0;//クールタイマーのリセット
-			m_magazine = false;//クールタイムを活性化
+		if (m_bulletMagazine == true) {
+			m_bullet = NewGO<Bullet>(0, "bullet");//砲丸を生成
+			m_bulletCoolTimer = 0;//クールタイマーのリセット
+			m_bulletMagazine = false;//クールタイムを活性化
 		}
-		else if (m_magazine == false) {//クールタイム活性化時
+		else if (m_bulletMagazine == false) {//クールタイム活性化時
 			m_dryFireSE = NewGO<SoundSource>(6);
 			m_dryFireSE->Init(6);
 			m_dryFireSE->Play(false);
+		}
+	}
+
+	//光魔法
+
+	m_shineCoolTimer += g_gameTime->GetFrameDeltaTime();
+
+	if (m_shineCoolTimer > 15.0f) {//射出してから1秒
+		m_shineMagazine = true;//クールタイムを非活性化
+	}
+
+	if (g_pad[0]->IsTrigger(enButtonY)) {//クールタイム非活性化時
+		if (m_shineMagazine == true) {
+			m_shine = NewGO<Shine>(0, "shine");//光魔法を生成
+			m_shineSE = NewGO<SoundSource>(7);
+			m_shineSE->Init(7);
+			m_shineSE->Play(false);
+			m_shineCoolTimer = 0;//クールタイマーのリセット
+			m_shineMagazine = false;//クールタイムを活性化
 		}
 	}
 }
@@ -115,9 +134,9 @@ void Player::Rotation() {
 	Vector3 forward = g_camera3D->GetForward();
 	forward.y = 0.0f;
 	forward.Normalize();
-	Quaternion rotation;
-	rotation.SetRotationY(atan2f(forward.x, forward.z));
-	m_render.SetRotation(rotation);
+	Quaternion quaternion;
+	quaternion.SetRotationY(atan2f(forward.x, forward.z));
+	m_render.SetRotation(quaternion);
 }
 
 void Player::ManageState() {

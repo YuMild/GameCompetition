@@ -18,21 +18,34 @@ bool Bullet::Start() {
 	m_position = m_player->GetPosition();//プレイヤーの場所に生まれる
 	m_position.y += 50.0f;//プレイヤーの50f上に生まれる
 
+	//余裕が出来たらやる
+	// 
+	//コリジョンの生成
+	//collisionObject = NewGO<CollisionObject>(0);
+	//Vector3 collisionPosition = m_position;
+	//collisionObject->CreateSphere(collisionPosition);
+	//collisionObject->SetName("bullet");
+
 	//エフェクトファイル
 	EffectEngine::GetInstance()->ResistEffect(0, u"Assets/effect/fireball.efk");
 
 	//方向
-	m_direction = g_camera3D->GetForward();
-	m_direction.y = 0.0f;
-	m_direction.Normalize();
+	m_forward = g_camera3D->GetForward();
+	m_forward.y = 0.0f;
+	m_forward.Normalize();
 
+	//エフェクト
 	m_fireBallEF = NewGO<EffectEmitter>(0);
 	m_fireBallEF->Init(0);
-	
 	m_fireBallEF->SetScale(Vector3::One * 20.0f);
 	m_fireBallEF->Play();
 
-	m_moveSpeed = m_direction * 20.0f;
+	//音声
+	m_gunShotSE = NewGO<SoundSource>(5);
+	m_gunShotSE->Init(5);
+	m_gunShotSE->Play(false);
+
+	m_moveSpeed = m_forward * 20.0f;
 
 	return true;
 }
@@ -42,10 +55,10 @@ void Bullet::Update() {
 	m_fireBallEF->SetPosition(m_position);
 
 	Move();//Move関数を更新する
-	m_deletetimer += g_gameTime->GetFrameDeltaTime();
+	m_deleteTimer += g_gameTime->GetFrameDeltaTime();
 
 	//タイマーが2.0以上になったら。
-	if (m_deletetimer >= 2.0f)
+	if (m_deleteTimer >= 2.0f)
 	{
 		//自身を削除。
 		DeleteGO(this);

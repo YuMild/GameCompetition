@@ -1,5 +1,6 @@
 #pragma once
 
+class Enemy;
 class Player;
 
 class Map :public IGameObject
@@ -12,13 +13,16 @@ public:
 	void Render(RenderContext& rc);
 
 private:
-	SpriteRender m_mapFrame;
+	//SpriteRender m_enemysMap[30];
 	SpriteRender m_mapBackGround;
+	SpriteRender m_mapGradation;
+	SpriteRender m_mapFrame;
 	SpriteRender m_playerMap;
-	SpriteRender m_enemyMap;
 
 	Vector3 m_playerMapPosition;
+	Vector3 m_enemyMapPosition;
 
+	Enemy* m_enemy;
 	Player* m_player;
 };
 
