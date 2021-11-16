@@ -33,8 +33,6 @@ bool Player::Start() {
 	m_render.SetScale({ 1.0f,1.0f,1.0f });//初期値だから実は書かなくてもいい
 	m_render.Update();
 
-	EffectEngine::GetInstance()->ResistEffect(0, u"Assets/effect/shine.efk");
-
 	return true;
 }
 
@@ -54,23 +52,20 @@ void Player::Render(RenderContext& rc) {
 
 void Player::Move() {
 
-	//キャラコン
-	Vector3 stickL;//スティックの入力
-	stickL.y = g_pad[0]->GetLStickYF();
-	stickL.x = g_pad[0]->GetLStickXF();
-	Vector3 forward = g_camera3D->GetForward();//前後
-	Vector3 right = g_camera3D->GetRight();//左右
-	forward.y = 0.0f;//上には動かないように
-	right.y = 0.0f;
-	forward.Normalize();
-	right.Normalize();
-	forward *= stickL.y * 150.0f;//前後
-	right *= stickL.x * 150.0f;//左右
-
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 
-	m_moveSpeed += right + forward;
+	float lStickX = g_pad[0]->GetLStickXF();
+	float lStickY = g_pad[0]->GetLStickYF();
+
+	Vector3 cameraForward = g_camera3D->GetForward();//前後
+	Vector3 cameraRight = g_camera3D->GetRight();//左右
+	cameraForward.y = 0.0f;//上には動かないように
+	cameraRight.y = 0.0f;
+	cameraForward.Normalize();
+	cameraRight.Normalize();
+	m_moveSpeed += cameraForward * lStickY * 300.0f;//前後
+	m_moveSpeed += cameraRight * lStickX * 300.0f;//左右
 
 	if (m_characterController.IsOnGround()) {//キャラが地面に立っている時
 		m_moveSpeed.y = 0.0f;//上には動かない
@@ -79,8 +74,6 @@ void Player::Move() {
 		m_moveSpeed.y -= 2.5f;//落下スピード
 	}
 
-	m_position = m_characterController.Execute(m_moveSpeed, 1.0f / 30.0f);
-	m_render.SetPosition(m_position);
 
 	//通常攻撃
 
@@ -89,18 +82,18 @@ void Player::Move() {
 	if (m_bulletCoolTimer > 1.0f) {//射出してから1秒
 		m_bulletMagazine = true;//クールタイムを非活性化
 	}
-	
-	if (g_pad[0]->IsTrigger(enButtonLB1)) {//クールタイム非活性化時
-		if (m_bulletMagazine == true) {
-			m_bullet = NewGO<Bullet>(0, "bullet");//砲丸を生成
-			m_bulletCoolTimer = 0;//クールタイマーのリセット
-			m_bulletMagazine = false;//クールタイムを活性化
-		}
-		else if (m_bulletMagazine == false) {//クールタイム活性化時
-			m_dryFireSE = NewGO<SoundSource>(6);
-			m_dryFireSE->Init(6);
-			m_dryFireSE->Play(false);
-		}
+
+	//クールタイム非活性化時
+	if (g_pad[0]->IsTrigger(enButtonLB1) && m_bulletMagazine == true)
+	{
+		m_bullet = NewGO<Bullet>(0, "bullet");//砲丸を生成
+		m_bulletCoolTimer = 0;//クールタイマーのリセット
+		m_bulletMagazine = false;//クールタイムを活性化
+	}
+	else if (m_bulletMagazine == false) {//クールタイム活性化時
+		m_dryFireSE = NewGO<SoundSource>(6);
+		m_dryFireSE->Init(6);
+		m_dryFireSE->Play(false);
 	}
 
 	//光魔法
@@ -111,26 +104,42 @@ void Player::Move() {
 		m_shineMagazine = true;//クールタイムを非活性化
 	}
 
-	if (g_pad[0]->IsTrigger(enButtonY)) {//クールタイム非活性化時
-		if (m_shineMagazine == true) {
-			m_shine = NewGO<Shine>(0, "shine");//光魔法を生成
-			m_shineSE = NewGO<SoundSource>(7);
-			m_shineSE->Init(7);
-			m_shineSE->Play(false);
-			m_shineCoolTimer = 0;//クールタイマーのリセット
-			m_shineMagazine = false;//クールタイムを活性化
+	//クールタイム非活性化時
+	if (g_pad[0]->IsTrigger(enButtonY) && m_shineMagazine == true)
+	{
+		m_shine = NewGO<Shine>(0, "shine");//光魔法を生成
+		m_shineSE = NewGO<SoundSource>(7);
+		m_shineSE->Init(7);
+		m_shineSE->Play(false);
+		m_shineCoolTimer = 0;//クールタイマーのリセット
+		m_shineMagazine = false;//クールタイムを活性化
+	}
+
+	//風魔法
+
+	m_windCoolTimer += g_gameTime->GetFrameDeltaTime();
+
+	//クールタイム活性化
+	if (g_pad[0]->IsTrigger(enButtonA) && m_windMagazine == true) {
+		m_windCoolTimer = 0.0f;
+		m_windMagazine = false;
+	}
+	if (m_windMagazine == false) {
+		if (m_windCoolTimer < 0.2f) {
+			m_moveSpeed += cameraForward * 5000.0f;
+		}
+		else if (m_windCoolTimer >= 2.0f) {
+			m_windCoolTimer = 0.0f;
+			m_windMagazine = true;
 		}
 	}
+
+	m_position = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
+	m_render.SetPosition(m_position);
 }
 
 void Player::Rotation() {
 	//プレイヤーの回転
-	if (fabsf(m_moveSpeed.x) >= 0.001f || fabsf(m_moveSpeed.z) >= 0.001f) {
-		m_rotation.SetRotationYFromDirectionXZ(m_moveSpeed);
-		m_forward = Vector3::AxisZ;//分かんない
-		m_rotation.Apply(m_forward);//プレイヤーが向いている方向(?)
-	}
-
 	Vector3 forward = g_camera3D->GetForward();
 	forward.y = 0.0f;
 	forward.Normalize();

@@ -17,11 +17,14 @@ Enemy::~Enemy() {
 }
 
 bool Enemy::Start() {
+	m_animationClips[enAnimationClip_Idle].Load("Assets/animData/idle.tka");
+	m_animationClips[enAnimationClip_Idle].SetLoopFlag(true);
 	m_animationClips[enAnimationClip_Walk].Load("Assets/animData/walk.tka");
 	m_animationClips[enAnimationClip_Walk].SetLoopFlag(true);
 	m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
 	m_enemyMap.Init("Assets/sprite/EnemyMap.dds", 10.0f, 10.0f);
 	m_enemyMap.SetPosition({ 540.0f,260.0f,0.0f });
+
 
 	constexpr int MIN = -300;//—”‚Ì”ÍˆÍÅ’á’l
 	constexpr int MAX = 300;//—”‚Ì”ÍˆÍÅ‘å’l
@@ -116,5 +119,9 @@ void Enemy::Rotation() {
 void Enemy::PlayAnimation() {
 	if (m_enemyCanMove == true) {
 		m_render.PlayAnimation(enAnimationClip_Walk);
+	}
+	else
+	{
+		m_render.PlayAnimation(enAnimationClip_Idle);
 	}
 }

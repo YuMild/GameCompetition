@@ -14,14 +14,14 @@ Shine::~Shine() {
 bool Shine::Start() {
 
 	m_player = FindGO<Player>("player");
-	m_position.y = 10.0f;
+	m_position.y = -1.0f;
 
 	EffectEngine::GetInstance()->ResistEffect(1, u"Assets/effect/shine.efk");
 
 	m_shineEF = NewGO<EffectEmitter>(1);
 	m_shineEF->Init(1);
 	m_shineEF->SetPosition(m_position);
-	m_shineEF->SetScale(Vector3::One * 30.0f);
+	m_shineEF->SetScale(Vector3::One * 10.0f);
 	Quaternion quaternion;
 	quaternion.SetRotationDegX(90.0f);
 	m_shineEF->SetRotation(quaternion);

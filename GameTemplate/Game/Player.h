@@ -40,16 +40,18 @@ private:
 	Vector3 m_bulletDirection;
 	Vector3 m_moveSpeed;
 	Vector3 m_forward;
+	Vector3 m_right;
 	Bullet* m_bullet;
 	Shine* m_shine;
-	EffectEmitter* m_shineEF;
 	SoundSource* m_shineSE;
 	SoundSource* m_dryFireSE;
 	SoundSource* m_enemyDeathSE;
 	bool m_bulletMagazine = true;
 	bool m_shineMagazine = true;
+	bool m_windMagazine = true;
 	float m_bulletCoolTimer = 0;
 	float m_shineCoolTimer = 0;
+	float m_windCoolTimer = 0;
 	int m_playerState = 0;
 };
 

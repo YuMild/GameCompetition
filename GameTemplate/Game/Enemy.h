@@ -22,6 +22,7 @@ public:
 	void Rotation();
 	void PlayAnimation();
 	enum EnAnimationClip {
+		enAnimationClip_Idle,
 		enAnimationClip_Walk,
 		enAnimationClip_Num,
 	};
