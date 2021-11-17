@@ -19,7 +19,6 @@ bool Bullet::Start() {
 	m_position.y += 50.0f;//プレイヤーの50f上に生まれる
 
 	//余裕が出来たらやる
-	// 
 	//コリジョンの生成
 	//collisionObject = NewGO<CollisionObject>(0);
 	//Vector3 collisionPosition = m_position;

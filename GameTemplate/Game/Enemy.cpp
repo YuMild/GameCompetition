@@ -4,6 +4,7 @@
 #include "Bullet.h"
 #include "Player.h"
 #include "Shine.h"
+#include "Wind.h"
 #include <random>
 
 using namespace std;
@@ -25,35 +26,11 @@ bool Enemy::Start() {
 	m_enemyMap.Init("Assets/sprite/EnemyMap.dds", 10.0f, 10.0f);
 	m_enemyMap.SetPosition({ 540.0f,260.0f,0.0f });
 
-
-	constexpr int MIN = -300;//乱数の範囲最低値
-	constexpr int MAX = 300;//乱数の範囲最大値
-
-	constexpr int RAND_NUMS_TO_GENERATE = 2;//乱数を生成する回数
-
-	//座標
-	random_device rd;
-	default_random_engine eng(rd());
-	uniform_int_distribution<int> distr(MIN, MAX);
-	int i = 0;
-	for (int n = 0; n < RAND_NUMS_TO_GENERATE; ++n) {
-		switch (i) {
-		case 0:
-			m_position.x = distr(eng);
-			i++;
-			break;
-		case 1:
-			m_position.z = distr(eng);
-			break;
-		}
-	}
-	m_position.y = -20.0f;
-	m_render.SetPosition(m_position);//場所
-	m_render.SetScale({ 0.7f,0.7f,0.7f });//サイズ
-	m_render.Update();//上の情報を更新する
-
-	//参照
 	m_player = FindGO<Player>("player");
+
+	m_render.SetPosition(m_position);//場所
+	m_render.SetScale({ 0.5f,0.5f,0.5f });//サイズ
+	m_render.Update();//上の情報を更新する
 
 	//音声
 	g_soundEngine->ResistWaveFileBank(7, "Assets/sound enemydeath.wav");
@@ -64,7 +41,6 @@ bool Enemy::Start() {
 void Enemy::Update() {
 	m_render.Update();
 	Move();
-	Rotation(); 
 	PlayAnimation();
 }
 
@@ -76,28 +52,50 @@ void Enemy::Render(RenderContext& rc) {
 
 void Enemy::Move() {
 
-	Vector3 diff = m_player->GetPosition() - m_position;
-	diff.Normalize();
-	m_moveSpeed = diff * 10.0f;
-	if (m_enemyCanMove == true) {
-		m_position += m_moveSpeed * 15.0f / 30.0f;
-	}
-	m_render.SetPosition(m_position);
+	m_target = m_player->GetPosition() - m_position;
+	m_target.Normalize();
+	m_moveSpeed = m_target * 10.0f;
+
+	Vector3 direction = m_moveSpeed;
+	direction.y = 0.0f;
+	direction.Normalize();
+	Quaternion quaternion;
+	quaternion.SetRotationY(atan2f(direction.x, direction.z));
 
 	//光魔法判定
 	const auto& shineList = FindGOs<Shine>("shine");
 	int shineSize = shineList.size();
-	m_enemyCanMove = true;
+	m_shineMoving = false;
 	for (int i = 0; i < shineSize; i++) {
-			m_enemyCanMove = false;
+		m_shineMoving = true;
 	}
-	
+
+	//風魔法判定
+	const auto& windList = FindGOs<Wind>("wind");
+	int windSize = windList.size();
+	m_windMoving = false;
+	for (m_windUnit = 0; m_windUnit < windSize; m_windUnit++) {
+		m_windMoving = true;
+		//風魔法が活性化時、風魔法の座標に向かう
+		if (m_windMoving == true) {
+			m_target = windList[m_windUnit]->GetPosition() - m_position;
+			m_target.Normalize();
+			m_moveSpeed = m_target * 2.0f;
+			m_position += m_moveSpeed;
+		}
+	}
+
+	//光魔法が非活性化時、移動できる
+	if (m_shineMoving == false) {
+		m_position += m_moveSpeed * 15.0f / 30.0f;
+	}
+
 	//敵の死亡判定
 	const auto& bulletList = FindGOs<Bullet>("bullet");
 	int bulletSize = bulletList.size();
 	for (int i = 0; i < bulletSize; i++) {
 		Vector3 bulletdiff = bulletList[i]->GetPosition() - m_position;
-		if (bulletdiff.Length() <= 100.0f) {
+		if (bulletdiff.Length() <= 75.0f) {
 			DeleteGO(this);
 			m_enemyDeathSE = NewGO<SoundSource>(7);
 			m_enemyDeathSE->Init(7);
@@ -105,23 +103,16 @@ void Enemy::Move() {
 		}
 	}
 
-}
-
-void Enemy::Rotation() {
-	Vector3 m_forward = m_moveSpeed;
-	m_forward.y = 0.0f;
-	m_forward.Normalize();
-	Quaternion quaternion;
-	quaternion.SetRotationY(atan2f(m_forward.x, m_forward.z));
+	m_render.SetPosition(m_position);
 	m_render.SetRotation(quaternion);
 }
 
 void Enemy::PlayAnimation() {
-	if (m_enemyCanMove == true) {
-		m_render.PlayAnimation(enAnimationClip_Walk);
+	if (m_shineMoving == true || m_windMoving == true) {
+		m_render.PlayAnimation(enAnimationClip_Idle);
 	}
 	else
 	{
-		m_render.PlayAnimation(enAnimationClip_Idle);
+		m_render.PlayAnimation(enAnimationClip_Walk);
 	}
 }

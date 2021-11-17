@@ -14,7 +14,7 @@ Shine::~Shine() {
 bool Shine::Start() {
 
 	m_player = FindGO<Player>("player");
-	m_position.y = -1.0f;
+	m_position.y = 1.0f;
 
 	EffectEngine::GetInstance()->ResistEffect(1, u"Assets/effect/shine.efk");
 

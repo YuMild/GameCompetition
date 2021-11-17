@@ -1,21 +1,21 @@
 #include "stdafx.h"
-#include "Map.h"
+#include "Ui.h"
 
 #include "Enemy.h"
 #include "Player.h"
 
 namespace
 {
-	Vector3 MAP_CENTER_POSITION = Vector3(750.0f, 330.0f, 0.0f);
+	Vector3 MAP_CENTER_POSITION = Vector3(740.0f, 330.0f, 0.0f);
 }
 
-Map::Map() {
+Ui::Ui() {
 
 }
-Map::~Map() {
+Ui::~Ui() {
 
 }
-bool Map::Start()
+bool Ui::Start()
 {
 	m_mapBackGround.Init("Assets/sprite/MapGround.DDS", 300.0f, 300.0f);
 	m_mapBackGround.SetPosition(MAP_CENTER_POSITION);
@@ -28,6 +28,23 @@ bool Map::Start()
 	m_mapFrame.Init("Assets/sprite/MapFrame.DDS", 300.0f, 300.0f);
 	m_mapFrame.SetPosition(MAP_CENTER_POSITION);
 	m_mapFrame.Update();
+
+	m_typeFire.Init("Assets/sprite/TypeFire.DDS", 140.0f, 140.0f);
+	m_typeFire.SetPosition(Vector3(840.0f, -260.0f, 0.0f));
+	m_typeFire.Update();
+
+	m_typeWater.Init("Assets/sprite/TypeWater.DDS", 140.0f, 140.0f);
+	m_typeWater.SetPosition(Vector3(640.0f, -260.0f, 0.0f));
+	m_typeWater.Update();
+
+	m_typeWind.Init("Assets/sprite/TypeWind.DDS", 140.0f, 140.0f);
+	m_typeWind.SetPosition(Vector3(740.0f, -360.0f, 0.0f));
+	m_typeWind.Update();
+
+	m_typeShine.Init("Assets/sprite/TypeShine.DDS", 140.0f, 140.0f);
+	m_typeShine.SetPosition(Vector3(740.0f, -160.0f, 0.0f));
+	m_typeShine.Update();
+
 
 	/*const auto& enemyList = FindGOs<Enemy>("Enemy");
 	int size = enemyList.size();
@@ -45,7 +62,8 @@ bool Map::Start()
 
 	return true;
 }
-void Map::Update() 
+
+void Ui::Update()
 {
 	
 
@@ -58,12 +76,20 @@ void Map::Update()
 	m_playerMap.Update();
 	m_mapGradation.Update();
 	m_mapFrame.Update();
+	m_typeFire.Update();
+	m_typeWater.Update();
+	m_typeWind.Update();
+	m_typeShine.Update();
 }
-void Map::Render(RenderContext& rc) 
+void Ui::Render(RenderContext& rc)
 {
 	m_mapBackGround.Draw(rc);//èáî‘ëÂéñ
 	//m_enemyMap.Draw(rc);
 	m_playerMap.Draw(rc);
 	m_mapGradation.Draw(rc);
 	m_mapFrame.Draw(rc);
+	m_typeFire.Draw(rc);
+	m_typeWater.Draw(rc);
+	m_typeWind.Draw(rc);
+	m_typeShine.Draw(rc);
 }

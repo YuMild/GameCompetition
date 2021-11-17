@@ -158,7 +158,7 @@
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Ui.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Shine.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -167,6 +167,7 @@
     </ClCompile>
     <ClCompile Include="system\system.cpp" />
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="Wind.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
@@ -175,12 +176,13 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameOver.h" />
-    <ClInclude Include="Map.h" />
+    <ClInclude Include="Ui.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Shine.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
     <ClInclude Include="Title.h" />
+    <ClInclude Include="Wind.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

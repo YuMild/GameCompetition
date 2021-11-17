@@ -3,21 +3,27 @@
 class Enemy;
 class Player;
 
-class Map :public IGameObject
+class Ui :public IGameObject
 {
 public:
-	Map();
-	~Map();
+	Ui();
+	~Ui();
 	bool Start();
 	void Update();
 	void Render(RenderContext& rc);
 
 private:
-	//SpriteRender m_enemysMap[30];
+	//ƒ}ƒbƒv
 	SpriteRender m_mapBackGround;
 	SpriteRender m_mapGradation;
 	SpriteRender m_mapFrame;
 	SpriteRender m_playerMap;
+
+	SpriteRender m_typeFire;
+	SpriteRender m_typeWater;
+	SpriteRender m_typeWind;
+	SpriteRender m_typeShine;
+
 
 	Vector3 m_playerMapPosition;
 	Vector3 m_enemyMapPosition;

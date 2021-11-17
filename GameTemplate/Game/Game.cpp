@@ -5,10 +5,14 @@
 #include "Enemy.h"
 #include "GameCamera.h"
 #include "GameOver.h"
-#include "Map.h"
+#include "Ui.h"
 #include "Player.h"
 
 #include "nature/SkyCube.h"
+
+#include <random>
+
+using namespace std;
 
 Game::Game() {
 
@@ -23,7 +27,7 @@ Game::~Game() {
 	}
 	DeleteGO(m_backGround);
 	DeleteGO(m_gameCamera);
-	DeleteGO(m_map);
+	DeleteGO(m_ui);
 	DeleteGO(m_player);
 	DeleteGO(m_skyCube);
 }
@@ -32,13 +36,17 @@ bool Game::Start()
 {
 	m_backGround = NewGO<BackGround>(0, "backGround");
 	m_gameCamera = NewGO<GameCamera>(0, "gameCamera");
-	m_map = NewGO<Map>(0, "map");
+	m_ui = NewGO<Ui>(0, "ui");
 	m_player = NewGO<Player>(0, "player");
 	m_skyCube = NewGO<SkyCube>(0, "skyCube");
-	
+
 	//背景
 	m_skyCube->SetScale({ 300.0f, 300.0f, 300.0f });
 	m_skyCube->SetType(enSkyCubeType_NightToon);
+
+	g_soundEngine->ResistWaveFileBank(2, "Assets/sound/damage1.wav");
+	g_soundEngine->ResistWaveFileBank(3, "Assets/sound/damage2.wav");
+	g_soundEngine->ResistWaveFileBank(4, "Assets/sound/damage3.wav");
 
 	return true;
 }
@@ -48,16 +56,12 @@ void Game::Update()
 	m_timer += g_gameTime->GetFrameDeltaTime();
 	m_spawnTimer += g_gameTime->GetFrameDeltaTime();
 
-	if (m_spawnTimer > 2.0f - m_level)
-	{
-		NewGO<Enemy>(0, "Enemy");
-		m_spawnTimer = 0.0f;
-	}
+	EnemyGenerate();
 
 	//レベル
 	if (m_timer > 10.0f)
 	{
-		if (m_level <= 1.8) {
+		if (m_level <= 1.5) {
 			m_level += 0.1f;
 		}
 		m_levelFont += 1;
@@ -91,6 +95,37 @@ void Game::Update()
 	}
 
 	ManageState();
+}
+
+void Game::EnemyGenerate()
+{
+	if (m_spawnTimer > 2.0f - m_level)
+	{
+		constexpr int MIN = -400;//乱数の範囲最低値
+		constexpr int MAX = 400;//乱数の範囲最大値
+
+		constexpr int RAND_NUMS_TO_GENERATE = 2;//乱数を生成する回数
+
+		Vector3 position;
+		//座標
+		random_device rd;
+		default_random_engine eng(rd());
+		uniform_int_distribution<int> distr(MIN, MAX);
+
+
+		position.x = distr(eng);
+		position.z = distr(eng);
+
+		position.y = 0.0f;
+
+		if ((position - m_player->GetPosition()).Length() <= 20.0f)
+		{
+			return;
+		}
+		Enemy* enemy = NewGO<Enemy>(0, "Enemy");
+		enemy->SetPosition(position);
+		m_spawnTimer = 0.0f;
+	}
 }
 
 void Game::Render(RenderContext& rc)

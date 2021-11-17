@@ -6,7 +6,7 @@ class BackGround;
 class Enemy;
 class GameCamera;
 class GameOver;
-class Map;
+class Ui;
 class Player;
 
 class Game : public IGameObject
@@ -18,18 +18,19 @@ public:
 	void Update();
 	void Render(RenderContext& rc);
 	void ManageState();
-
+	void EnemyGenerate();
 private:
 	ModelRender m_modelRender;
 	BackGround* m_backGround;
 	GameCamera* m_gameCamera;
 	GameOver* m_gameOver;
-	Map* m_map;
+	Ui* m_ui;
 	Player* m_player;
 	SkyCube* m_skyCube;
 	SoundSource* m_damage1SE;
 	SoundSource* m_damage2SE;
 	SoundSource* m_damage3SE;
+
 	int m_levelFont = 0;
 	int m_hp = 3;
 	float m_timer = 0;

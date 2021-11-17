@@ -19,8 +19,9 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameOver.cpp" />
-    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Ui.cpp" />
     <ClCompile Include="Shine.cpp" />
+    <ClCompile Include="Wind.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -35,7 +36,8 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameOver.h" />
-    <ClInclude Include="Map.h" />
+    <ClInclude Include="Ui.h" />
     <ClInclude Include="Shine.h" />
+    <ClInclude Include="Wind.h" />
   </ItemGroup>
 </Project>

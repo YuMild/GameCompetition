@@ -2,6 +2,7 @@
 
 class Bullet;
 class Shine;
+class Wind;
 
 class Player:public IGameObject
 {
@@ -35,23 +36,34 @@ private:
 	CharacterController m_characterController;
 	Quaternion m_rotation;
 	ModelRender m_render;
+
 	Vector3 m_position;
 	Vector3 m_cameraPosition;
 	Vector3 m_bulletDirection;
 	Vector3 m_moveSpeed;
 	Vector3 m_forward;
 	Vector3 m_right;
-	Bullet* m_bullet;
-	Shine* m_shine;
+	
+	EffectEmitter* m_brinkEF;
+
 	SoundSource* m_shineSE;
 	SoundSource* m_dryFireSE;
 	SoundSource* m_enemyDeathSE;
+
+	Bullet* m_bullet;
+	Shine* m_shine;
+	Wind* m_wind;
+
 	bool m_bulletMagazine = true;
 	bool m_shineMagazine = true;
 	bool m_windMagazine = true;
+	bool m_brinkMagazine = true;
+
 	float m_bulletCoolTimer = 0;
 	float m_shineCoolTimer = 0;
 	float m_windCoolTimer = 0;
+	float m_brinkCoolTimer = 0;
+
 	int m_playerState = 0;
 };
 

@@ -3,6 +3,7 @@
 
 #include "Bullet.h"
 #include "Shine.h"
+#include "Wind.h"
 
 Player::Player() {
 
@@ -22,6 +23,8 @@ bool Player::Start() {
 	m_animationClips[enAnimationClip_Jump].SetLoopFlag(false);
 	m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
 
+	EffectEngine::GetInstance()->ResistEffect(2, u"Assets/effect/wind.efk");
+
 	//当たり判定
 	m_characterController.Init(20.0f, 5.0f, m_position);
 
@@ -30,7 +33,7 @@ bool Player::Start() {
 	m_position.x = 0.0f;//初期値だから実は書かなくてもいい
 	m_position.y = 0.0f;//初期値だから実は書かなくてもいい
 	m_position.z = 0.0f;//初期値だから実は書かなくてもいい
-	m_render.SetScale({ 1.0f,1.0f,1.0f });//初期値だから実は書かなくてもいい
+	m_render.SetScale({ 0.7f,0.7f,0.7f });//初期値だから実は書かなくてもいい
 	m_render.Update();
 
 	return true;
@@ -64,8 +67,8 @@ void Player::Move() {
 	cameraRight.y = 0.0f;
 	cameraForward.Normalize();
 	cameraRight.Normalize();
-	m_moveSpeed += cameraForward * lStickY * 300.0f;//前後
-	m_moveSpeed += cameraRight * lStickX * 300.0f;//左右
+	m_moveSpeed += cameraForward * lStickY * 250.0f;//前後
+	m_moveSpeed += cameraRight * lStickX * 250.0f;//左右
 
 	if (m_characterController.IsOnGround()) {//キャラが地面に立っている時
 		m_moveSpeed.y = 0.0f;//上には動かない
@@ -84,7 +87,7 @@ void Player::Move() {
 	}
 
 	//クールタイム非活性化時
-	if (g_pad[0]->IsTrigger(enButtonLB1) && m_bulletMagazine == true)
+	if (g_pad[0]->IsTrigger(enButtonRB1) && m_bulletMagazine == true)
 	{
 		m_bullet = NewGO<Bullet>(0, "bullet");//砲丸を生成
 		m_bulletCoolTimer = 0;//クールタイマーのリセット
@@ -111,7 +114,7 @@ void Player::Move() {
 		m_shineSE = NewGO<SoundSource>(7);
 		m_shineSE->Init(7);
 		m_shineSE->Play(false);
-		m_shineCoolTimer = 0;//クールタイマーのリセット
+		m_shineCoolTimer = 0;//クールタイマーのリセットaa
 		m_shineMagazine = false;//クールタイムを活性化
 	}
 
@@ -119,18 +122,40 @@ void Player::Move() {
 
 	m_windCoolTimer += g_gameTime->GetFrameDeltaTime();
 
-	//クールタイム活性化
-	if (g_pad[0]->IsTrigger(enButtonA) && m_windMagazine == true) {
-		m_windCoolTimer = 0.0f;
-		m_windMagazine = false;
+	if (m_windCoolTimer > 2.0f) {//射出してから1秒
+		m_windMagazine = true;//クールタイムを非活性化
 	}
-	if (m_windMagazine == false) {
-		if (m_windCoolTimer < 0.2f) {
-			m_moveSpeed += cameraForward * 5000.0f;
-		}
-		else if (m_windCoolTimer >= 2.0f) {
-			m_windCoolTimer = 0.0f;
-			m_windMagazine = true;
+	
+	//クールタイム非活性化時
+	if (g_pad[0]->IsTrigger(enButtonA) && m_windMagazine == true)
+	{
+		m_wind = NewGO<Wind>(0, "wind");//風魔法を生成
+		m_windCoolTimer = 0;//クールタイマーのリセット
+		m_windMagazine = false;//クールタイムを活性化
+	}
+
+	//瞬間移動魔法
+
+	m_brinkCoolTimer += g_gameTime->GetFrameDeltaTime();
+
+	//クールタイム活性化
+	if (m_brinkCoolTimer >= 7.0f) {
+		m_brinkMagazine = true;
+	}
+
+	if (g_pad[0]->IsTrigger(enButtonLB1) && m_brinkMagazine == true) {
+
+		m_brinkCoolTimer = 0.0f;
+		m_brinkMagazine = false;
+
+		m_brinkEF = NewGO<EffectEmitter>(2);
+		m_brinkEF->Init(2);
+		m_brinkEF->SetScale(Vector3::One * 20.0f);
+		m_brinkEF->SetPosition(m_position);
+		m_brinkEF->Play();
+
+		if (m_brinkCoolTimer < 0.2f) {
+			m_moveSpeed += cameraForward * 20000.0f;
 		}
 	}
 
