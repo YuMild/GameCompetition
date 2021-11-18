@@ -94,8 +94,8 @@ void Player::Move() {
 		m_bulletMagazine = false;//クールタイムを活性化
 	}
 	else if (m_bulletMagazine == false) {//クールタイム活性化時
-		m_dryFireSE = NewGO<SoundSource>(6);
-		m_dryFireSE->Init(6);
+		m_dryFireSE = NewGO<SoundSource>(7);
+		m_dryFireSE->Init(7);
 		m_dryFireSE->Play(false);
 	}
 
@@ -122,7 +122,7 @@ void Player::Move() {
 
 	m_windCoolTimer += g_gameTime->GetFrameDeltaTime();
 
-	if (m_windCoolTimer > 2.0f) {//射出してから1秒
+	if (m_windCoolTimer > 10.0f) {//射出してから1秒
 		m_windMagazine = true;//クールタイムを非活性化
 	}
 	

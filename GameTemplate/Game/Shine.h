@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sound/SoundSource.h"
+
 class Enemy;
 class Player;
 
@@ -13,6 +15,8 @@ public:
 
 private:
 	Vector3 m_position;
+	SoundSource* m_shineSE;
+	SoundSource* m_shineSE_2;
 	EffectEmitter* m_shineEF;
 	Enemy* m_enemy;
 	Player* m_player;

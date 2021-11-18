@@ -14,10 +14,21 @@ Shine::~Shine() {
 bool Shine::Start() {
 
 	m_player = FindGO<Player>("player");
-	m_position.y = 1.0f;
+	m_position.y = 10.0f;
 
+	//音声
+	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/shine.wav");
+	m_shineSE = NewGO<SoundSource>(8);
+	m_shineSE->Init(8);
+	m_shineSE->Play(false);
+
+	//g_soundEngine->ResistWaveFileBank(9, "Assets/sound/shine2.wav");
+	//m_shineSE_2 = NewGO<SoundSource>(9);
+	//m_shineSE_2->Init(9);
+	//m_shineSE_2->Play(false);
+
+	//エフェクト
 	EffectEngine::GetInstance()->ResistEffect(1, u"Assets/effect/shine.efk");
-
 	m_shineEF = NewGO<EffectEmitter>(1);
 	m_shineEF->Init(1);
 	m_shineEF->SetPosition(m_position);
@@ -26,6 +37,7 @@ bool Shine::Start() {
 	quaternion.SetRotationDegX(90.0f);
 	m_shineEF->SetRotation(quaternion);
 	m_shineEF->Play();
+
 	return true;
 }
 

@@ -40,8 +40,8 @@ bool Bullet::Start() {
 	m_fireBallEF->Play();
 
 	//âπê∫
-	m_gunShotSE = NewGO<SoundSource>(5);
-	m_gunShotSE->Init(5);
+	m_gunShotSE = NewGO<SoundSource>(6);
+	m_gunShotSE->Init(6);
 	m_gunShotSE->Play(false);
 
 	m_moveSpeed = m_forward * 20.0f;
