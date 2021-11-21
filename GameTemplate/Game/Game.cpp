@@ -93,14 +93,11 @@ void Game::EnemyGenerate()
 		constexpr int MIN = -400;//—”‚Ì”ÍˆÍÅ’á’l
 		constexpr int MAX = 400;//—”‚Ì”ÍˆÍÅ‘å’l
 
-		constexpr int RAND_NUMS_TO_GENERATE = 2;//—”‚ğ¶¬‚·‚é‰ñ”
-
 		Vector3 position;
 		//À•W
 		random_device rd;
 		default_random_engine eng(rd());
 		uniform_int_distribution<int> distr(MIN, MAX);
-
 
 		position.x = distr(eng);
 		position.z = distr(eng);
