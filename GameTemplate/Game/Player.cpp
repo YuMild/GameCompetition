@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 
+#include "Enemy.h"
 #include "Bullet.h"
 #include "Shine.h"
 #include "Wind.h"
@@ -125,7 +126,7 @@ void Player::Move() {
 	if (m_windCoolTimer > 10.0f) {//射出してから1秒
 		m_windMagazine = true;//クールタイムを非活性化
 	}
-	
+
 	//クールタイム非活性化時
 	if (g_pad[0]->IsTrigger(enButtonA) && m_windMagazine == true)
 	{
@@ -159,8 +160,22 @@ void Player::Move() {
 		}
 	}
 
-	m_position = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
-	m_render.SetPosition(m_position);
+	//死亡判定//
+	const auto& enemyList = FindGOs<Enemy>("Enemy");
+	for (auto enemy : enemyList)
+	{
+		Vector3 unitydiff = m_position - enemy->GetPosition();
+		if (unitydiff.Length() <= 10.0f) {
+			if (m_hp >= 1) {
+				m_hp -= 1;
+				DeleteGO(enemy);
+			}
+
+			m_position = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
+			m_render.SetPosition(m_position);
+		}
+	}
+	ManageState();
 }
 
 void Player::Rotation() {
@@ -186,6 +201,35 @@ void Player::ManageState() {
 	}
 	else {//上以外の時
 		m_playerState = 0;//立ちアニメーションを再生する
+	}
+	switch (m_hp) {
+	case 0:
+		if (m_1Damage == true) {
+			m_damage1SE = NewGO<SoundSource>(4);
+			m_damage1SE->Init(4);
+			m_damage1SE->Play(false);
+			m_1Damage = false;
+			DeleteGO(this);
+		}
+		break;
+	case 1:
+		if (m_2Damage == true) {
+			m_damage1SE = NewGO<SoundSource>(3);
+			m_damage1SE->Init(3);
+			m_damage1SE->Play(false);
+			m_2Damage = false;
+		}
+		break;
+	case 2:
+		if (m_3Damage == true) {
+			m_damage1SE = NewGO<SoundSource>(2);
+			m_damage1SE->Init(2);
+			m_damage1SE->Play(false);
+			m_3Damage = false;
+		}
+		break;
+	case 3:
+		break;
 	}
 }
 

@@ -23,7 +23,7 @@ private:
 	SpriteRender m_typeWater;
 	SpriteRender m_typeWind;
 	SpriteRender m_typeShine;
-
+	SpriteRender m_hpBar;
 
 	Vector3 m_playerMapPosition;
 	Vector3 m_enemyMapPosition;

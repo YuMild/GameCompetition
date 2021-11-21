@@ -45,6 +45,10 @@ bool Ui::Start()
 	m_typeShine.SetPosition(Vector3(740.0f, -160.0f, 0.0f));
 	m_typeShine.Update();
 
+	m_hpBar.Init("Assets/sprite/HPbar.DDS", 500.0f, 200.0f);
+	m_hpBar.SetPosition(Vector3(540.0f, 300.0f, 0.0f));
+	m_hpBar.Update();
+
 
 	/*const auto& enemyList = FindGOs<Enemy>("Enemy");
 	int size = enemyList.size();
@@ -57,15 +61,19 @@ bool Ui::Start()
 	
 	m_playerMap.Init("Assets/sprite/PlayerMap.DDS", 200.0f, 200.0f);
 
+	m_playerMap.SetIsDisplayRestrictionRightSide(true);
+
 	m_player = FindGO<Player>("player");
 	
-
 	return true;
 }
 
 void Ui::Update()
 {
-	
+
+	float x = 1.0f / 3.0f * m_player->GetHP();
+	m_hpBar.SetIsDisplayRestrictionRightSide(true);
+	m_hpBar.SetLimitedX(x);
 
 	m_playerMapPosition = m_player->GetPosition();
 	m_playerMap.SetPosition({ m_playerMapPosition.x * -0.085f + MAP_CENTER_POSITION.x,m_playerMapPosition.z * -0.085f + MAP_CENTER_POSITION.y,0.0f });
@@ -80,6 +88,7 @@ void Ui::Update()
 	m_typeWater.Update();
 	m_typeWind.Update();
 	m_typeShine.Update();
+	m_hpBar.Update();
 }
 void Ui::Render(RenderContext& rc)
 {
@@ -92,4 +101,5 @@ void Ui::Render(RenderContext& rc)
 	m_typeWater.Draw(rc);
 	m_typeWind.Draw(rc);
 	m_typeShine.Draw(rc);
+	m_hpBar.Draw(rc);
 }

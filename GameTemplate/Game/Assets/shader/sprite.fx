@@ -5,6 +5,10 @@
 cbuffer cb : register(b0){
 	float4x4 mvp;		//???[???h?r???[?v???W?F?N?V?????s??B
 	float4 mulColor;	//??Z?J???[?B
+    float4 screenParam;
+    float2 imageParam;
+    int isRight = 0;
+    int isUp = 0;
 };
 struct VSInput{
 	float4 pos : POSITION;
@@ -28,7 +32,44 @@ PSInput VSMain(VSInput In)
 }
 float4 PSMain( PSInput In ) : SV_Target0
 {
-	return colorTexture.Sample(Sampler, In.uv) * mulColor;
+	
+    //右側を表示させない。
+    if (isRight == 1)
+    {
+        if (In.pos.x > imageParam.x)
+        {
+            clip(-1);
+        }
+    }
+    //左側を表示させない。
+    else if (isRight == 0)
+    {
+        if (In.pos.x < imageParam.x)
+        {
+            clip(-1);
+        }
+    }
+    
+    //上側を表示させない。
+    if (isUp == 1)
+    {
+        if (In.pos.y < imageParam.y)
+        {
+            clip(-1);
+        }
+    }
+    //下側を表示させない。
+    else if (isUp == 0)
+    {
+        if (In.pos.y > imageParam.y)
+        {
+            clip(-1);
+        }
+    }
+    
+    
+    float4 color = colorTexture.Sample(Sampler, In.uv) * mulColor;
+	return color;
 }
 float4 PSMainGamma( PSInput In ) : SV_Target0
 {

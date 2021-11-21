@@ -1,5 +1,6 @@
 #pragma once
 
+class Enemy;
 class Bullet;
 class Shine;
 class Wind;
@@ -14,6 +15,9 @@ public:
 	Vector3 GetDirection() const
 	{
 		return m_forward;
+	}
+	int GetHP() const {
+		return m_hp;
 	}
 	Player();
 	~Player();
@@ -50,6 +54,10 @@ private:
 	SoundSource* m_dryFireSE;
 	SoundSource* m_enemyDeathSE;
 
+	SoundSource* m_damage1SE;
+	SoundSource* m_damage2SE;
+	SoundSource* m_damage3SE;
+
 	Bullet* m_bullet;
 	Shine* m_shine;
 	Wind* m_wind;
@@ -59,11 +67,16 @@ private:
 	bool m_windMagazine = true;
 	bool m_brinkMagazine = true;
 
+	bool m_1Damage = true;
+	bool m_2Damage = true;
+	bool m_3Damage = true;
+
 	float m_bulletCoolTimer = 0;
 	float m_shineCoolTimer = 0;
 	float m_windCoolTimer = 0;
 	float m_brinkCoolTimer = 0;
 
 	int m_playerState = 0;
+	int m_hp = 3;
 };
 

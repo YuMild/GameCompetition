@@ -110,7 +110,33 @@ namespace nsK2Engine {
 		/// </summary>
 		/// <param name="rc">レンダーコンテキスト。</param>
 		void Draw(RenderContext& rc);
+		void SetLimitedX(const float x)
+		{
+			m_sprite.SetX(x);
+		}
+		void SetLimitedY(const float y)
+		{
+			m_sprite.SetY(y);
+		}
 
+		void SetIsDisplayRestrictionLeftSide(const bool isLeft)
+		{
+			m_sprite.SetIsDisplayRestrictionLeftSide(isLeft);
+		}
+		void SetIsDisplayRestrictionRightSide(const bool isRight)
+		{
+			m_sprite.SetIsDisplayRestrictionRightSide(isRight);
+		}
+
+		void SetIsDisplayRestrictionUpSide(const bool isUp)
+		{
+			m_sprite.SetIsDisplayRestrictionUpSide(isUp);
+		}
+		void SetIsDisplayRestrictionDownSide(const bool isDown)
+		{
+			m_sprite.SetIsDisplayRestrictionDownSide(isDown);
+		}
+		
 	private:
 		/// <summary>
 		/// 2D描画パスから呼ばれる処理。

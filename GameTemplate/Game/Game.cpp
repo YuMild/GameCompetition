@@ -68,21 +68,11 @@ void Game::Update()
 		m_timer = 0;
 	}
 
-	//Ž€–S”»’è//
-	const auto& enemyList = FindGOs<Enemy>("Enemy");
-	for (auto enemy : enemyList)
-	{
-		Vector3 unitydiff = m_player->GetPosition() - enemy->GetPosition();
-		if (unitydiff.Length() <= 10.0f) {
-			if (m_hp >= 1) {
-				m_hp -= 1;
-				DeleteGO(enemy);
-			}
-			if (m_hp == 0) {
-				m_gameOver = NewGO<GameOver>(0, "GameOver");
-			}
-		}
+
+	if (m_player->GetHP() == 0) {
+		m_gameOver = NewGO<GameOver>(0, "GameOver");
 	}
+
 	//—Ž‰ºŽ€–S//
 	if (m_player->GetPosition().y <= -100.0f)
 	{
@@ -93,9 +83,8 @@ void Game::Update()
 			DeleteGO(this);
 		}
 	}
-
-	ManageState();
 }
+
 
 void Game::EnemyGenerate()
 {
@@ -131,37 +120,4 @@ void Game::EnemyGenerate()
 void Game::Render(RenderContext& rc)
 {
 	
-}
-
-void Game::ManageState() 
-{
-	switch (m_hp) {
-	case 0:
-		if (m_1Damage == true) {
-			m_damage1SE = NewGO<SoundSource>(4);
-			m_damage1SE->Init(4);
-			m_damage1SE->Play(false);
-			m_1Damage = false;
-			DeleteGO(this);
-		}
-		break;
-	case 1:
-		if (m_2Damage == true) {
-			m_damage1SE = NewGO<SoundSource>(3);
-			m_damage1SE->Init(3);
-			m_damage1SE->Play(false);
-			m_2Damage = false;
-		}
-		break;
-	case 2:
-		if (m_3Damage == true) {
-			m_damage1SE = NewGO<SoundSource>(2);
-			m_damage1SE->Init(2);
-			m_damage1SE->Play(false);
-			m_3Damage = false;
-		}
-		break;
-	case 3:
-		break;
-	}
 }
