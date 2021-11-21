@@ -33,7 +33,7 @@ bool Enemy::Start() {
 	m_render.Update();//ã‚Ìî•ñ‚ðXV‚·‚é
 
 	//‰¹º
-	g_soundEngine->ResistWaveFileBank(7, "Assets/sound enemydeath.wav");
+	g_soundEngine->ResistWaveFileBank(11, "Assets/sound/EnemyDeath.wav");
 
 	return true;
 }
@@ -97,8 +97,9 @@ void Enemy::Move() {
 		Vector3 bulletdiff = bulletList[i]->GetPosition() - m_position;
 		if (bulletdiff.Length() <= 75.0f) {
 			DeleteGO(this);
-			m_enemyDeathSE = NewGO<SoundSource>(7);
-			m_enemyDeathSE->Init(7);
+			m_enemyDeathSE = NewGO<SoundSource>(11);
+			m_enemyDeathSE->Init(11);
+			m_enemyDeathSE->SetVolume(0.1f);
 			m_enemyDeathSE->Play(false);
 		}
 	}

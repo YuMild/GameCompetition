@@ -44,9 +44,12 @@ bool Game::Start()
 	m_skyCube->SetScale({ 300.0f, 300.0f, 300.0f });
 	m_skyCube->SetType(enSkyCubeType_NightToon);
 
-	g_soundEngine->ResistWaveFileBank(2, "Assets/sound/damage1.wav");
-	g_soundEngine->ResistWaveFileBank(3, "Assets/sound/damage2.wav");
-	g_soundEngine->ResistWaveFileBank(4, "Assets/sound/damage3.wav");
+	//‰¹º
+	g_soundEngine->ResistWaveFileBank(1, "Assets/sound/BackGround.wav");
+	m_backGroundBGM = NewGO<SoundSource>(1);
+	m_backGroundBGM->Init(1);
+	m_backGroundBGM->SetVolume(0.01f);
+	m_backGroundBGM->Play(true);
 
 	return true;
 }
@@ -65,7 +68,6 @@ void Game::Update()
 		m_levelFont += 1;
 		m_timer = 0;
 	}
-
 
 	if (m_player->GetHP() == 0) {
 		m_gameOver = NewGO<GameOver>(0, "GameOver");

@@ -31,19 +31,19 @@ bool Ui::Start()
 	m_mapFrame.SetPosition(MAP_CENTER_POSITION);
 	m_mapFrame.Update();
 
-	m_typeFire.Init("Assets/sprite/TypeFire.DDS", 140.0f, 140.0f);
+	m_typeFire.Init("Assets/sprite/TypeFire.DDS", 120.0f, 120.0f);
 	m_typeFire.SetPosition(Vector3(840.0f, -260.0f, 0.0f));
 	m_typeFire.Update();
 
-	m_typeWater.Init("Assets/sprite/TypeWater.DDS", 140.0f, 140.0f);
+	m_typeWater.Init("Assets/sprite/TypeWater.DDS", 120.0f, 120.0f);
 	m_typeWater.SetPosition(Vector3(640.0f, -260.0f, 0.0f));
 	m_typeWater.Update();
 
-	m_typeWind.Init("Assets/sprite/TypeWind.DDS", 140.0f, 140.0f);
+	m_typeWind.Init("Assets/sprite/TypeWind.DDS", 120.0f, 120.0f);
 	m_typeWind.SetPosition(Vector3(740.0f, -360.0f, 0.0f));
 	m_typeWind.Update();
 
-	m_typeShine.Init("Assets/sprite/TypeShine.DDS", 140.0f, 140.0f);
+	m_typeShine.Init("Assets/sprite/TypeShine.DDS", 120.0f, 120.0f);
 	m_typeShine.SetPosition(Vector3(740.0f, -160.0f, 0.0f));
 	m_typeShine.Update();
 
@@ -72,7 +72,6 @@ bool Ui::Start()
 
 void Ui::Update()
 {
-
 	float x = 1.0f / 3.0f * m_player->GetHP();
 	m_hpBar.SetIsDisplayRestrictionRightSide(true);
 	m_hpBar.SetLimitedX(x);

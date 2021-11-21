@@ -50,7 +50,6 @@ private:
 	
 	EffectEmitter* m_brinkEF;
 
-	SoundSource* m_shineSE;
 	SoundSource* m_dryFireSE;
 	SoundSource* m_enemyDeathSE;
 

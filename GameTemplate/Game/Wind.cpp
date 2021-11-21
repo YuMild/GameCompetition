@@ -18,16 +18,17 @@ bool Wind::Start() {
 	m_position = m_player->GetPosition() += g_camera3D->GetForward() * 500.0f;
 	m_position.y = 0.0f;
 
-	g_soundEngine->ResistWaveFileBank(5, "Assets/sound/wind.wav");
+	g_soundEngine->ResistWaveFileBank(6, "Assets/sound/Wind.wav");
 
-	m_windSE = NewGO<SoundSource>(5);
-	m_windSE->Init(5);
+	m_windSE = NewGO<SoundSource>(6);
+	m_windSE->Init(6);
+	m_windSE->SetVolume(0.1f);
 	m_windSE->Play(false);
 
-	EffectEngine::GetInstance()->ResistEffect(3, u"Assets/effect/tornado.efk");
+	EffectEngine::GetInstance()->ResistEffect(4, u"Assets/effect/Wind.efk");
 
-	m_windEF = NewGO<EffectEmitter>(3);
-	m_windEF->Init(3);
+	m_windEF = NewGO<EffectEmitter>(4);
+	m_windEF->Init(4);
 	m_windEF->SetPosition(m_position);
 	m_windEF->SetScale(Vector3::One * 70.0f);
 	m_windEF->Play();

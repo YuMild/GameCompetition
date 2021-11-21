@@ -12,7 +12,6 @@ class Player;
 class Game : public IGameObject
 {
 public:
-
 	Game();
 	~Game();
 	bool Start();
@@ -21,6 +20,7 @@ public:
 	void EnemyGenerate();
 private:
 	ModelRender m_modelRender;
+	SoundSource* m_backGroundBGM;
 	BackGround* m_backGround;
 	GameCamera* m_gameCamera;
 	GameOver* m_gameOver;
@@ -28,7 +28,6 @@ private:
 	Player* m_player;
 	SkyCube* m_skyCube;
 	
-
 	int m_levelFont = 0;
 
 	float m_timer = 0;

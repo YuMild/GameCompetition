@@ -27,6 +27,11 @@ bool Player::Start() {
 	//当たり判定
 	m_characterController.Init(20.0f, 5.0f, m_position);
 
+	//音声
+	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/damage1.wav");
+	g_soundEngine->ResistWaveFileBank(9, "Assets/sound/damage2.wav");
+	g_soundEngine->ResistWaveFileBank(10, "Assets/sound/damage3.wav");
+
 	//描画
 	m_render.SetPosition(m_position);//初期値だから実は書かなくてもいい
 	m_position.x = 0.0f;//初期値だから実は書かなくてもいい
@@ -65,8 +70,8 @@ void Player::Move() {
 	cameraRight.y = 0.0f;
 	cameraForward.Normalize();
 	cameraRight.Normalize();
-	m_moveSpeed += cameraForward * lStickY * 250.0f;//前後
-	m_moveSpeed += cameraRight * lStickX * 250.0f;//左右
+	m_moveSpeed += cameraForward * lStickY * 150.0f;//前後
+	m_moveSpeed += cameraRight * lStickX * 150.0f;//左右
 
 	if (m_characterController.IsOnGround()) {//キャラが地面に立っている時
 		m_moveSpeed.y = 0.0f;//上には動かない
@@ -90,11 +95,6 @@ void Player::Move() {
 		m_bulletCoolTimer = 0;//クールタイマーのリセット
 		m_bulletMagazine = false;//クールタイムを活性化
 	}
-	else if (m_bulletMagazine == false) {//クールタイム活性化時
-		m_dryFireSE = NewGO<SoundSource>(7);
-		m_dryFireSE->Init(7);
-		m_dryFireSE->Play(false);
-	}
 
 	//光魔法
 
@@ -108,9 +108,6 @@ void Player::Move() {
 	if (g_pad[0]->IsTrigger(enButtonY) && m_shineMagazine == true)
 	{
 		m_shine = NewGO<Shine>(0, "shine");//光魔法を生成
-		m_shineSE = NewGO<SoundSource>(7);
-		m_shineSE->Init(7);
-		m_shineSE->Play(false);
 		m_shineCoolTimer = 0;//クールタイマーのリセットaa
 		m_shineMagazine = false;//クールタイムを活性化
 	}
@@ -195,8 +192,8 @@ void Player::ManageState() {
 	switch (m_hp) {
 	case 0:
 		if (m_1Damage == true) {
-			m_damage1SE = NewGO<SoundSource>(4);
-			m_damage1SE->Init(4);
+			m_damage1SE = NewGO<SoundSource>(10);
+			m_damage1SE->Init(10);
 			m_damage1SE->Play(false);
 			m_1Damage = false;
 			DeleteGO(this);
@@ -204,16 +201,16 @@ void Player::ManageState() {
 		break;
 	case 1:
 		if (m_2Damage == true) {
-			m_damage1SE = NewGO<SoundSource>(3);
-			m_damage1SE->Init(3);
+			m_damage1SE = NewGO<SoundSource>(9);
+			m_damage1SE->Init(9);
 			m_damage1SE->Play(false);
 			m_2Damage = false;
 		}
 		break;
 	case 2:
 		if (m_3Damage == true) {
-			m_damage1SE = NewGO<SoundSource>(2);
-			m_damage1SE->Init(2);
+			m_damage1SE = NewGO<SoundSource>(8);
+			m_damage1SE->Init(8);
 			m_damage1SE->Play(false);
 			m_3Damage = false;
 		}

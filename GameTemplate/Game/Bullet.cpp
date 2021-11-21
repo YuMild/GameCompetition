@@ -18,15 +18,8 @@ bool Bullet::Start() {
 	m_position = m_player->GetPosition();//プレイヤーの場所に生まれる
 	m_position.y += 50.0f;//プレイヤーの50f上に生まれる
 
-	//余裕が出来たらやる
-	//コリジョンの生成
-	//collisionObject = NewGO<CollisionObject>(0);
-	//Vector3 collisionPosition = m_position;
-	//collisionObject->CreateSphere(collisionPosition);
-	//collisionObject->SetName("bullet");
-
 	//エフェクトファイル
-	EffectEngine::GetInstance()->ResistEffect(0, u"Assets/effect/fireball.efk");
+	EffectEngine::GetInstance()->ResistEffect(0, u"Assets/effect/Bullet.efk");
 
 	//方向
 	m_forward = g_camera3D->GetForward();
@@ -39,9 +32,13 @@ bool Bullet::Start() {
 	m_fireBallEF->SetScale(Vector3::One * 20.0f);
 	m_fireBallEF->Play();
 
+	//音声ファイル
+	g_soundEngine->ResistWaveFileBank(2, "Assets/sound/Bullet.wav");
+
 	//音声
-	m_gunShotSE = NewGO<SoundSource>(6);
-	m_gunShotSE->Init(6);
+	m_gunShotSE = NewGO<SoundSource>(2);
+	m_gunShotSE->Init(2);
+	m_gunShotSE->SetVolume(0.1f);
 	m_gunShotSE->Play(false);
 
 	m_moveSpeed = m_forward * 20.0f;

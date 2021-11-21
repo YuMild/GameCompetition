@@ -17,20 +17,16 @@ bool Shine::Start() {
 	m_position.y = 10.0f;
 
 	//音声
-	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/Shine.wav");
-	m_shineSE = NewGO<SoundSource>(8);
-	m_shineSE->Init(8);
+	g_soundEngine->ResistWaveFileBank(7, "Assets/sound/Shine.wav");
+	m_shineSE = NewGO<SoundSource>(7);
+	m_shineSE->Init(7);
+	m_shineSE->SetVolume(0.1f);
 	m_shineSE->Play(false);
 
-	//g_soundEngine->ResistWaveFileBank(9, "Assets/sound/shine2.wav");
-	//m_shineSE_2 = NewGO<SoundSource>(9);
-	//m_shineSE_2->Init(9);
-	//m_shineSE_2->Play(false);
-
 	//エフェクト
-	EffectEngine::GetInstance()->ResistEffect(1, u"Assets/effect/shine.efk");
-	m_shineEF = NewGO<EffectEmitter>(1);
-	m_shineEF->Init(1);
+	EffectEngine::GetInstance()->ResistEffect(5, u"Assets/effect/shine.efk");
+	m_shineEF = NewGO<EffectEmitter>(5);
+	m_shineEF->Init(5);
 	m_shineEF->SetPosition(m_position);
 	m_shineEF->SetScale(Vector3::One * 10.0f);
 	Quaternion quaternion;
