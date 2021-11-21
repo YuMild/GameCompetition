@@ -17,7 +17,7 @@ bool Shine::Start() {
 	m_position.y = 10.0f;
 
 	//‰¹º
-	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/shine.wav");
+	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/Shine.wav");
 	m_shineSE = NewGO<SoundSource>(8);
 	m_shineSE->Init(8);
 	m_shineSE->Play(false);

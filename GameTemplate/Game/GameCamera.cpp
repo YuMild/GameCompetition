@@ -18,12 +18,12 @@ bool GameCamera::Start()
 	//プレイヤーのインスタンスを探す
 	m_player = FindGO<Player>("player");
 
-	m_toCameraPos.Set(0.0f, 50.0f, 100.0f);
+	m_toCameraPos.Set(0.0f, 70.0f, 70.0f);
 
 	//ばねカメラの初期化
 	m_springCamera.Init(
 		*g_camera3D,		//ばねカメラの処理を行うカメラを指定する
-		5000.0f,				//カメラの移動速度の最大値
+		10000.0f,				//カメラの移動速度の最大値
 		true,				//カメラと地形とのあたり判定を取るかどうかのフラグ。trueだとあたり判定を行う
 		5.0f				//カメラに設定される球体コリジョンの半径。第３引数がtrueの時に有効になる
 	);

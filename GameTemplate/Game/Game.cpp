@@ -56,8 +56,6 @@ void Game::Update()
 	m_timer += g_gameTime->GetFrameDeltaTime();
 	m_spawnTimer += g_gameTime->GetFrameDeltaTime();
 
-	EnemyGenerate();
-
 	//ƒŒƒxƒ‹
 	if (m_timer > 10.0f)
 	{
@@ -74,15 +72,13 @@ void Game::Update()
 	}
 
 	//—Ž‰ºŽ€–S//
-	if (m_player->GetPosition().y <= -100.0f)
+	if (m_player->GetPosition().y <= -300.0f)
 	{
-
-		if (m_player->GetPosition().y <= -300.0f)
-		{
-			NewGO<GameOver>(0, "GameOver");
-			DeleteGO(this);
-		}
+		NewGO<GameOver>(0, "GameOver");
+		DeleteGO(this);
 	}
+
+	EnemyGenerate();
 }
 
 
@@ -101,7 +97,6 @@ void Game::EnemyGenerate()
 
 		position.x = distr(eng);
 		position.z = distr(eng);
-
 		position.y = 0.0f;
 
 		if ((position - m_player->GetPosition()).Length() <= 20.0f)

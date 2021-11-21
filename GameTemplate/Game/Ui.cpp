@@ -12,9 +12,11 @@ namespace
 Ui::Ui() {
 
 }
+
 Ui::~Ui() {
 
 }
+
 bool Ui::Start()
 {
 	m_mapBackGround.Init("Assets/sprite/MapGround.DDS", 300.0f, 300.0f);

@@ -24,8 +24,6 @@ bool Player::Start() {
 	m_animationClips[enAnimationClip_Jump].SetLoopFlag(false);
 	m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
 
-	EffectEngine::GetInstance()->ResistEffect(2, u"Assets/effect/wind.efk");
-
 	//当たり判定
 	m_characterController.Init(20.0f, 5.0f, m_position);
 
@@ -41,12 +39,11 @@ bool Player::Start() {
 }
 
 void Player::Update(){
-
-	m_render.Update();
 	Move();
 	ManageState();
 	PlayAnimation();
 	Rotation();
+	m_render.Update();
 }
 
 void Player::Render(RenderContext& rc) {
@@ -77,7 +74,6 @@ void Player::Move() {
 	else {
 		m_moveSpeed.y -= 2.5f;//落下スピード
 	}
-
 
 	//通常攻撃
 
@@ -149,12 +145,6 @@ void Player::Move() {
 		m_brinkCoolTimer = 0.0f;
 		m_brinkMagazine = false;
 
-		m_brinkEF = NewGO<EffectEmitter>(2);
-		m_brinkEF->Init(2);
-		m_brinkEF->SetScale(Vector3::One * 20.0f);
-		m_brinkEF->SetPosition(m_position);
-		m_brinkEF->Play();
-
 		if (m_brinkCoolTimer < 0.2f) {
 			m_moveSpeed += cameraForward * 20000.0f;
 		}
@@ -170,11 +160,11 @@ void Player::Move() {
 				m_hp -= 1;
 				DeleteGO(enemy);
 			}
-
-			m_position = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
-			m_render.SetPosition(m_position);
 		}
 	}
+
+	m_position = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
+	m_render.SetPosition(m_position);
 	ManageState();
 }
 
