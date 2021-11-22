@@ -19,8 +19,10 @@ public:
 
 private:
 	Vector3 m_position;
-	SoundSource *m_windSE;
+	Vector3 m_magicCirclePosition;
 	EffectEmitter* m_windEF;
+	EffectEmitter* m_windMagicCircleEF;
+	SoundSource* m_windSE;
 	Enemy* m_enemy;
 	Player* m_player;
 	float m_aliveTimer = 0.0f;
