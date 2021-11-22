@@ -22,6 +22,7 @@
     <ClCompile Include="Ui.cpp" />
     <ClCompile Include="Shine.cpp" />
     <ClCompile Include="Wind.cpp" />
+    <ClCompile Include="Fire.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -39,5 +40,6 @@
     <ClInclude Include="Ui.h" />
     <ClInclude Include="Shine.h" />
     <ClInclude Include="Wind.h" />
+    <ClInclude Include="Fire.h" />
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 
 class Enemy;
 class Bullet;
+class Fire;
 class Shine;
 class Wind;
 
@@ -23,8 +24,11 @@ public:
 	~Player();
 	bool Start();
 	void Update();
+	void Timer();
 	void Render(RenderContext& rc);
 	void Move();
+	void Magic();
+	void Death();
 	void Rotation();
 	void ManageState();
 	void PlayAnimation();
@@ -43,6 +47,8 @@ private:
 
 	Vector3 m_position;
 	Vector3 m_cameraPosition;
+	Vector3 m_cameraForward;
+	Vector3 m_cameraRight;
 	Vector3 m_bulletDirection;
 	Vector3 m_moveSpeed;
 	Vector3 m_forward;
@@ -58,10 +64,12 @@ private:
 	SoundSource* m_damage3SE;
 
 	Bullet* m_bullet;
+	Fire* m_fire;
 	Shine* m_shine;
 	Wind* m_wind;
 
 	bool m_bulletMagazine = true;
+	bool m_fireMagazine = true;
 	bool m_shineMagazine = true;
 	bool m_windMagazine = true;
 	bool m_brinkMagazine = true;
@@ -71,6 +79,7 @@ private:
 	bool m_3Damage = true;
 
 	float m_bulletCoolTimer = 0;
+	float m_fireCoolTimer = 0;
 	float m_shineCoolTimer = 0;
 	float m_windCoolTimer = 0;
 	float m_brinkCoolTimer = 0;

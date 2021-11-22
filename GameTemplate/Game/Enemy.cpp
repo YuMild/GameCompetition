@@ -3,11 +3,10 @@
 
 #include "Bullet.h"
 #include "Player.h"
+#include "Fire.h"
 #include "Shine.h"
 #include "Wind.h"
 #include <random>
-
-using namespace std;
 
 Enemy::Enemy() {
 	
@@ -41,13 +40,14 @@ bool Enemy::Start() {
 void Enemy::Update() {
 	m_render.Update();
 	Move();
+	Magic();
+	Death();
 	PlayAnimation();
 }
 
 void Enemy::Render(RenderContext& rc) {
 
 	m_render.Draw(rc);
-
 }
 
 void Enemy::Move() {
@@ -61,6 +61,27 @@ void Enemy::Move() {
 	direction.Normalize();
 	Quaternion quaternion;
 	quaternion.SetRotationY(atan2f(direction.x, direction.z));
+
+	m_render.SetPosition(m_position);
+	m_render.SetRotation(quaternion);
+}
+
+void Enemy::Magic() {
+
+	//‰Š–‚–@”»’è
+	const auto& fireList = FindGOs<Fire>("fire");
+	int fireSize = fireList.size();
+	m_fireDiff = m_position - m_player->GetPosition();
+	for (m_fireUnit = 0; m_fireUnit < fireSize; m_fireUnit++) {
+		if (fireList[m_fireUnit]->GetMoving()==true && m_fireDiff.Length() <= 400.0f) {
+			DeleteGO(this);
+			m_enemyDeathSE = NewGO<SoundSource>(11);
+			m_enemyDeathSE->Init(11);
+			m_enemyDeathSE->SetVolume(0.1f);
+			m_enemyDeathSE->Play(false);
+		}
+	}
+			
 
 	//Œõ–‚–@”»’è
 	const auto& shineList = FindGOs<Shine>("shine");
@@ -89,6 +110,9 @@ void Enemy::Move() {
 	if (m_shineMoving == false) {
 		m_position += m_moveSpeed * 15.0f / 30.0f;
 	}
+}
+
+void Enemy::Death() {
 
 	//“G‚ÌŽ€–S”»’è
 	const auto& bulletList = FindGOs<Bullet>("bullet");
@@ -103,9 +127,6 @@ void Enemy::Move() {
 			m_enemyDeathSE->Play(false);
 		}
 	}
-
-	m_render.SetPosition(m_position);
-	m_render.SetRotation(quaternion);
 }
 
 void Enemy::PlayAnimation() {

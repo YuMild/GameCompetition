@@ -43,6 +43,7 @@ bool Game::Start()
 	//”wŒi
 	m_skyCube->SetScale({ 300.0f, 300.0f, 300.0f });
 	m_skyCube->SetType(enSkyCubeType_NightToon);
+	m_skyCube->SetLuminance(0.4);
 
 	//‰¹º
 	g_soundEngine->ResistWaveFileBank(1, "Assets/sound/BackGround.wav");

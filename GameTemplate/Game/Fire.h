@@ -4,24 +4,24 @@
 
 class Player;
 
-class Wind :public IGameObject
+class Fire :public IGameObject
 {
 public:
-	Vector3 GetPosition() const
-	{
-		return m_position;
+	bool GetMoving()const {
+		return m_isMoving;
 	}
-	Wind();
-	~Wind();
+	Fire();
+	~Fire();
 	bool Start();
 	void Update();
 
 private:
 	Vector3 m_position;
 	Vector3 m_magicCirclePosition;
-	EffectEmitter* m_windEF;
-	EffectEmitter* m_windMagicCircleEF;
-	SoundSource* m_windSE;
+	SoundSource* m_fireSE;
+	EffectEmitter* m_fireEF;
+	EffectEmitter* m_fireMagicCircleEF;
 	Player* m_player;
+	bool m_isMoving = false;
 	float m_aliveTimer = 0.0f;
 };

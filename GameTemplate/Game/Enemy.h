@@ -2,6 +2,7 @@
 
 class Bullet;
 class Player;
+class Fire;
 class Shine;
 class Wind;
 
@@ -20,6 +21,8 @@ public:
 	void Update();
 	void Render(RenderContext& rc);
 	void Move();
+	void Magic();
+	void Death();
 	void PlayAnimation();
 	enum EnAnimationClip {
 		enAnimationClip_Idle,
@@ -37,12 +40,17 @@ private:
 	Vector3 m_moveSpeed;
 	Vector3 m_forward;
 	Vector3 m_spawnDiff;
+	Vector3 m_fireDiff;
 	Bullet* m_bullet;
+	Fire* m_fire;
 	Player* m_player;
+	Shine* m_shine;
 	Wind* m_wind;
 	SoundSource* m_enemyDeathSE;
+	int m_fireUnit;
 	int m_windUnit;
 	bool m_shineMoving = false;
 	bool m_windMoving = false;
+	float m_fireTimer = 0.0f;
 };
 

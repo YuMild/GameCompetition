@@ -254,6 +254,10 @@ namespace nsK2Engine {
         {
             return m_deferredLightingCB;
         }
+        void SetIsGrayScale(bool isGrayScale)
+        {
+            m_postEffect.SetIsGrayScale(isGrayScale);
+        }
     private:
         /// <summary>
         /// イメージベースドライティング(IBL)のためのデータを初期化する。
@@ -342,6 +346,8 @@ namespace nsK2Engine {
         /// 2D描画用のレンダ―ターゲットを初期化
         /// </summary>
         void Init2DRenderTarget();
+
+     
     private:
         // GBufferの定義
         enum EnGBuffer

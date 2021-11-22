@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 #include "Bullet.h"
+#include "Fire.h"
 #include "Shine.h"
 #include "Wind.h"
 
@@ -44,11 +45,42 @@ bool Player::Start() {
 }
 
 void Player::Update(){
+	Magic();
 	Move();
+	Timer();
+	Death();
 	ManageState();
 	PlayAnimation();
 	Rotation();
 	m_render.Update();
+}
+
+void Player::Timer() {
+
+	m_bulletCoolTimer += g_gameTime->GetFrameDeltaTime();
+	if (m_bulletCoolTimer > 1.0f) {//射出してから1秒
+		m_bulletMagazine = true;//クールタイムを非活性化
+	}
+
+	m_fireCoolTimer += g_gameTime->GetFrameDeltaTime();
+	if (m_fireCoolTimer > 10.0f) {//射出してから10秒
+		m_fireMagazine = true;//クールタイムを非活性化
+	}
+
+	m_windCoolTimer += g_gameTime->GetFrameDeltaTime();
+	if (m_windCoolTimer > 15.0f) {//射出してから15秒
+		m_windMagazine = true;//クールタイムを非活性化
+	}
+
+	m_shineCoolTimer += g_gameTime->GetFrameDeltaTime();
+	if (m_shineCoolTimer > 20.0f) {//射出してから20秒
+		m_shineMagazine = true;//クールタイムを非活性化
+	}
+
+	m_brinkCoolTimer += g_gameTime->GetFrameDeltaTime();
+	if (m_brinkCoolTimer > 7.0f) {//射出してから7秒
+		m_brinkMagazine = true;//クールタイムを非活性化
+	}
 }
 
 void Player::Render(RenderContext& rc) {
@@ -64,14 +96,24 @@ void Player::Move() {
 	float lStickX = g_pad[0]->GetLStickXF();
 	float lStickY = g_pad[0]->GetLStickYF();
 
-	Vector3 cameraForward = g_camera3D->GetForward();//前後
-	Vector3 cameraRight = g_camera3D->GetRight();//左右
-	cameraForward.y = 0.0f;//上には動かないように
-	cameraRight.y = 0.0f;
-	cameraForward.Normalize();
-	cameraRight.Normalize();
-	m_moveSpeed += cameraForward * lStickY * 150.0f;//前後
-	m_moveSpeed += cameraRight * lStickX * 150.0f;//左右
+	m_cameraForward = g_camera3D->GetForward();//前後
+	m_cameraRight = g_camera3D->GetRight();//左右
+	m_cameraForward.y = 0.0f;//上には動かないように
+	m_cameraRight.y = 0.0f;
+	m_cameraForward.Normalize();
+	m_cameraRight.Normalize();
+	m_moveSpeed += m_cameraForward * lStickY * 150.0f;//前後
+	m_moveSpeed += m_cameraRight * lStickX * 150.0f;//左右
+
+	//瞬間移動魔法
+	//クールタイム非活性化時
+	if (g_pad[0]->IsTrigger(enButtonLB1) /* && m_brinkMagazine == true*/) {
+		m_brinkCoolTimer = 0.0f;
+		m_brinkMagazine = false;
+		if (m_brinkCoolTimer < 0.3f) {
+			m_moveSpeed += m_cameraForward * 20000.0f;
+		}
+	}
 
 	if (m_characterController.IsOnGround()) {//キャラが地面に立っている時
 		m_moveSpeed.y = 0.0f;//上には動かない
@@ -80,14 +122,14 @@ void Player::Move() {
 		m_moveSpeed.y -= 2.5f;//落下スピード
 	}
 
+	m_position = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
+	m_render.SetPosition(m_position);
+	ManageState();
+}
+
+void Player::Magic() {
+
 	//通常攻撃
-
-	m_bulletCoolTimer += g_gameTime->GetFrameDeltaTime();
-
-	if (m_bulletCoolTimer > 1.0f) {//射出してから1秒
-		m_bulletMagazine = true;//クールタイムを非活性化
-	}
-
 	//クールタイム非活性化時
 	if (g_pad[0]->IsTrigger(enButtonRB1) && m_bulletMagazine == true)
 	{
@@ -96,30 +138,25 @@ void Player::Move() {
 		m_bulletMagazine = false;//クールタイムを活性化
 	}
 
-	//光魔法
-
-	m_shineCoolTimer += g_gameTime->GetFrameDeltaTime();
-
-	if (m_shineCoolTimer > 15.0f) {//射出してから1秒
-		m_shineMagazine = true;//クールタイムを非活性化
+	//炎魔法
+	//クールタイム非活性化時
+	if (g_pad[0]->IsTrigger(enButtonB) && m_fireMagazine == true)
+	{
+		m_fire = NewGO<Fire>(0, "fire");//炎魔法を生成
+		m_fireCoolTimer = 0;//クールタイムのリセット
+		m_fireMagazine = false;//クールタイムを活性化
 	}
 
+	//光魔法
 	//クールタイム非活性化時
 	if (g_pad[0]->IsTrigger(enButtonY) && m_shineMagazine == true)
 	{
 		m_shine = NewGO<Shine>(0, "shine");//光魔法を生成
-		m_shineCoolTimer = 0;//クールタイマーのリセットaa
+		m_shineCoolTimer = 0;//クールタイマーのリセット
 		m_shineMagazine = false;//クールタイムを活性化
 	}
 
 	//風魔法
-
-	m_windCoolTimer += g_gameTime->GetFrameDeltaTime();
-
-	if (m_windCoolTimer > 10.0f) {//射出してから1秒
-		m_windMagazine = true;//クールタイムを非活性化
-	}
-
 	//クールタイム非活性化時
 	if (g_pad[0]->IsTrigger(enButtonA) && m_windMagazine == true)
 	{
@@ -128,24 +165,11 @@ void Player::Move() {
 		m_windMagazine = false;//クールタイムを活性化
 	}
 
-	//瞬間移動魔法
 
-	m_brinkCoolTimer += g_gameTime->GetFrameDeltaTime();
+	
+}
 
-	//クールタイム活性化
-	if (m_brinkCoolTimer >= 7.0f) {
-		m_brinkMagazine = true;
-	}
-
-	if (g_pad[0]->IsTrigger(enButtonLB1) && m_brinkMagazine == true) {
-
-		m_brinkCoolTimer = 0.0f;
-		m_brinkMagazine = false;
-
-		if (m_brinkCoolTimer < 0.2f) {
-			m_moveSpeed += cameraForward * 20000.0f;
-		}
-	}
+void Player::Death() {
 
 	//死亡判定//
 	const auto& enemyList = FindGOs<Enemy>("Enemy");
@@ -159,10 +183,6 @@ void Player::Move() {
 			}
 		}
 	}
-
-	m_position = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
-	m_render.SetPosition(m_position);
-	ManageState();
 }
 
 void Player::Rotation() {
@@ -192,18 +212,20 @@ void Player::ManageState() {
 	switch (m_hp) {
 	case 0:
 		if (m_1Damage == true) {
-			m_damage1SE = NewGO<SoundSource>(10);
-			m_damage1SE->Init(10);
-			m_damage1SE->Play(false);
+			m_damage3SE = NewGO<SoundSource>(10);
+			m_damage3SE->Init(10);
+			m_damage3SE->SetVolume(0.1f);
+			m_damage3SE->Play(false);
 			m_1Damage = false;
 			DeleteGO(this);
 		}
 		break;
 	case 1:
 		if (m_2Damage == true) {
-			m_damage1SE = NewGO<SoundSource>(9);
-			m_damage1SE->Init(9);
-			m_damage1SE->Play(false);
+			m_damage2SE = NewGO<SoundSource>(9);
+			m_damage2SE->Init(9);
+			m_damage2SE->SetVolume(0.1f);
+			m_damage2SE->Play(false);
 			m_2Damage = false;
 		}
 		break;
@@ -211,6 +233,7 @@ void Player::ManageState() {
 		if (m_3Damage == true) {
 			m_damage1SE = NewGO<SoundSource>(8);
 			m_damage1SE->Init(8);
+			m_damage1SE->SetVolume(0.1f);
 			m_damage1SE->Play(false);
 			m_3Damage = false;
 		}

@@ -236,7 +236,7 @@ float4 PSFinal( PSInput In) : SV_Target0
     
 	float4 vSample = sceneTexture.Sample(Sampler, In.uv );
     float3 hsv = Rgb2Hsv(vSample.xyz);
-
+    /*
 	float fAvgLum = 0.0f;
     if( currentAvgTexNo == 0){
         fAvgLum = lastLumAvgTextureArray[0].Sample(Sampler, float2( 0.5f, 0.5f)).r;
@@ -251,6 +251,8 @@ float4 PSFinal( PSInput In) : SV_Target0
     float4 color;
     color.xyz = Hsv2Rgb(hsv);
     color.w= 1.0f;
-    
-	return color;
+    */
+
+	vSample.xyz = (vSample.x + vSample.y + vSample.z) / 3.0f;
+	return vSample;
 }

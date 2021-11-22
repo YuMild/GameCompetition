@@ -27,13 +27,10 @@ bool Wind::Start() {
 	m_windEF->SetScale(Vector3::One * 70.0f);
 	m_windEF->Play();
 
-	m_magicCirclePosition = m_player->GetPosition();
-	m_magicCirclePosition.y = 10.0f;
-
+	
 	EffectEngine::GetInstance()->ResistEffect(9, u"Assets/effect/MagicCircleWind.efk");
 	m_windMagicCircleEF = NewGO<EffectEmitter>(9);
 	m_windMagicCircleEF->Init(9);
-	m_windMagicCircleEF->SetPosition(m_magicCirclePosition);
 	m_windMagicCircleEF->SetScale(Vector3::One * 70.0f);
 	m_windMagicCircleEF->Play();
 
@@ -48,10 +45,14 @@ bool Wind::Start() {
 }
 
 void Wind::Update() {
-
-	m_windMagicCircleEF->SetPosition(m_magicCirclePosition);
-
+	
 	m_aliveTimer += g_gameTime->GetFrameDeltaTime();
+
+	if (m_aliveTimer < 0.5f) {
+		m_magicCirclePosition = m_player->GetPosition();
+		m_magicCirclePosition.y = 10.0f;
+		m_windMagicCircleEF->SetPosition(m_magicCirclePosition);
+	}
 	if (m_aliveTimer > 3.5f) {
 		DeleteGO(this);
 		m_aliveTimer = 0;

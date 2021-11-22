@@ -29,18 +29,37 @@ bool Shine::Start() {
 	m_shineEF->Init(5);
 	m_shineEF->SetPosition(m_position);
 	m_shineEF->SetScale(Vector3::One * 10.0f);
+
+	EffectEngine::GetInstance()->ResistEffect(10, u"Assets/effect/MagicCircleShine.efk");
+	m_shineMagicCircleEF = NewGO<EffectEmitter>(10);
+	m_shineMagicCircleEF->Init(10);
+	m_shineMagicCircleEF->SetScale(Vector3::One * 70.0f);
+	m_shineMagicCircleEF->Play();
+
 	Quaternion quaternion;
 	quaternion.SetRotationDegX(90.0f);
 	m_shineEF->SetRotation(quaternion);
 	m_shineEF->Play();
 
+	m_isMoving == true;
+
+	g_renderingEngine->SetIsGrayScale(true);
+
 	return true;
 }
 
 void Shine::Update() {
+
 	m_aliveTimer += g_gameTime->GetFrameDeltaTime();
+
+	if (m_aliveTimer < 0.5f) {
+		m_magicCirclePosition = m_player->GetPosition();
+		m_magicCirclePosition.y = 10.0f;
+		m_shineMagicCircleEF->SetPosition(m_magicCirclePosition);
+	}
 	if (m_aliveTimer > 5.0f) {
 		DeleteGO(this);
 		m_aliveTimer = 0;
+		g_renderingEngine->SetIsGrayScale(false);
 	}
 }
