@@ -73,7 +73,7 @@ void Enemy::Magic() {
 	int fireSize = fireList.size();
 	m_fireDiff = m_position - m_player->GetPosition();
 	for (m_fireUnit = 0; m_fireUnit < fireSize; m_fireUnit++) {
-		if (fireList[m_fireUnit]->GetMoving()==true && m_fireDiff.Length() <= 400.0f) {
+		if (fireList[m_fireUnit]->GetMoving()==true && m_fireDiff.Length() <= 500.0f) {
 			DeleteGO(this);
 			m_enemyDeathSE = NewGO<SoundSource>(11);
 			m_enemyDeathSE->Init(11);
@@ -95,12 +95,12 @@ void Enemy::Magic() {
 	const auto& windList = FindGOs<Wind>("wind");
 	int windSize = windList.size();
 	m_windMoving = false;
-	for (m_windUnit = 0; m_windUnit < windSize; m_windUnit++) {
-		m_windMoving = true;
-		//風魔法が活性化時、風魔法の座標に向かう
-		if (m_windMoving == true) {
-			m_target = windList[m_windUnit]->GetPosition() - m_position;
-			m_target.Normalize();
+	for (m_windUnit = 0; m_windUnit < windSize; m_windUnit++) {//風魔法が活性化時、風魔法の座標に向かう
+		m_windDiff = windList[m_windUnit]->GetPosition() - m_position;
+		m_target = windList[m_windUnit]->GetPosition() - m_position;
+		m_target.Normalize();
+		if (m_windDiff.Length() <= 300.0f) {
+			m_shineMoving = true;
 			m_moveSpeed = m_target * 2.0f;
 			m_position += m_moveSpeed;
 		}

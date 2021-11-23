@@ -24,9 +24,8 @@ bool Wind::Start() {
 	m_windEF = NewGO<EffectEmitter>(4);
 	m_windEF->Init(4);
 	m_windEF->SetPosition(m_position);
-	m_windEF->SetScale(Vector3::One * 70.0f);
+	m_windEF->SetScale(Vector3::One * 100.0f);
 	m_windEF->Play();
-
 	
 	EffectEngine::GetInstance()->ResistEffect(9, u"Assets/effect/MagicCircleWind.efk");
 	m_windMagicCircleEF = NewGO<EffectEmitter>(9);

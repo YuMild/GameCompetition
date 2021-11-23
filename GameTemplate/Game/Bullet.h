@@ -10,6 +10,10 @@ public:
 	{
 		return m_position;
 	}
+	void SetPosition(const Vector3& position)
+	{
+		m_position = position;
+	}
 	Bullet();
 	~Bullet();
 	bool Start();

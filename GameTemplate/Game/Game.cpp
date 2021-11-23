@@ -51,7 +51,7 @@ bool Game::Start()
 	m_backGroundBGM->Init(1);
 	m_backGroundBGM->SetVolume(0.01f);
 	m_backGroundBGM->Play(true);
-
+	g_sceneLight->SetDirectionLight(0, Vector3(0.5f,-0.5f,0.5f), Vector3(2.5f,2.5f,2.5f));
 	return true;
 }
 

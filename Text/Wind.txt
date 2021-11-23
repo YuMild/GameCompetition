@@ -1,0 +1,89 @@
+void Player::Move() {
+
+	m_moveSpeed.x = 0.0f;
+	m_moveSpeed.z = 0.0f;
+
+	//キャラコン
+	Vector3 stickL;//スティックの入力
+	stickL.y = g_pad[0]->GetLStickYF();
+	stickL.x = g_pad[0]->GetLStickXF();
+	Vector3 cameraForward = g_camera3D->GetForward();//前後
+	Vector3 cameraRight = g_camera3D->GetRight();//左右
+	cameraForward.y = 0.0f;//上には動かないように
+	cameraRight.y = 0.0f;
+	cameraForward.Normalize();
+	cameraRight.Normalize();
+	m_moveSpeed += cameraForward * stickL.y * 300.0f;//前後
+	m_moveSpeed += cameraRight * stickL.x * 300.0f;//左右
+
+	if (m_characterController.IsOnGround()) {//キャラが地面に立っている時
+		m_moveSpeed.y = 0.0f;//上には動かない
+	}
+	else {
+		m_moveSpeed.y -= 2.5f;//落下スピード
+	}
+
+	m_position = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
+	m_render.SetPosition(m_position);
+
+	//通常攻撃
+
+	m_bulletCoolTimer += g_gameTime->GetFrameDeltaTime();
+
+	if (m_bulletCoolTimer > 1.0f) {//射出してから1秒
+		m_bulletMagazine = true;//クールタイムを非活性化
+	}
+
+	if (g_pad[0]->IsTrigger(enButtonLB1)) {//クールタイム非活性化時
+		if (m_bulletMagazine == true) {
+			m_bullet = NewGO<Bullet>(0, "bullet");//砲丸を生成
+			m_bulletCoolTimer = 0;//クールタイマーのリセット
+			m_bulletMagazine = false;//クールタイムを活性化
+		}
+		else if (m_bulletMagazine == false) {//クールタイム活性化時
+			m_dryFireSE = NewGO<SoundSource>(6);
+			m_dryFireSE->Init(6);
+			m_dryFireSE->Play(false);
+		}
+	}
+
+	//光魔法
+
+	m_shineCoolTimer += g_gameTime->GetFrameDeltaTime();
+
+	if (m_shineCoolTimer > 15.0f) {//射出してから1秒
+		m_shineMagazine = true;//クールタイムを非活性化
+	}
+
+	if (g_pad[0]->IsTrigger(enButtonY)) {//クールタイム非活性化時
+		if (m_shineMagazine == true) {
+			m_shine = NewGO<Shine>(0, "shine");//光魔法を生成
+			m_shineSE = NewGO<SoundSource>(7);
+			m_shineSE->Init(7);
+			m_shineSE->Play(false);
+			m_shineCoolTimer = 0;//クールタイマーのリセット
+			m_shineMagazine = false;//クールタイムを活性化
+		}
+	}
+
+	//風魔法
+
+	m_windCoolTimer += g_gameTime->GetFrameDeltaTime();
+
+	if (g_pad[0]->IsTrigger(enButtonX) && m_windMagazine == true) {
+		m_windCoolTimer = 0.0f;
+		m_windMagazine = false;
+	}
+	if (m_windMagazine == false) {
+		if(m_windCoolTimer < 0.2f) {
+			m_moveSpeed += cameraForward * 10000.0f;
+		}
+		else if (m_windCoolTimer >= 0.3f && m_windCoolTimer <= 0.5f) {
+			m_moveSpeed += cameraForward * 3000.0f;
+		}
+		else if (m_windCoolTimer >= 2.0f) {
+			m_windCoolTimer = 0.0f;
+			m_windMagazine = true;
+		}
+	}
+}

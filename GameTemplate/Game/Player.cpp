@@ -134,6 +134,7 @@ void Player::Magic() {
 	if (g_pad[0]->IsTrigger(enButtonRB1) && m_bulletMagazine == true)
 	{
 		m_bullet = NewGO<Bullet>(0, "bullet");//砲丸を生成
+		m_bullet->SetPosition(m_position);
 		m_bulletCoolTimer = 0;//クールタイマーのリセット
 		m_bulletMagazine = false;//クールタイムを活性化
 	}
@@ -209,18 +210,24 @@ void Player::ManageState() {
 	else {//上以外の時
 		m_playerState = 0;//立ちアニメーションを再生する
 	}
+
 	switch (m_hp) {
 	case 0:
-		if (m_1Damage == true) {
+	{
+		DeleteGO(this);
+	}
+		break;
+	case 1:
+		if (m_1Damage == true)
+		{
 			m_damage3SE = NewGO<SoundSource>(10);
 			m_damage3SE->Init(10);
 			m_damage3SE->SetVolume(0.1f);
 			m_damage3SE->Play(false);
 			m_1Damage = false;
-			DeleteGO(this);
 		}
 		break;
-	case 1:
+	case 2:
 		if (m_2Damage == true) {
 			m_damage2SE = NewGO<SoundSource>(9);
 			m_damage2SE->Init(9);
@@ -229,7 +236,7 @@ void Player::ManageState() {
 			m_2Damage = false;
 		}
 		break;
-	case 2:
+	case 3:
 		if (m_3Damage == true) {
 			m_damage1SE = NewGO<SoundSource>(8);
 			m_damage1SE->Init(8);
@@ -237,8 +244,6 @@ void Player::ManageState() {
 			m_damage1SE->Play(false);
 			m_3Damage = false;
 		}
-		break;
-	case 3:
 		break;
 	}
 }

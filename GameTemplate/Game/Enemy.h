@@ -41,6 +41,7 @@ private:
 	Vector3 m_forward;
 	Vector3 m_spawnDiff;
 	Vector3 m_fireDiff;
+	Vector3 m_windDiff;
 	Bullet* m_bullet;
 	Fire* m_fire;
 	Player* m_player;
