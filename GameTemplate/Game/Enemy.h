@@ -3,8 +3,8 @@
 class Bullet;
 class Player;
 class Fire;
+class Map;
 class Shine;
-class Ui;
 class Wind;
 
 class Enemy:public IGameObject
@@ -20,7 +20,7 @@ public:
 	~Enemy();
 	bool Start();
 	void Update();
-	void Map();
+	void MapMove();
 	void Render(RenderContext& rc);
 	void Move();
 	void Magic();
@@ -49,7 +49,7 @@ private:
 	Fire* m_fire;
 	Player* m_player;
 	Shine* m_shine;
-	Ui* m_ui;
+	Map* m_map;
 	Wind* m_wind;
 	SoundSource* m_enemyDeathSE;
 	int m_fireUnit;

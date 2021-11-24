@@ -50,7 +50,7 @@ void Fire::Update() {
 		m_position.y = 10.0f;
 		m_fireEF->SetPosition(m_position);
 	}
-	if (m_aliveTimer >= 2.5f) {//“–‚½‚è”»’è
+	if (m_aliveTimer >= 2.3f) {//“–‚½‚è”»’è
 		m_isMoving = true;
 	}
 	if (m_aliveTimer >= 3.0f) {//Á‹Ž

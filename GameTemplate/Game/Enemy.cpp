@@ -4,8 +4,8 @@
 #include "Bullet.h"
 #include "Player.h"
 #include "Fire.h"
+#include "Map.h"
 #include "Shine.h"
-#include "Ui.h"
 #include "Wind.h"
 #include <random>
 
@@ -25,7 +25,7 @@ bool Enemy::Start() {
 	m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
 	m_enemyMap.Init("Assets/sprite/EnemyMap.dds", 200.0f, 200.0f);
 
-	m_ui = FindGO<Ui>("ui");
+	m_map = FindGO<Map>("map");
 	m_player = FindGO<Player>("player");
 
 	m_render.SetPosition(m_position);
@@ -40,15 +40,15 @@ bool Enemy::Start() {
 
 void Enemy::Update() {
 	m_render.Update();
-	Map();
+	MapMove();
 	Move();
 	Magic();
 	Death();
 	PlayAnimation();
 }
 
-void Enemy::Map() {
-	m_enemyMap.SetPosition({ m_position.x * -0.085f + m_ui->GetMapCenterPosition().x,m_position.z * -0.085f + m_ui->GetMapCenterPosition().y,0.0f });
+void Enemy::MapMove() {
+	m_enemyMap.SetPosition({ m_position.x * -0.085f + m_map->GetMapCenterPosition().x,m_position.z * -0.085f + m_map->GetMapCenterPosition().y,0.0f });
 	m_enemyMap.Update();
 }
 

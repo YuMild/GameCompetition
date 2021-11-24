@@ -3,10 +3,12 @@
 #include "Level3DRender/LevelRender.h"
 
 class BackGround;
+class Clock;
 class Enemy;
 class GameCamera;
 class GameOver;
-class Ui;
+class Magic;
+class Map;
 class Player;
 
 class Game : public IGameObject
@@ -22,12 +24,14 @@ private:
 	ModelRender m_modelRender;
 	SoundSource* m_backGroundBGM;
 	BackGround* m_backGround;
+	Clock* m_clock;
 	GameCamera* m_gameCamera;
 	GameOver* m_gameOver;
-	Ui* m_ui;
+	Magic* m_magic;
+	Map* m_map;
 	Player* m_player;
 	SkyCube* m_skyCube;
-	
+
 	int m_levelFont = 0;
 
 	float m_timer = 0;

@@ -2,10 +2,12 @@
 #include "Game.h"
 
 #include "BackGround.h"
+#include "Clock.h"
 #include "Enemy.h"
 #include "GameCamera.h"
 #include "GameOver.h"
-#include "Ui.h"
+#include "Magic.h"
+#include "Map.h"
 #include "Player.h"
 
 #include "nature/SkyCube.h"
@@ -27,7 +29,6 @@ Game::~Game() {
 	}
 	DeleteGO(m_backGround);
 	DeleteGO(m_gameCamera);
-	DeleteGO(m_ui);
 	DeleteGO(m_player);
 	DeleteGO(m_skyCube);
 }
@@ -35,15 +36,17 @@ Game::~Game() {
 bool Game::Start()
 {
 	m_backGround = NewGO<BackGround>(0, "backGround");
+	m_clock = NewGO<Clock>(0, "clock");
 	m_gameCamera = NewGO<GameCamera>(0, "gameCamera");
-	m_ui = NewGO<Ui>(0, "ui");
+	m_magic = NewGO<Magic>(0, "magic");
+	m_map = NewGO<Map>(0, "map");
 	m_player = NewGO<Player>(0, "player");
 	m_skyCube = NewGO<SkyCube>(0, "skyCube");
 
 	//”wŒi
 	m_skyCube->SetScale({ 300.0f, 300.0f, 300.0f });
 	m_skyCube->SetType(enSkyCubeType_NightToon);
-	m_skyCube->SetLuminance(0.4);
+	m_skyCube->SetLuminance(0.5);
 
 	//‰¹º
 	g_soundEngine->ResistWaveFileBank(1, "Assets/sound/BackGround.wav");

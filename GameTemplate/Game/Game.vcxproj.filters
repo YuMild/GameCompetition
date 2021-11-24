@@ -1,45 +1,96 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="system">
-      <UniqueIdentifier>{22dd8095-74f9-46df-81a1-36675a040b1f}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="system\system.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="GameCamera.cpp" />
-    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameOver.cpp" />
-    <ClCompile Include="Ui.cpp" />
-    <ClCompile Include="Shine.cpp" />
-    <ClCompile Include="Wind.cpp" />
-    <ClCompile Include="Fire.cpp" />
+    <ClCompile Include="system\system.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>Magic</Filter>
+    </ClCompile>
+    <ClCompile Include="Shine.cpp">
+      <Filter>Magic</Filter>
+    </ClCompile>
+    <ClCompile Include="Wind.cpp">
+      <Filter>Magic</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Magic</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Stdafx</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock.cpp">
+      <Filter>Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Magic.cpp">
+      <Filter>Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Mp.cpp">
+      <Filter>Ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="system\system.h">
-      <Filter>system</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="GameCamera.h" />
-    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameOver.h" />
-    <ClInclude Include="Ui.h" />
-    <ClInclude Include="Shine.h" />
-    <ClInclude Include="Wind.h" />
-    <ClInclude Include="Fire.h" />
+    <ClInclude Include="Fire.h">
+      <Filter>Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="Shine.h">
+      <Filter>Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="Wind.h">
+      <Filter>Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="system\system.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Stdafx</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Magic.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Mp.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="System">
+      <UniqueIdentifier>{901852a2-d52d-446e-8ae5-05da6b8efad1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Magic">
+      <UniqueIdentifier>{2314ae36-1778-4aa6-8a8e-061447b9b0b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stdafx">
+      <UniqueIdentifier>{82fb7b04-ff26-4827-842f-969229c9ddd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui">
+      <UniqueIdentifier>{395c90b1-cfa2-488d-8b22-f420cb7b9ab3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

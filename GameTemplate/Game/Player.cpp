@@ -121,7 +121,7 @@ void Player::Move() {
 	if (m_brinkMagazine == false && m_brinkCoolTimer <= 0.8f) {
 		m_magicCirclePosition = m_position;
 		m_magicCirclePosition.y = 10.0f;
-		
+	
 		m_brinkEF->SetPosition(m_magicCirclePosition);
 	}
 
