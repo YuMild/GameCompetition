@@ -30,14 +30,13 @@ bool Wind::Start() {
 	EffectEngine::GetInstance()->ResistEffect(9, u"Assets/effect/MagicCircleWind.efk");
 	m_windMagicCircleEF = NewGO<EffectEmitter>(9);
 	m_windMagicCircleEF->Init(9);
-	m_windMagicCircleEF->SetScale(Vector3::One * 70.0f);
+	m_windMagicCircleEF->SetScale(Vector3::One * 50.0f);
 	m_windMagicCircleEF->Play();
 
 	g_soundEngine->ResistWaveFileBank(6, "Assets/sound/Wind.wav");
 
 	m_windSE = NewGO<SoundSource>(6);
 	m_windSE->Init(6);
-	m_windSE->SetVolume(0.1f);
 	m_windSE->Play(false);
 
 	return true;
@@ -47,7 +46,7 @@ void Wind::Update() {
 	
 	m_aliveTimer += g_gameTime->GetFrameDeltaTime();
 
-	if (m_aliveTimer < 0.5f) {
+	if (m_aliveTimer < 0.8f) {
 		m_magicCirclePosition = m_player->GetPosition();
 		m_magicCirclePosition.y = 10.0f;
 		m_windMagicCircleEF->SetPosition(m_magicCirclePosition);

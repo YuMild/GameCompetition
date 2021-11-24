@@ -38,7 +38,6 @@ bool Bullet::Start() {
 	//音声
 	m_gunShotSE = NewGO<SoundSource>(2);
 	m_gunShotSE->Init(2);
-	m_gunShotSE->SetVolume(0.1f);
 	m_gunShotSE->Play(false);
 
 	m_moveSpeed = m_forward * 20.0f;
@@ -66,7 +65,7 @@ void Bullet::Render(RenderContext& rc) {
 }
 
 void Bullet::Move() {
-	m_position += m_moveSpeed;//砲丸のスピード(重要)
+	m_position += m_moveSpeed;//砲丸のスピード
 	m_render.SetPosition(m_position);//描画する位置
 	m_render.Update();//描画の更新
 }

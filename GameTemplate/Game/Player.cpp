@@ -33,6 +33,8 @@ bool Player::Start() {
 	g_soundEngine->ResistWaveFileBank(9, "Assets/sound/damage2.wav");
 	g_soundEngine->ResistWaveFileBank(10, "Assets/sound/damage3.wav");
 
+	EffectEngine::GetInstance()->ResistEffect(6, u"Assets/effect/MagicCircleBrink.efk");
+
 	//描画
 	m_render.SetPosition(m_position);//初期値だから実は書かなくてもいい
 	m_position.x = 0.0f;//初期値だから実は書かなくてもいい
@@ -107,12 +109,20 @@ void Player::Move() {
 
 	//瞬間移動魔法
 	//クールタイム非活性化時
-	if (g_pad[0]->IsTrigger(enButtonLB1) /* && m_brinkMagazine == true*/) {
+	if (g_pad[0]->IsTrigger(enButtonLB1) && m_brinkMagazine == true) {
 		m_brinkCoolTimer = 0.0f;
 		m_brinkMagazine = false;
-		if (m_brinkCoolTimer < 0.3f) {
-			m_moveSpeed += m_cameraForward * 20000.0f;
-		}
+		m_moveSpeed += m_cameraForward * 20000.0f;
+		m_brinkEF = NewGO<EffectEmitter>(6);
+		m_brinkEF->Init(6);
+		m_brinkEF->SetScale(Vector3::One * 50.0f);
+		m_brinkEF->Play();
+	}
+	if (m_brinkMagazine == false && m_brinkCoolTimer <= 0.8f) {
+		m_magicCirclePosition = m_position;
+		m_magicCirclePosition.y = 10.0f;
+		
+		m_brinkEF->SetPosition(m_magicCirclePosition);
 	}
 
 	if (m_characterController.IsOnGround()) {//キャラが地面に立っている時
@@ -165,9 +175,6 @@ void Player::Magic() {
 		m_windCoolTimer = 0;//クールタイマーのリセット
 		m_windMagazine = false;//クールタイムを活性化
 	}
-
-
-	
 }
 
 void Player::Death() {
@@ -213,37 +220,35 @@ void Player::ManageState() {
 
 	switch (m_hp) {
 	case 0:
-	{
-		DeleteGO(this);
-	}
-		break;
-	case 1:
-		if (m_1Damage == true)
+		if (m_3Damage == true)
 		{
 			m_damage3SE = NewGO<SoundSource>(10);
 			m_damage3SE->Init(10);
-			m_damage3SE->SetVolume(0.1f);
+			//m_damage3SE->SetVolume(0.1f);
 			m_damage3SE->Play(false);
-			m_1Damage = false;
+			m_3Damage = false;
+			DeleteGO(this);
 		}
 		break;
-	case 2:
+	case 1:
 		if (m_2Damage == true) {
 			m_damage2SE = NewGO<SoundSource>(9);
 			m_damage2SE->Init(9);
-			m_damage2SE->SetVolume(0.1f);
+			//m_damage2SE->SetVolume(0.1f);
 			m_damage2SE->Play(false);
 			m_2Damage = false;
 		}
 		break;
-	case 3:
-		if (m_3Damage == true) {
+	case 2:
+		if (m_1Damage == true) {
 			m_damage1SE = NewGO<SoundSource>(8);
 			m_damage1SE->Init(8);
-			m_damage1SE->SetVolume(0.1f);
+			//m_damage1SE->SetVolume(0.1f);
 			m_damage1SE->Play(false);
-			m_3Damage = false;
+			m_1Damage = false;
 		}
+		break;
+	case 3:
 		break;
 	}
 }

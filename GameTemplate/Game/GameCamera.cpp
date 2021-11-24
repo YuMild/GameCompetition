@@ -18,7 +18,7 @@ bool GameCamera::Start()
 	//プレイヤーのインスタンスを探す
 	m_player = FindGO<Player>("player");
 
-	m_toCameraPos.Set(0.0f, 70.0f, 700.0f);
+	m_toCameraPos.Set(0.0f, 70.0f, 70.0f);
 
 	//ばねカメラの初期化
 	m_springCamera.Init(

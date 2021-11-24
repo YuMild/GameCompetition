@@ -17,6 +17,18 @@ public:
 	{
 		return m_forward;
 	}
+	bool GetFire() const {
+		return m_fireMagazine;
+	}
+	//bool GetWater() const {
+	//	return m_waterMagazine;
+	//}
+	bool GetWind() const {
+		return m_windMagazine;
+	}
+	bool GetShine() const {
+		return m_shineMagazine;
+	}
 	int GetHP() const {
 		return m_hp;
 	}
@@ -53,6 +65,7 @@ private:
 	Vector3 m_moveSpeed;
 	Vector3 m_forward;
 	Vector3 m_right;
+	Vector3 m_magicCirclePosition;
 	
 	EffectEmitter* m_brinkEF;
 

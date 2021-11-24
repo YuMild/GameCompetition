@@ -49,7 +49,6 @@ bool Game::Start()
 	g_soundEngine->ResistWaveFileBank(1, "Assets/sound/BackGround.wav");
 	m_backGroundBGM = NewGO<SoundSource>(1);
 	m_backGroundBGM->Init(1);
-	m_backGroundBGM->SetVolume(0.01f);
 	m_backGroundBGM->Play(true);
 	g_sceneLight->SetDirectionLight(0, Vector3(0.5f,-0.5f,0.5f), Vector3(2.5f,2.5f,2.5f));
 	return true;

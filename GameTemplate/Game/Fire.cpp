@@ -20,7 +20,6 @@ bool Fire::Start() {
 	g_soundEngine->ResistWaveFileBank(4, "Assets/sound/Fire.wav");
 	m_fireSE = NewGO<SoundSource>(4);
 	m_fireSE->Init(4);
-	m_fireSE->SetVolume(0.1);
 	m_fireSE->Play(false);
 	
 	EffectEngine::GetInstance()->ResistEffect(2,u"Assets/effect/Fire.efk");
@@ -32,7 +31,7 @@ bool Fire::Start() {
 	EffectEngine::GetInstance()->ResistEffect(7, u"Assets/effect/MagicCircleFire.efk");
 	m_fireMagicCircleEF = NewGO<EffectEmitter>(7);
 	m_fireMagicCircleEF->Init(7);
-	m_fireMagicCircleEF->SetScale(Vector3::One * 70.0f);
+	m_fireMagicCircleEF->SetScale(Vector3::One * 50.0f);
 	m_fireMagicCircleEF->Play();
 	
 	return true;
@@ -41,7 +40,7 @@ bool Fire::Start() {
 void Fire::Update() {
 	m_aliveTimer += g_gameTime->GetFrameDeltaTime();
 
-	if (m_aliveTimer <= 0.5f) {//–‚–@w
+	if (m_aliveTimer <= 0.8f) {//–‚–@w
 		m_magicCirclePosition = m_player->GetPosition();
 		m_magicCirclePosition.y = 10.0f;
 		m_fireMagicCircleEF->SetPosition(m_magicCirclePosition);

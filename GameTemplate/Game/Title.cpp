@@ -17,7 +17,6 @@ bool Title::Start() {
 	g_soundEngine->ResistWaveFileBank(0, "Assets/sound/Title.wav");
 	m_titleBGM = NewGO<SoundSource>(0);
 	m_titleBGM->Init(0);
-	m_titleBGM->SetVolume(0.1f);
 	m_titleBGM->Play(true);
 	return true;
 }

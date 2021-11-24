@@ -20,7 +20,6 @@ bool Shine::Start() {
 	g_soundEngine->ResistWaveFileBank(7, "Assets/sound/Shine.wav");
 	m_shineSE = NewGO<SoundSource>(7);
 	m_shineSE->Init(7);
-	m_shineSE->SetVolume(0.1f);
 	m_shineSE->Play(false);
 
 	//エフェクト
@@ -33,7 +32,7 @@ bool Shine::Start() {
 	EffectEngine::GetInstance()->ResistEffect(10, u"Assets/effect/MagicCircleShine.efk");
 	m_shineMagicCircleEF = NewGO<EffectEmitter>(10);
 	m_shineMagicCircleEF->Init(10);
-	m_shineMagicCircleEF->SetScale(Vector3::One * 70.0f);
+	m_shineMagicCircleEF->SetScale(Vector3::One * 50.0f);
 	m_shineMagicCircleEF->Play();
 
 	Quaternion quaternion;
@@ -52,12 +51,12 @@ void Shine::Update() {
 
 	m_aliveTimer += g_gameTime->GetFrameDeltaTime();
 
-	if (m_aliveTimer < 0.5f) {
+	if (m_aliveTimer < 0.8f) {
 		m_magicCirclePosition = m_player->GetPosition();
 		m_magicCirclePosition.y = 10.0f;
 		m_shineMagicCircleEF->SetPosition(m_magicCirclePosition);
 	}
-	if (m_aliveTimer > 5.0f) {
+	if (m_aliveTimer > 5.3f) {
 		DeleteGO(this);
 		m_aliveTimer = 0;
 		g_renderingEngine->SetIsGrayScale(false);

@@ -56,6 +56,8 @@ void Enemy::Move() {
 	m_target.Normalize();
 	m_moveSpeed = m_target * 10.0f;
 
+	g_k2Engine->DrawVector(m_target, m_player->GetPosition());
+
 	Vector3 direction = m_moveSpeed;
 	direction.y = 0.0f;
 	direction.Normalize();
@@ -77,11 +79,9 @@ void Enemy::Magic() {
 			DeleteGO(this);
 			m_enemyDeathSE = NewGO<SoundSource>(11);
 			m_enemyDeathSE->Init(11);
-			m_enemyDeathSE->SetVolume(0.1f);
 			m_enemyDeathSE->Play(false);
 		}
 	}
-			
 
 	//Œõ–‚–@”»’è
 	const auto& shineList = FindGOs<Shine>("shine");
