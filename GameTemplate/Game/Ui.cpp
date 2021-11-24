@@ -4,12 +4,6 @@
 #include "Enemy.h"
 #include "Player.h"
 
-namespace
-{
-	Vector3 MAP_CENTER_POSITION = Vector3(740.0f, 330.0f, 0.0f);
-	Vector3 CLOCK_CENTER_POSITION = Vector3(-740.0f, 330.0f, 0.0f);
-}
-
 Ui::Ui() {
 
 }
@@ -20,21 +14,30 @@ Ui::~Ui() {
 
 bool Ui::Start()
 {
+	m_mapCenterPosition = { 740.0f, 330.0f, 0.0f };
+	m_clockCenterPosition = { -740.0f, 330.0f, 0.0f };
+
 	//マップ
 	m_mapBackGround.Init("Assets/sprite/MapBackGround.DDS", 300.0f, 300.0f);
-	m_mapBackGround.SetPosition(MAP_CENTER_POSITION);
+	m_mapBackGround.SetPosition(m_mapCenterPosition);
 	m_mapBackGround.Update();
-	//m_mapGradation.Init("Assets/sprite/MapGradation.DDS", 300.0f, 300.0f);
-	//m_mapGradation.SetPosition(MAP_CENTER_POSITION);
-	//m_mapGradation.Update();
 	m_mapFrame.Init("Assets/sprite/MapFrame.DDS", 300.0f, 300.0f);
-	m_mapFrame.SetPosition(MAP_CENTER_POSITION);
+	m_mapFrame.SetPosition(m_mapCenterPosition);
 	m_mapFrame.Update();
 
 	//時計
-	m_clockBackGround.Init("Assets/sprite/MapGround.DDS", 300.0f, 300.0f);
-	m_clockBackGround.SetPosition(MAP_CENTER_POSITION);
+	m_clockBackGround.Init("Assets/sprite/ClockBackGround.DDS", 300.0f, 300.0f);
+	m_clockBackGround.SetPosition(m_clockCenterPosition);
 	m_clockBackGround.Update();
+	m_clockMinuteHund.Init("Assets/sprite/ClockMinuteHund.DDS", 300.0f, 300.0f);
+	m_clockMinuteHund.SetPosition(m_clockCenterPosition);
+	m_clockMinuteHund.Update();
+	m_clockSecondHund.Init("Assets/sprite/ClockSecondHund.DDS", 300.0f, 300.0f);
+	m_clockSecondHund.SetPosition(m_clockCenterPosition);
+	m_clockSecondHund.Update();
+	m_clockFrame.Init("Assets/sprite/ClockFrame.DDS", 300.0f, 300.0f);
+	m_clockFrame.SetPosition(m_clockCenterPosition);
+	m_clockFrame.Update();
 
 	//クールタイム
 	m_typeFireCoolTime.Init("Assets/sprite/TypeFireCoolTime.DDS", 120.0f, 120.0f);
@@ -74,19 +77,7 @@ bool Ui::Start()
 	m_mpBar.SetPosition(Vector3(-520.0f, -390.0f, 0.0f));
 	m_mpBar.Update();
 
-	/*const auto& enemyList = FindGOs<Enemy>("Enemy");
-	int size = enemyList.size();
-	for (int i = 0; i < size; i++) {
-		m_enemysMap[i].Init("Assets/sprite/EnemyMap.DDS");
-		m_enemyMapPosition = enemyList[i]->GetPosition();
-		m_enemysMap.SetPosition({ m_enemyMapPosition.x * -0.085f + MAP_CENTER_POSITION.x,m_enemyMapPosition.z * -0.085f + MAP_CENTER_POSITION.y,0.0f });
-		m_enemysMap.Update();
-	}*/
-
 	m_playerMap.Init("Assets/sprite/PlayerMap.DDS", 200.0f, 200.0f);
-
-	m_playerMap.SetIsDisplayRestrictionRightSide(true);
-
 	m_player = FindGO<Player>("player");
 
 	return true;
@@ -99,17 +90,26 @@ void Ui::Update()
 	m_mpBar.SetLimitedX(x);
 
 	m_playerMapPosition = m_player->GetPosition();
-	m_playerMap.SetPosition({ m_playerMapPosition.x * -0.085f + MAP_CENTER_POSITION.x,m_playerMapPosition.z * -0.085f + MAP_CENTER_POSITION.y,0.0f });
+	m_playerMap.SetPosition({ m_playerMapPosition.x * -0.085f + m_mapCenterPosition.x,m_playerMapPosition.z * -0.085f + m_mapCenterPosition.y,0.0f });
 
-	//Vector3 m_playerMapDirection = m_player->GetDirection()
-
+	const auto& enemyList = FindGOs<Enemy>("Enemy");
+	int enemySize = enemyList.size();
+	for (m_enemyUnit = 0; m_enemyUnit < enemySize; m_enemyUnit++) {
+		
+		//m_enemyMapPosition = enemyList[m_enemyUnit]->GetPosition();
+		//m_enemyMap.SetPosition({ m_enemyMapPosition.x * -0.085f + MAP_CENTER_POSITION.x,m_enemyMapPosition.z * -0.085f + MAP_CENTER_POSITION.y,0.0f });
+		//m_enemyMap.Update();
+	}
+	
 	//マップ
 	m_mapBackGround.Update();
 	m_playerMap.Update();
-	m_mapGradation.Update();
 	m_mapFrame.Update();
 	//時計
 	m_clockBackGround.Update();
+	m_clockMinuteHund.Update();
+	m_clockSecondHund.Update();
+	m_clockFrame.Update();
 	//魔法
 	m_typeFire.Update();
 	m_typeWater.Update();
@@ -130,10 +130,12 @@ void Ui::Render(RenderContext& rc)
 	m_mapBackGround.Draw(rc);//順番大事
 	//m_enemyMap.Draw(rc);
 	m_playerMap.Draw(rc);
-	m_mapGradation.Draw(rc);
 	m_mapFrame.Draw(rc);
 	//時計
 	m_clockBackGround.Draw(rc);
+	m_clockMinuteHund.Draw(rc);
+	m_clockSecondHund.Draw(rc);
+	m_clockFrame.Draw(rc);
 	//クールタイム
 	m_typeFireCoolTime.Draw(rc);
 	m_typeWaterCoolTime.Draw(rc);

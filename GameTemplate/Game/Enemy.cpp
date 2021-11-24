@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Fire.h"
 #include "Shine.h"
+#include "Ui.h"
 #include "Wind.h"
 #include <random>
 
@@ -22,14 +23,14 @@ bool Enemy::Start() {
 	m_animationClips[enAnimationClip_Walk].Load("Assets/animData/walk.tka");
 	m_animationClips[enAnimationClip_Walk].SetLoopFlag(true);
 	m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
-	m_enemyMap.Init("Assets/sprite/EnemyMap.dds", 10.0f, 10.0f);
-	m_enemyMap.SetPosition({ 540.0f,260.0f,0.0f });
+	m_enemyMap.Init("Assets/sprite/EnemyMap.dds", 200.0f, 200.0f);
 
+	m_ui = FindGO<Ui>("ui");
 	m_player = FindGO<Player>("player");
 
-	m_render.SetPosition(m_position);//場所
-	m_render.SetScale({ 0.5f,0.5f,0.5f });//サイズ
-	m_render.Update();//上の情報を更新する
+	m_render.SetPosition(m_position);
+	m_render.SetScale({ 0.5f,0.5f,0.5f });
+	m_render.Update();
 
 	//音声
 	g_soundEngine->ResistWaveFileBank(11, "Assets/sound/EnemyDeath.wav");
@@ -39,14 +40,20 @@ bool Enemy::Start() {
 
 void Enemy::Update() {
 	m_render.Update();
+	Map();
 	Move();
 	Magic();
 	Death();
 	PlayAnimation();
 }
 
-void Enemy::Render(RenderContext& rc) {
+void Enemy::Map() {
+	m_enemyMap.SetPosition({ m_position.x * -0.085f + m_ui->GetMapCenterPosition().x,m_position.z * -0.085f + m_ui->GetMapCenterPosition().y,0.0f });
+	m_enemyMap.Update();
+}
 
+void Enemy::Render(RenderContext& rc) {
+	m_enemyMap.Draw(rc);
 	m_render.Draw(rc);
 }
 
@@ -87,6 +94,7 @@ void Enemy::Magic() {
 	const auto& shineList = FindGOs<Shine>("shine");
 	int shineSize = shineList.size();
 	m_shineMoving = false;
+	//光魔法が活性化時、enemyが停止する
 	for (int i = 0; i < shineSize; i++) {
 		m_shineMoving = true;
 	}
@@ -95,7 +103,8 @@ void Enemy::Magic() {
 	const auto& windList = FindGOs<Wind>("wind");
 	int windSize = windList.size();
 	m_windMoving = false;
-	for (m_windUnit = 0; m_windUnit < windSize; m_windUnit++) {//風魔法が活性化時、風魔法の座標に向かう
+	//風魔法が活性化時、風魔法の座標に向かう
+	for (m_windUnit = 0; m_windUnit < windSize; m_windUnit++) {
 		m_windDiff = windList[m_windUnit]->GetPosition() - m_position;
 		m_target = windList[m_windUnit]->GetPosition() - m_position;
 		m_target.Normalize();
@@ -106,7 +115,7 @@ void Enemy::Magic() {
 		}
 	}
 
-	//光魔法が非活性化時、移動できる
+	//光魔法が非活性化時、動作する
 	if (m_shineMoving == false) {
 		m_position += m_moveSpeed * 15.0f / 30.0f;
 	}
@@ -130,6 +139,8 @@ void Enemy::Death() {
 }
 
 void Enemy::PlayAnimation() {
+
+	//魔法が活性化時、待機アニメーションを再生する
 	if (m_shineMoving == true || m_windMoving == true) {
 		m_render.PlayAnimation(enAnimationClip_Idle);
 	}

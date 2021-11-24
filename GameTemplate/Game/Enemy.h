@@ -4,6 +4,7 @@ class Bullet;
 class Player;
 class Fire;
 class Shine;
+class Ui;
 class Wind;
 
 class Enemy:public IGameObject
@@ -19,6 +20,7 @@ public:
 	~Enemy();
 	bool Start();
 	void Update();
+	void Map();
 	void Render(RenderContext& rc);
 	void Move();
 	void Magic();
@@ -35,6 +37,7 @@ private:
 	Quaternion m_rotation;
 	ModelRender m_render;
 	SpriteRender m_enemyMap;
+	Vector3 m_enemyMapPosition;
 	Vector3 m_target;
 	Vector3 m_position;
 	Vector3 m_moveSpeed;
@@ -46,6 +49,7 @@ private:
 	Fire* m_fire;
 	Player* m_player;
 	Shine* m_shine;
+	Ui* m_ui;
 	Wind* m_wind;
 	SoundSource* m_enemyDeathSE;
 	int m_fireUnit;
