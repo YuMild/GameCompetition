@@ -18,6 +18,11 @@ private:
 	SpriteRender m_mapGradation;
 	SpriteRender m_mapFrame;
 	SpriteRender m_playerMap;
+	//ŽžŒv
+	SpriteRender m_clockBackGround;
+	SpriteRender m_clockFrame;
+	SpriteRender m_clockMinuteHund;
+	SpriteRender m_clockSecondHund;
 
 	SpriteRender m_typeFire;
 	SpriteRender m_typeWater;

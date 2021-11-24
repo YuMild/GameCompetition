@@ -80,7 +80,7 @@ void Player::Timer() {
 	}
 
 	m_brinkCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_brinkCoolTimer > 7.0f) {//射出してから7秒
+	if (m_brinkCoolTimer > 5.0f) {//射出してから7秒
 		m_brinkMagazine = true;//クールタイムを非活性化
 	}
 }

@@ -97,7 +97,10 @@ private:
 	float m_windCoolTimer = 0;
 	float m_brinkCoolTimer = 0;
 
+	float m_mp = 100.0f;
+
 	int m_playerState = 0;
 	int m_hp = 3;
+	
 };
 
