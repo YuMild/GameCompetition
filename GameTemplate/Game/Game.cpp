@@ -8,6 +8,7 @@
 #include "GameOver.h"
 #include "Magic.h"
 #include "Map.h"
+#include "Mp.h"
 #include "Player.h"
 
 #include "nature/SkyCube.h"
@@ -28,7 +29,11 @@ Game::~Game() {
 		DeleteGO(enemys[i]);
 	}
 	DeleteGO(m_backGround);
+	DeleteGO(m_clock);
 	DeleteGO(m_gameCamera);
+	DeleteGO(m_magic);
+	DeleteGO(m_map);
+	DeleteGO(m_mp);
 	DeleteGO(m_player);
 	DeleteGO(m_skyCube);
 }
@@ -40,6 +45,7 @@ bool Game::Start()
 	m_gameCamera = NewGO<GameCamera>(0, "gameCamera");
 	m_magic = NewGO<Magic>(0, "magic");
 	m_map = NewGO<Map>(0, "map");
+	m_mp = NewGO<Mp>(0, "Mp");
 	m_player = NewGO<Player>(0, "player");
 	m_skyCube = NewGO<SkyCube>(0, "skyCube");
 
@@ -74,6 +80,7 @@ void Game::Update()
 
 	if (m_player->GetHP() == 0) {
 		m_gameOver = NewGO<GameOver>(0, "GameOver");
+		DeleteGO(this);
 	}
 
 	//—Ž‰ºŽ€–S//

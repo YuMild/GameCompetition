@@ -28,7 +28,7 @@ bool Map::Start() {
 
 void Map::Update() {
 	m_playerMapPosition = m_player->GetPosition();
-	m_playerMap.SetPosition({ m_playerMapPosition.x * -0.085f + m_mapCenterPosition.x,m_playerMapPosition.z * -0.085f + m_mapCenterPosition.y,0.0f });
+	m_playerMap.SetPosition({ m_playerMapPosition.x * -0.15f + m_mapCenterPosition.x,m_playerMapPosition.z * -0.15f + m_mapCenterPosition.y,0.0f });
 
 	m_mapBackGround.Update();
 	m_playerMap.Update();

@@ -17,8 +17,7 @@ bool GameCamera::Start()
 {
 	//プレイヤーのインスタンスを探す
 	m_player = FindGO<Player>("player");
-
-	m_toCameraPos.Set(0.0f, 70.0f, 70.0f);
+	m_toCameraPos.Set(0.0f, 70.0f, 100.0f);
 
 	//ばねカメラの初期化
 	m_springCamera.Init(
@@ -27,6 +26,9 @@ bool GameCamera::Start()
 		true,				//カメラと地形とのあたり判定を取るかどうかのフラグ。trueだとあたり判定を行う
 		5.0f				//カメラに設定される球体コリジョンの半径。第３引数がtrueの時に有効になる
 	);
+
+	m_toCameraPos.y -= 100.0f;
+
 	return true;
 }
 
@@ -34,10 +36,10 @@ void GameCamera::Update()
 {
 	//カメラを更新
 	//注視点を計算する
-	Vector3 target = m_player->GetPosition();
+	m_target = m_player->GetPosition();
 	//プレイヤの足元からちょっと上を注視点とする。
-	target.y += 70.0f;
-	target += g_camera3D->GetForward() * 20.0f;
+	m_target.y += 70.0f;
+	m_target += g_camera3D->GetForward() * 10.0f;
 
 	Vector3 toCameraPosOld = m_toCameraPos;
 	//パッドの入力を使ってカメラを回す
@@ -69,11 +71,11 @@ void GameCamera::Update()
 	}
 
 	//視点を計算する
-	Vector3 pos = target + m_toCameraPos;
+	Vector3 pos = m_target + m_toCameraPos;
 
 	//バネカメラに注視点と視点を設定する
 	m_springCamera.SetPosition(pos);
-	m_springCamera.SetTarget(target);
+	m_springCamera.SetTarget(m_target);
 
 	//カメラの更新
 	m_springCamera.Update();

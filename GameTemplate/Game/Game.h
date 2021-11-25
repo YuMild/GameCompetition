@@ -9,6 +9,7 @@ class GameCamera;
 class GameOver;
 class Magic;
 class Map;
+class Mp;
 class Player;
 
 class Game : public IGameObject
@@ -29,6 +30,7 @@ private:
 	GameOver* m_gameOver;
 	Magic* m_magic;
 	Map* m_map;
+	Mp* m_mp;
 	Player* m_player;
 	SkyCube* m_skyCube;
 

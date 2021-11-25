@@ -4,7 +4,7 @@
 #include "sound/SoundEngine.h"
 
 GameOver::GameOver() {
-   m_render.Init("Assets/sprite/GameCver.dds", 1280.0f, 720.0f);
+   m_render.Init("Assets/sprite/GameOver.dds", 1920.0f, 1080.0f);
 }
 
 GameOver::~GameOver()

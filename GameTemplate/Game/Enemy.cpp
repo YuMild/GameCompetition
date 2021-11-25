@@ -48,7 +48,7 @@ void Enemy::Update() {
 }
 
 void Enemy::MapMove() {
-	m_enemyMap.SetPosition({ m_position.x * -0.085f + m_map->GetMapCenterPosition().x,m_position.z * -0.085f + m_map->GetMapCenterPosition().y,0.0f });
+	m_enemyMap.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
 	m_enemyMap.Update();
 }
 

@@ -129,7 +129,7 @@ void Player::Move() {
 		m_moveSpeed.y = 0.0f;//上には動かない
 	}
 	else {
-		m_moveSpeed.y -= 2.5f;//落下スピード
+		m_moveSpeed.y -= 10.0f;//落下スピード
 	}
 
 	m_position = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
@@ -224,17 +224,14 @@ void Player::ManageState() {
 		{
 			m_damage3SE = NewGO<SoundSource>(10);
 			m_damage3SE->Init(10);
-			//m_damage3SE->SetVolume(0.1f);
 			m_damage3SE->Play(false);
 			m_3Damage = false;
-			DeleteGO(this);
 		}
 		break;
 	case 1:
 		if (m_2Damage == true) {
 			m_damage2SE = NewGO<SoundSource>(9);
 			m_damage2SE->Init(9);
-			//m_damage2SE->SetVolume(0.1f);
 			m_damage2SE->Play(false);
 			m_2Damage = false;
 		}
@@ -243,7 +240,6 @@ void Player::ManageState() {
 		if (m_1Damage == true) {
 			m_damage1SE = NewGO<SoundSource>(8);
 			m_damage1SE->Init(8);
-			//m_damage1SE->SetVolume(0.1f);
 			m_damage1SE->Play(false);
 			m_1Damage = false;
 		}
