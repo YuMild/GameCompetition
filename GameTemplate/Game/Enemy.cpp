@@ -53,8 +53,9 @@ void Enemy::MapMove() {
 }
 
 void Enemy::Render(RenderContext& rc) {
-	m_enemyMap.Draw(rc);
+	
 	m_render.Draw(rc);
+	m_enemyMap.Draw(rc);
 }
 
 void Enemy::Move() {

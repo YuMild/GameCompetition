@@ -22,6 +22,10 @@ public:
 	void Update();
 	void MapMove();
 	void Render(RenderContext& rc);
+	void DrawMap(RenderContext& rc)
+	{
+		//m_enemyMap.Draw(rc);
+	}
 	void Move();
 	void Magic();
 	void Death();

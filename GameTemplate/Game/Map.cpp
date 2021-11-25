@@ -2,6 +2,7 @@
 #include "Map.h"
 
 #include "Player.h"
+#include "Enemy.h"
 
 Map::Map() {
 }
@@ -37,6 +38,15 @@ void Map::Update() {
 
 void Map::Render(RenderContext& rc) {
 	m_mapBackGround.Draw(rc);
+
+	const auto& enemys = FindGOs<Enemy>("Enemy");
+	const int size = enemys.size();
+
+	for (int i = 0; i < size; i++)
+	{
+		enemys[i]->DrawMap(rc);
+	}
+
 	m_playerMap.Draw(rc);
 	m_mapFrame.Draw(rc);
 }
