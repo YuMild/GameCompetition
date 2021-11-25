@@ -8,6 +8,7 @@ class Enemy;
 class GameCamera;
 class GameOver;
 class Magic;
+class MagicPoint;
 class Map;
 class Mp;
 class Player;
@@ -19,16 +20,18 @@ public:
 	~Game();
 	bool Start();
 	void Update();
-	void Render(RenderContext& rc);
 	void EnemyGenerate();
+	void MagicPointGenerate();
 private:
 	ModelRender m_modelRender;
 	SoundSource* m_backGroundBGM;
+	Enemy* m_enemy;
 	BackGround* m_backGround;
 	Clock* m_clock;
 	GameCamera* m_gameCamera;
 	GameOver* m_gameOver;
 	Magic* m_magic;
+	MagicPoint* m_magicPoint;
 	Map* m_map;
 	Mp* m_mp;
 	Player* m_player;
@@ -38,6 +41,7 @@ private:
 
 	float m_timer = 0;
 	float m_level = 0;
-	float m_spawnTimer = 0;
+	float m_enemySpawnTimer = 0;
+	float m_magicSpawnTimer = 0;
 };
 

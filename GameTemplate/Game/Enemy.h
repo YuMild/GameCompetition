@@ -24,7 +24,11 @@ public:
 	void Render(RenderContext& rc);
 	void DrawMap(RenderContext& rc)
 	{
-		//m_enemyMap.Draw(rc);
+		if (m_isStart == false)
+		{
+			return;
+		}
+		m_enemyMap.Draw(rc);
 	}
 	void Move();
 	void Magic();
@@ -35,7 +39,6 @@ public:
 		enAnimationClip_Walk,
 		enAnimationClip_Num,
 	};
-
 private:
 	AnimationClip m_animationClips[enAnimationClip_Num];
 	Quaternion m_rotation;
@@ -61,5 +64,6 @@ private:
 	bool m_shineMoving = false;
 	bool m_windMoving = false;
 	float m_fireTimer = 0.0f;
+	bool m_isStart = false;
 };
 

@@ -7,6 +7,7 @@
 #include "GameCamera.h"
 #include "GameOver.h"
 #include "Magic.h"
+#include "MagicPoint.h"
 #include "Map.h"
 #include "Mp.h"
 #include "Player.h"
@@ -29,6 +30,7 @@ Game::~Game() {
 		DeleteGO(enemys[i]);
 	}
 	DeleteGO(m_backGround);
+	DeleteGO(m_backGroundBGM);
 	DeleteGO(m_clock);
 	DeleteGO(m_gameCamera);
 	DeleteGO(m_magic);
@@ -66,7 +68,8 @@ bool Game::Start()
 void Game::Update()
 {
 	m_timer += g_gameTime->GetFrameDeltaTime();
-	m_spawnTimer += g_gameTime->GetFrameDeltaTime();
+	m_enemySpawnTimer += g_gameTime->GetFrameDeltaTime();
+	m_magicSpawnTimer += g_gameTime->GetFrameDeltaTime();
 
 	//レベル
 	if (m_timer > 10.0f)
@@ -91,18 +94,17 @@ void Game::Update()
 	}
 
 	EnemyGenerate();
+	MagicPointGenerate();
 }
-
 
 void Game::EnemyGenerate()
 {
-	if (m_spawnTimer > 2.0f - m_level)
+	if (m_enemySpawnTimer > 2.0f - m_level)
 	{
-		constexpr int MIN = -400;//乱数の範囲最低値
-		constexpr int MAX = 400;//乱数の範囲最大値
+		constexpr int MIN = -500;//乱数の範囲最低値
+		constexpr int MAX = 500;//乱数の範囲最大値
 
 		Vector3 position;
-		//座標
 		random_device rd;
 		default_random_engine eng(rd());
 		uniform_int_distribution<int> distr(MIN, MAX);
@@ -115,13 +117,35 @@ void Game::EnemyGenerate()
 		{
 			return;
 		}
-		Enemy* enemy = NewGO<Enemy>(0, "Enemy");
-		enemy->SetPosition(position);
-		m_spawnTimer = 0.0f;
+		m_enemy = NewGO<Enemy>(0, "Enemy");
+		m_enemy->SetPosition(position);
+		m_enemySpawnTimer = 0.0f;
 	}
 }
 
-void Game::Render(RenderContext& rc)
+void Game::MagicPointGenerate()
 {
-	
+	if (m_magicSpawnTimer > 15.0f)
+	{
+		constexpr int MIN = -500;//乱数の範囲最低値
+		constexpr int MAX = 500;//乱数の範囲最大値
+
+		Vector3 position;
+		random_device rd;
+		default_random_engine eng(rd());
+		uniform_int_distribution<int> distr(MIN, MAX);
+
+		position.x = distr(eng);
+		position.z = distr(eng);
+		position.y = 0.0f;
+
+		if ((position - m_player->GetPosition()).Length() <= 20.0f)
+		{
+			return;
+		}
+		m_magicPoint = NewGO<MagicPoint>(0, "magicPoint");
+		m_magicPoint->SetPosition(position);
+		m_magicSpawnTimer = 0.0f;
+	}
 }
+

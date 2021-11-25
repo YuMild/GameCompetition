@@ -34,7 +34,7 @@ bool Enemy::Start() {
 
 	//‰¹º
 	g_soundEngine->ResistWaveFileBank(11, "Assets/sound/EnemyDeath.wav");
-
+	m_isStart = true;
 	return true;
 }
 
@@ -55,7 +55,6 @@ void Enemy::MapMove() {
 void Enemy::Render(RenderContext& rc) {
 	
 	m_render.Draw(rc);
-	m_enemyMap.Draw(rc);
 }
 
 void Enemy::Move() {
@@ -129,7 +128,8 @@ void Enemy::Death() {
 	int bulletSize = bulletList.size();
 	for (int i = 0; i < bulletSize; i++) {
 		Vector3 bulletdiff = bulletList[i]->GetPosition() - m_position;
-		if (bulletdiff.Length() <= 75.0f) {
+		if (bulletdiff.Length() <= 70.0f) {
+			DeleteGO(bulletList[i]);
 			DeleteGO(this);
 			m_enemyDeathSE = NewGO<SoundSource>(11);
 			m_enemyDeathSE->Init(11);

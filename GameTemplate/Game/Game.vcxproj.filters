@@ -41,6 +41,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Main</Filter>
     </ClCompile>
+    <ClCompile Include="MagicPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -80,6 +81,7 @@
     <ClInclude Include="Mp.h">
       <Filter>Ui</Filter>
     </ClInclude>
+    <ClInclude Include="MagicPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">

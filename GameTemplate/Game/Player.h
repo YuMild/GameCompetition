@@ -20,9 +20,6 @@ public:
 	bool GetFire() const {
 		return m_fireMagazine;
 	}
-	//bool GetWater() const {
-	//	return m_waterMagazine;
-	//}
 	bool GetWind() const {
 		return m_windMagazine;
 	}
