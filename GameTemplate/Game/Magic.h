@@ -1,5 +1,6 @@
 #pragma once
 
+class Mp;
 class Player;
 
 class Magic :public IGameObject
@@ -21,6 +22,7 @@ private:
 	SpriteRender m_typeWindCoolTime;
 	SpriteRender m_typeShineCoolTime;
 
+	Mp* m_mp;
 	Player* m_player;
 };
 

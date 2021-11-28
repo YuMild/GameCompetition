@@ -28,6 +28,7 @@ bool Map::Start() {
 }
 
 void Map::Update() {
+
 	m_playerMapPosition = m_player->GetPosition();
 	m_playerMap.SetPosition({ m_playerMapPosition.x * -0.15f + m_mapCenterPosition.x,m_playerMapPosition.z * -0.15f + m_mapCenterPosition.y,0.0f });
 
@@ -37,6 +38,7 @@ void Map::Update() {
 }
 
 void Map::Render(RenderContext& rc) {
+
 	m_mapBackGround.Draw(rc);
 
 	const auto& enemys = FindGOs<Enemy>("Enemy");

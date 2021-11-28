@@ -46,13 +46,12 @@ void Wind::Update() {
 	
 	m_aliveTimer += g_gameTime->GetFrameDeltaTime();
 
-	if (m_aliveTimer < 0.8f) {
+	if (m_aliveTimer < 0.7f) {
 		m_magicCirclePosition = m_player->GetPosition();
 		m_magicCirclePosition.y = 10.0f;
 		m_windMagicCircleEF->SetPosition(m_magicCirclePosition);
 	}
 	if (m_aliveTimer > 3.5f) {
 		DeleteGO(this);
-		m_aliveTimer = 0;
 	}
 } 

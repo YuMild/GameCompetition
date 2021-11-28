@@ -17,7 +17,8 @@ Enemy::~Enemy() {
 
 }
 
-bool Enemy::Start() {
+bool Enemy::Start()
+{
 	m_animationClips[enAnimationClip_Idle].Load("Assets/animData/idle.tka");
 	m_animationClips[enAnimationClip_Idle].SetLoopFlag(true);
 	m_animationClips[enAnimationClip_Walk].Load("Assets/animData/walk.tka");
@@ -38,7 +39,8 @@ bool Enemy::Start() {
 	return true;
 }
 
-void Enemy::Update() {
+void Enemy::Update() 
+{
 	m_render.Update();
 	MapMove();
 	Move();
@@ -47,18 +49,19 @@ void Enemy::Update() {
 	PlayAnimation();
 }
 
-void Enemy::MapMove() {
+void Enemy::MapMove()
+{
 	m_enemyMap.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
 	m_enemyMap.Update();
 }
 
-void Enemy::Render(RenderContext& rc) {
-	
+void Enemy::Render(RenderContext& rc)
+{
 	m_render.Draw(rc);
 }
 
-void Enemy::Move() {
-
+void Enemy::Move() 
+{
 	m_target = m_player->GetPosition() - m_position;
 	m_target.Normalize();
 	m_moveSpeed = m_target * 10.0f;
@@ -75,8 +78,8 @@ void Enemy::Move() {
 	m_render.SetRotation(quaternion);
 }
 
-void Enemy::Magic() {
-
+void Enemy::Magic()
+{
 	//炎魔法判定
 	const auto& fireList = FindGOs<Fire>("fire");
 	int fireSize = fireList.size();
@@ -121,15 +124,14 @@ void Enemy::Magic() {
 	}
 }
 
-void Enemy::Death() {
-
+void Enemy::Death()
+{
 	//敵の死亡判定
 	const auto& bulletList = FindGOs<Bullet>("bullet");
 	int bulletSize = bulletList.size();
 	for (int i = 0; i < bulletSize; i++) {
 		Vector3 bulletdiff = bulletList[i]->GetPosition() - m_position;
-		if (bulletdiff.Length() <= 70.0f) {
-			DeleteGO(bulletList[i]);
+		if (bulletdiff.Length() <= 75.0f) {
 			DeleteGO(this);
 			m_enemyDeathSE = NewGO<SoundSource>(11);
 			m_enemyDeathSE->Init(11);
@@ -139,8 +141,8 @@ void Enemy::Death() {
 	}
 }
 
-void Enemy::PlayAnimation() {
-
+void Enemy::PlayAnimation() 
+{
 	//魔法が活性化時、待機アニメーションを再生する
 	if (m_shineMoving == true || m_windMoving == true) {
 		m_render.PlayAnimation(enAnimationClip_Idle);

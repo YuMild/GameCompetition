@@ -10,6 +10,7 @@ class Wind;
 class Enemy:public IGameObject
 {
 public:
+
 	void SetPosition( Vector3 & position) {
 		m_position = position;
 	}
@@ -34,16 +35,23 @@ public:
 	void Magic();
 	void Death();
 	void PlayAnimation();
+
+	//アニメーション
 	enum EnAnimationClip {
 		enAnimationClip_Idle,
 		enAnimationClip_Walk,
 		enAnimationClip_Num,
 	};
+
 private:
+
+	//描画
 	AnimationClip m_animationClips[enAnimationClip_Num];
 	Quaternion m_rotation;
 	ModelRender m_render;
 	SpriteRender m_enemyMap;
+
+	//ベクトル
 	Vector3 m_enemyMapPosition;
 	Vector3 m_target;
 	Vector3 m_position;
@@ -52,18 +60,23 @@ private:
 	Vector3 m_spawnDiff;
 	Vector3 m_fireDiff;
 	Vector3 m_windDiff;
+
+	//参照
 	Bullet* m_bullet;
 	Fire* m_fire;
 	Player* m_player;
 	Shine* m_shine;
 	Map* m_map;
 	Wind* m_wind;
+
+	//音声
 	SoundSource* m_enemyDeathSE;
+
 	int m_fireUnit;
 	int m_windUnit;
 	bool m_shineMoving = false;
 	bool m_windMoving = false;
-	float m_fireTimer = 0.0f;
 	bool m_isStart = false;
+	float m_fireTimer = 0.0f;
 };
 

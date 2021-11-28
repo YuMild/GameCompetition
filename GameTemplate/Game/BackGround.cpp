@@ -2,6 +2,7 @@
 #include "BackGround.h"
 
 bool BackGround::Start() {
+
 	m_render.Init("Assets/modelData/stage.tkm");
 	m_render.SetScale({ 1.5f,1.5f,1.5f });
 
@@ -22,5 +23,6 @@ void BackGround::Update() {
 }
 
 void BackGround::Render(RenderContext& rc) {
+
 	m_render.Draw(rc);
 }

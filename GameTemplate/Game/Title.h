@@ -5,6 +5,7 @@
 class Title : public IGameObject
 {
 public:
+
 	Title();
 	~Title();
 	bool Start();
@@ -12,6 +13,7 @@ public:
 	void Render(RenderContext& rc);
 
 private:
+
 	//‰æ‘œ
 	SpriteRender m_render;
 	//‰¹º

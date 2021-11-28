@@ -4,18 +4,21 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "Fire.h"
+#include "Hp.h"
+#include "Mp.h"
 #include "Shine.h"
 #include "Wind.h"
 
-Player::Player() {
-
+Player::Player() 
+{
 }
 
-Player::~Player() {
-
+Player::~Player()
+{
 }
 
-bool Player::Start() {
+bool Player::Start() 
+{
 	//アニメーションファイル
 	m_animationClips[enAnimationClip_Idle].Load("Assets/animData/idle.tka");
 	m_animationClips[enAnimationClip_Idle].SetLoopFlag(true);
@@ -43,10 +46,13 @@ bool Player::Start() {
 	m_render.SetScale({ 0.7f,0.7f,0.7f });//初期値だから実は書かなくてもいい
 	m_render.Update();
 
+	m_mp = FindGO<Mp>("mp");
+
 	return true;
 }
 
-void Player::Update(){
+void Player::Update()
+{
 	Magic();
 	Move();
 	Timer();
@@ -57,41 +63,37 @@ void Player::Update(){
 	m_render.Update();
 }
 
-void Player::Timer() {
-
+void Player::Timer() 
+{
 	m_bulletCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_bulletCoolTimer > 1.0f) {//射出してから1秒
+	if (m_bulletCoolTimer > 1.0f && m_mp->GetMP() >= 1.0f) {//使用されてから1秒が経過していて且つMPが1以上の時
 		m_bulletMagazine = true;//クールタイムを非活性化
 	}
-
 	m_fireCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_fireCoolTimer > 10.0f) {//射出してから10秒
+	if (m_fireCoolTimer > 10.0f && m_mp->GetMP() >= 10.0f) {//使用されてから10秒が経過していて且つMPが10以上の時
 		m_fireMagazine = true;//クールタイムを非活性化
 	}
-
 	m_windCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_windCoolTimer > 15.0f) {//射出してから15秒
+	if (m_windCoolTimer > 15.0f && m_mp->GetMP() >= 15.0f) {//使用されてから15秒が経過していて且つMPが15以上の時
 		m_windMagazine = true;//クールタイムを非活性化
 	}
-
 	m_shineCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_shineCoolTimer > 20.0f) {//射出してから20秒
+	if (m_shineCoolTimer > 20.0f && m_mp->GetMP() >= 20.0f) {//使用されてから20秒が経過していて且つMPが20以上の時
 		m_shineMagazine = true;//クールタイムを非活性化
 	}
-
 	m_brinkCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_brinkCoolTimer > 5.0f) {//射出してから7秒
+	if (m_brinkCoolTimer > 5.0f && m_mp->GetMP() >= 5.0f) {//使用されてから5秒が経過していて且つMPが5以上の時
 		m_brinkMagazine = true;//クールタイムを非活性化
 	}
 }
 
-void Player::Render(RenderContext& rc) {
-
+void Player::Render(RenderContext& rc)
+{
 	m_render.Draw(rc);
 }
 
-void Player::Move() {
-
+void Player::Move()
+{
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 
@@ -117,11 +119,12 @@ void Player::Move() {
 		m_brinkEF->Init(6);
 		m_brinkEF->SetScale(Vector3::One * 50.0f);
 		m_brinkEF->Play();
+		m_mp->SubMp(2.0f);
 	}
-	if (m_brinkMagazine == false && m_brinkCoolTimer <= 0.8f) {
+
+	if (m_brinkMagazine == false && m_brinkCoolTimer <= 0.7f) {
 		m_magicCirclePosition = m_position;
 		m_magicCirclePosition.y = 10.0f;
-	
 		m_brinkEF->SetPosition(m_magicCirclePosition);
 	}
 
@@ -137,16 +140,17 @@ void Player::Move() {
 	ManageState();
 }
 
-void Player::Magic() {
-
+void Player::Magic()
+{
 	//通常攻撃
 	//クールタイム非活性化時
 	if (g_pad[0]->IsTrigger(enButtonRB1) && m_bulletMagazine == true)
 	{
 		m_bullet = NewGO<Bullet>(0, "bullet");//砲丸を生成
-		m_bullet->SetPosition(m_position);
+		m_bullet->SetPosition(m_position);//最初の1fだけステージ中央に判定が生じるのを防ぐ
 		m_bulletCoolTimer = 0;//クールタイマーのリセット
 		m_bulletMagazine = false;//クールタイムを活性化
+		m_mp->SubMp(1.0f);
 	}
 
 	//炎魔法
@@ -156,15 +160,7 @@ void Player::Magic() {
 		m_fire = NewGO<Fire>(0, "fire");//炎魔法を生成
 		m_fireCoolTimer = 0;//クールタイムのリセット
 		m_fireMagazine = false;//クールタイムを活性化
-	}
-
-	//光魔法
-	//クールタイム非活性化時
-	if (g_pad[0]->IsTrigger(enButtonY) && m_shineMagazine == true)
-	{
-		m_shine = NewGO<Shine>(0, "shine");//光魔法を生成
-		m_shineCoolTimer = 0;//クールタイマーのリセット
-		m_shineMagazine = false;//クールタイムを活性化
+		m_mp->SubMp(10.0f);
 	}
 
 	//風魔法
@@ -174,26 +170,35 @@ void Player::Magic() {
 		m_wind = NewGO<Wind>(0, "wind");//風魔法を生成
 		m_windCoolTimer = 0;//クールタイマーのリセット
 		m_windMagazine = false;//クールタイムを活性化
+		m_mp->SubMp(5.0f);
+	}
+
+	//光魔法
+	//クールタイム非活性化時
+	if (g_pad[0]->IsTrigger(enButtonY) && m_shineMagazine == true)
+	{
+		m_shine = NewGO<Shine>(0, "shine");//光魔法を生成
+		m_shineCoolTimer = 0;//クールタイマーのリセット
+		m_shineMagazine = false;//クールタイムを活性化
+		m_mp->SubMp(15.0f);
 	}
 }
 
-void Player::Death() {
-
-	//死亡判定//
+void Player::Death()
+{
+	//ダメージ判定
 	const auto& enemyList = FindGOs<Enemy>("Enemy");
 	for (auto enemy : enemyList)
 	{
 		Vector3 unitydiff = m_position - enemy->GetPosition();
 		if (unitydiff.Length() <= 10.0f) {
-			if (m_hp >= 1) {
-				m_hp -= 1;
-				DeleteGO(enemy);
-			}
+			m_hp->SubHP(1);
 		}
 	}
 }
 
-void Player::Rotation() {
+void Player::Rotation() 
+{
 	//プレイヤーの回転
 	Vector3 forward = g_camera3D->GetForward();
 	forward.y = 0.0f;
@@ -203,7 +208,8 @@ void Player::Rotation() {
 	m_render.SetRotation(quaternion);
 }
 
-void Player::ManageState() {
+void Player::ManageState() 
+{
 	//プレイヤーの状態
 	if (m_characterController.IsOnGround() == false) {
 		//プレイヤーが地面の上に立っていない時
@@ -218,7 +224,7 @@ void Player::ManageState() {
 		m_playerState = 0;//立ちアニメーションを再生する
 	}
 
-	switch (m_hp) {
+	/*switch (m_hp) {
 	case 0:
 		if (m_3Damage == true)
 		{
@@ -246,10 +252,11 @@ void Player::ManageState() {
 		break;
 	case 3:
 		break;
-	}
+	}*/
 }
 
-void Player::PlayAnimation() {
+void Player::PlayAnimation()
+{
 	//プレイヤーの状態の描画
 	switch (m_playerState) {
 	case 0://プレイヤーが地面の上で静止している時

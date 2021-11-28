@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Magic.h"
 
+#include "Mp.h"
 #include "Player.h"
 
 Magic::Magic() {
@@ -9,6 +10,8 @@ Magic::~Magic() {
 }
 
 bool Magic::Start() {
+
+	//魔法クールタイム
 	m_typeFireCoolTime.Init("Assets/sprite/TypeFireCoolTime.DDS", 120.0f, 120.0f);
 	m_typeFireCoolTime.SetPosition(Vector3(840.0f, -270.0f, 0.0f));
 	m_typeFireCoolTime.Update();
@@ -22,6 +25,7 @@ bool Magic::Start() {
 	m_typeShineCoolTime.SetPosition(Vector3(740.0f, -170.0f, 0.0f));
 	m_typeShineCoolTime.Update();
 
+	//魔法
 	m_typeFire.Init("Assets/sprite/TypeFire.DDS", 120.0f, 120.0f);
 	m_typeFire.SetPosition(Vector3(840.0f, -270.0f, 0.0f));
 	m_typeFire.Update();
@@ -35,6 +39,7 @@ bool Magic::Start() {
 	m_typeShine.SetPosition(Vector3(740.0f, -170.0f, 0.0f));
 	m_typeShine.Update();
 
+	//参照
 	m_player = FindGO<Player>("player");
 
 	return true;

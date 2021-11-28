@@ -27,7 +27,7 @@ bool GameCamera::Start()
 		5.0f				//カメラに設定される球体コリジョンの半径。第３引数がtrueの時に有効になる
 	);
 
-	m_toCameraPos.y -= 100.0f;
+	m_toCameraPos.y -= 50.0f;
 
 	return true;
 }
@@ -37,28 +37,31 @@ void GameCamera::Update()
 	//カメラを更新
 	//注視点を計算する
 	m_target = m_player->GetPosition();
+
 	//プレイヤの足元からちょっと上を注視点とする。
 	m_target.y += 70.0f;
 	m_target += g_camera3D->GetForward() * 10.0f;
 
 	Vector3 toCameraPosOld = m_toCameraPos;
+
 	//パッドの入力を使ってカメラを回す
 	float x = g_pad[0]->GetRStickXF();
 	float y = g_pad[0]->GetRStickYF();
+
 	//Y軸周りの回転
 	Quaternion qRot;
 	qRot.SetRotationDeg(Vector3::AxisY, 2.0f * x);
 	qRot.Apply(m_toCameraPos);
+
 	//X軸周りの回転
 	Vector3 axisX;
 	axisX.Cross(Vector3::AxisY, m_toCameraPos);
 	axisX.Normalize();
 	qRot.SetRotationDeg(axisX, 2.0f * y);
 	qRot.Apply(m_toCameraPos);
+
 	//カメラの回転の上限をチェックする
 	//注視点から視点までのベクトルを正規化する
-	//正規化すると、ベクトルの大きさが１になる
-	//大きさが１になるということは、ベクトルから強さがなくなり、方向のみの情報となるということ
 	Vector3 toPosDir = m_toCameraPos;
 	toPosDir.Normalize();
 	if (toPosDir.y < -0.5f) {

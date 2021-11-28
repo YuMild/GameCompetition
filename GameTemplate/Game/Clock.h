@@ -12,12 +12,15 @@ public:
 private:
 	SpriteRender m_clockBackGround;
 	SpriteRender m_clockFrame;
-	SpriteRender m_clockMinuteHund;
 	SpriteRender m_clockSecondHund;
+	SpriteRender m_clockMinuteHund;
 
 	Vector3 m_clockCenterPosition;
-	Quaternion m_rotation;
+	Quaternion m_secondHundRotation;
+	Quaternion m_minuteHundRotation;
 
 	float m_timer = 0;
+	float m_secondRotation = 0;
+	float m_minuteRotation = 0;
 };
 

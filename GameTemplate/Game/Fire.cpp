@@ -40,7 +40,7 @@ bool Fire::Start() {
 void Fire::Update() {
 	m_aliveTimer += g_gameTime->GetFrameDeltaTime();
 
-	if (m_aliveTimer <= 0.8f) {//ñÇñ@êw
+	if (m_aliveTimer <= 0.7f) {//ñÇñ@êw
 		m_magicCirclePosition = m_player->GetPosition();
 		m_magicCirclePosition.y = 10.0f;
 		m_fireMagicCircleEF->SetPosition(m_magicCirclePosition);
@@ -55,7 +55,6 @@ void Fire::Update() {
 	}
 	if (m_aliveTimer >= 3.0f) {//è¡ãé
 		DeleteGO(this);
-		m_aliveTimer = 0;
 	}
 }
 

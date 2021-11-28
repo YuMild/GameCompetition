@@ -42,6 +42,9 @@
       <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="MagicPoint.cpp" />
+    <ClCompile Include="Hp.cpp">
+      <Filter>Ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -82,6 +85,9 @@
       <Filter>Ui</Filter>
     </ClInclude>
     <ClInclude Include="MagicPoint.h" />
+    <ClInclude Include="Hp.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">

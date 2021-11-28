@@ -51,14 +51,13 @@ void Shine::Update() {
 
 	m_aliveTimer += g_gameTime->GetFrameDeltaTime();
 
-	if (m_aliveTimer < 0.8f) {
+	if (m_aliveTimer < 0.7f) {
 		m_magicCirclePosition = m_player->GetPosition();
 		m_magicCirclePosition.y = 10.0f;
 		m_shineMagicCircleEF->SetPosition(m_magicCirclePosition);
 	}
 	if (m_aliveTimer > 5.3f) {
 		DeleteGO(this);
-		m_aliveTimer = 0;
 		g_renderingEngine->SetIsGrayScale(false);
 	}
 }

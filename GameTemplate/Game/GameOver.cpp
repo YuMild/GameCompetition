@@ -3,13 +3,13 @@
 #include "Title.h"
 #include "sound/SoundEngine.h"
 
-GameOver::GameOver() {
+GameOver::GameOver()
+{
    m_render.Init("Assets/sprite/GameOver.dds", 1920.0f, 1080.0f);
 }
 
 GameOver::~GameOver()
 {
-
 }
 
 void GameOver::Update()
@@ -21,6 +21,7 @@ void GameOver::Update()
     }
 }
 
-void GameOver::Render(RenderContext& rc) {
+void GameOver::Render(RenderContext& rc) 
+{
    m_render.Draw(rc);
 }

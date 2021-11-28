@@ -30,14 +30,12 @@ bool Clock::Start() {
 }
 
 void Clock::Update() {
-	m_timer += g_gameTime->GetFrameDeltaTime();
-
-	m_clockMinuteHund.SetRotation(m_rotation);
 
 	m_clockBackGround.Update();
 	m_clockMinuteHund.Update();
 	m_clockSecondHund.Update();
 	m_clockFrame.Update();
+	Rotation();
 }
 
 void Clock::Render(RenderContext& rc) {
@@ -48,6 +46,11 @@ void Clock::Render(RenderContext& rc) {
 }
 
 void Clock::Rotation() {
-	
-	m_rotation.SetRotationDegZ(10.0f);
+	m_timer += g_gameTime->GetFrameDeltaTime();
+	m_secondRotation = m_timer * 30.0f;
+	m_minuteRotation = m_timer * 2.5;
+	m_secondHundRotation.SetRotationDegZ(-m_secondRotation);
+	m_minuteHundRotation.SetRotationDegZ(-m_minuteRotation);
+	m_clockSecondHund.SetRotation(m_secondHundRotation);
+	m_clockMinuteHund.SetRotation(m_minuteHundRotation);
 }

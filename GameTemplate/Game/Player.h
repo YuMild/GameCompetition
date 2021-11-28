@@ -3,12 +3,15 @@
 class Enemy;
 class Bullet;
 class Fire;
+class Hp;
+class Mp;
 class Shine;
 class Wind;
 
 class Player:public IGameObject
 {
 public:
+
 	Vector3 GetPosition() const
 	{
 		return m_position;
@@ -17,6 +20,8 @@ public:
 	{
 		return m_forward;
 	}
+
+	//動作確認
 	bool GetFire() const {
 		return m_fireMagazine;
 	}
@@ -26,9 +31,7 @@ public:
 	bool GetShine() const {
 		return m_shineMagazine;
 	}
-	int GetHP() const {
-		return m_hp;
-	}
+
 	Player();
 	~Player();
 	bool Start();
@@ -41,6 +44,8 @@ public:
 	void Rotation();
 	void ManageState();
 	void PlayAnimation();
+
+	//アニメーション
 	enum EnAnimationClip {
 		enAnimationClip_Idle,
 		enAnimationClip_Walk,
@@ -49,11 +54,14 @@ public:
 	};
 
 private:
+
+	//描画
 	AnimationClip m_animationClips[enAnimationClip_Num];
 	CharacterController m_characterController;
 	Quaternion m_rotation;
 	ModelRender m_render;
 
+	//ベクトル
 	Vector3 m_position;
 	Vector3 m_cameraPosition;
 	Vector3 m_cameraForward;
@@ -64,8 +72,10 @@ private:
 	Vector3 m_right;
 	Vector3 m_magicCirclePosition;
 	
+	//エフェクト
 	EffectEmitter* m_brinkEF;
 
+	//音声
 	SoundSource* m_dryFireSE;
 	SoundSource* m_enemyDeathSE;
 
@@ -73,8 +83,11 @@ private:
 	SoundSource* m_damage2SE;
 	SoundSource* m_damage3SE;
 
+	//参照
 	Bullet* m_bullet;
 	Fire* m_fire;
+	Hp* m_hp;
+	Mp* m_mp;
 	Shine* m_shine;
 	Wind* m_wind;
 
@@ -84,9 +97,9 @@ private:
 	bool m_windMagazine = true;
 	bool m_brinkMagazine = true;
 
-	bool m_1Damage = true;
-	bool m_2Damage = true;
-	bool m_3Damage = true;
+	//bool m_1Damage = true;
+	//bool m_2Damage = true;
+	//bool m_3Damage = true;
 
 	float m_bulletCoolTimer = 0;
 	float m_fireCoolTimer = 0;
@@ -94,10 +107,6 @@ private:
 	float m_windCoolTimer = 0;
 	float m_brinkCoolTimer = 0;
 
-	float m_mp = 100.0f;
-
 	int m_playerState = 0;
-	int m_hp = 3;
-	
 };
 
