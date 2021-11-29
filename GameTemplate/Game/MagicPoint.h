@@ -24,6 +24,9 @@ private:
 	EffectEmitter* m_magicPointEF;
 	EffectEmitter* m_magicPointDeleteEF;
 
+	//サウンド
+	SoundSource* m_magicPointSE;
+
 	//参照
 	Mp* m_mp;
 	Player* m_player;

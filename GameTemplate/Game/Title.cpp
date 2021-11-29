@@ -29,6 +29,7 @@ void Title::Update()
 	if (g_pad[0]->IsTrigger(enButtonStart))
 	{
 		NewGO<Game>(0, "game");
+		
 		DeleteGO(this);
 		DeleteGO(m_titleBGM);
 	}

@@ -9,6 +9,10 @@
 #include "Shine.h"
 #include "Wind.h"
 
+namespace {
+	
+}
+
 Player::Player() 
 {
 }
@@ -46,6 +50,7 @@ bool Player::Start()
 	m_render.SetScale({ 0.7f,0.7f,0.7f });//初期値だから実は書かなくてもいい
 	m_render.Update();
 
+	m_hp = FindGO<Hp>("hp");
 	m_mp = FindGO<Mp>("mp");
 
 	return true;
@@ -66,23 +71,23 @@ void Player::Update()
 void Player::Timer() 
 {
 	m_bulletCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_bulletCoolTimer > 1.0f && m_mp->GetMP() >= 1.0f) {//使用されてから1秒が経過していて且つMPが1以上の時
+	if (m_bulletCoolTimer > COOLTIME_BULLET && m_mp->GetMP() >= MP_BULLET) {//クールタイムが非活性化且つMPが必要以上の時
 		m_bulletMagazine = true;//クールタイムを非活性化
 	}
 	m_fireCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_fireCoolTimer > 10.0f && m_mp->GetMP() >= 10.0f) {//使用されてから10秒が経過していて且つMPが10以上の時
+	if (m_fireCoolTimer > COOLTIME_FIRE && m_mp->GetMP() >= MP_FIRE) {//クールタイムが非活性化且つMPが必要以上の時
 		m_fireMagazine = true;//クールタイムを非活性化
 	}
 	m_windCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_windCoolTimer > 15.0f && m_mp->GetMP() >= 15.0f) {//使用されてから15秒が経過していて且つMPが15以上の時
+	if (m_windCoolTimer > COOLTIME_WIND && m_mp->GetMP() >= MP_WIND) {//クールタイムが非活性化且つMPが必要以上の時
 		m_windMagazine = true;//クールタイムを非活性化
 	}
 	m_shineCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_shineCoolTimer > 20.0f && m_mp->GetMP() >= 20.0f) {//使用されてから20秒が経過していて且つMPが20以上の時
+	if (m_shineCoolTimer > COOLTIME_SHINE && m_mp->GetMP() >= MP_SHINE) {//クールタイムが非活性化且つMPが必要以上の時
 		m_shineMagazine = true;//クールタイムを非活性化
 	}
 	m_brinkCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_brinkCoolTimer > 5.0f && m_mp->GetMP() >= 5.0f) {//使用されてから5秒が経過していて且つMPが5以上の時
+	if (m_brinkCoolTimer > COOLTIME_BRINK && m_mp->GetMP() >= MP_BRINK) {//クールタイムが非活性化且つMPが必要以上の時
 		m_brinkMagazine = true;//クールタイムを非活性化
 	}
 }
@@ -106,8 +111,8 @@ void Player::Move()
 	m_cameraRight.y = 0.0f;
 	m_cameraForward.Normalize();
 	m_cameraRight.Normalize();
-	m_moveSpeed += m_cameraForward * lStickY * 150.0f;//前後
-	m_moveSpeed += m_cameraRight * lStickX * 150.0f;//左右
+	m_moveSpeed += m_cameraForward * lStickY * 170.0f;//前後
+	m_moveSpeed += m_cameraRight * lStickX * 170.0f;//左右
 
 	//瞬間移動魔法
 	//クールタイム非活性化時
@@ -119,7 +124,7 @@ void Player::Move()
 		m_brinkEF->Init(6);
 		m_brinkEF->SetScale(Vector3::One * 50.0f);
 		m_brinkEF->Play();
-		m_mp->SubMp(2.0f);
+		m_mp->SubMp(MP_BRINK);
 	}
 
 	if (m_brinkMagazine == false && m_brinkCoolTimer <= 0.7f) {
@@ -150,7 +155,7 @@ void Player::Magic()
 		m_bullet->SetPosition(m_position);//最初の1fだけステージ中央に判定が生じるのを防ぐ
 		m_bulletCoolTimer = 0;//クールタイマーのリセット
 		m_bulletMagazine = false;//クールタイムを活性化
-		m_mp->SubMp(1.0f);
+		m_mp->SubMp(MP_BULLET);
 	}
 
 	//炎魔法
@@ -160,7 +165,7 @@ void Player::Magic()
 		m_fire = NewGO<Fire>(0, "fire");//炎魔法を生成
 		m_fireCoolTimer = 0;//クールタイムのリセット
 		m_fireMagazine = false;//クールタイムを活性化
-		m_mp->SubMp(10.0f);
+		m_mp->SubMp(MP_FIRE);
 	}
 
 	//風魔法
@@ -170,7 +175,7 @@ void Player::Magic()
 		m_wind = NewGO<Wind>(0, "wind");//風魔法を生成
 		m_windCoolTimer = 0;//クールタイマーのリセット
 		m_windMagazine = false;//クールタイムを活性化
-		m_mp->SubMp(5.0f);
+		m_mp->SubMp(MP_WIND);
 	}
 
 	//光魔法
@@ -180,21 +185,13 @@ void Player::Magic()
 		m_shine = NewGO<Shine>(0, "shine");//光魔法を生成
 		m_shineCoolTimer = 0;//クールタイマーのリセット
 		m_shineMagazine = false;//クールタイムを活性化
-		m_mp->SubMp(15.0f);
+		m_mp->SubMp(MP_SHINE);
 	}
 }
 
 void Player::Death()
 {
-	//ダメージ判定
-	const auto& enemyList = FindGOs<Enemy>("Enemy");
-	for (auto enemy : enemyList)
-	{
-		Vector3 unitydiff = m_position - enemy->GetPosition();
-		if (unitydiff.Length() <= 10.0f) {
-			m_hp->SubHP(1);
-		}
-	}
+
 }
 
 void Player::Rotation() 
@@ -223,36 +220,6 @@ void Player::ManageState()
 	else {//上以外の時
 		m_playerState = 0;//立ちアニメーションを再生する
 	}
-
-	/*switch (m_hp) {
-	case 0:
-		if (m_3Damage == true)
-		{
-			m_damage3SE = NewGO<SoundSource>(10);
-			m_damage3SE->Init(10);
-			m_damage3SE->Play(false);
-			m_3Damage = false;
-		}
-		break;
-	case 1:
-		if (m_2Damage == true) {
-			m_damage2SE = NewGO<SoundSource>(9);
-			m_damage2SE->Init(9);
-			m_damage2SE->Play(false);
-			m_2Damage = false;
-		}
-		break;
-	case 2:
-		if (m_1Damage == true) {
-			m_damage1SE = NewGO<SoundSource>(8);
-			m_damage1SE->Init(8);
-			m_damage1SE->Play(false);
-			m_1Damage = false;
-		}
-		break;
-	case 3:
-		break;
-	}*/
 }
 
 void Player::PlayAnimation()

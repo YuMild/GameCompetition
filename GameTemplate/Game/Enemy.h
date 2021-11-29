@@ -3,6 +3,7 @@
 class Bullet;
 class Player;
 class Fire;
+class Hp;
 class Map;
 class Shine;
 class Wind;
@@ -64,6 +65,7 @@ private:
 	//éQè∆
 	Bullet* m_bullet;
 	Fire* m_fire;
+	Hp* m_hp;
 	Player* m_player;
 	Shine* m_shine;
 	Map* m_map;

@@ -23,14 +23,16 @@ bool Mp::Start()
 
 void Mp::Update() 
 {
+	Cut();
+	Heal();
+	m_mpBar.Update();
+	m_mpFrame.Update();
+}
+
+void Mp::Cut() {
 	float x = m_mp / 100;
 	m_mpBar.SetIsDisplayRestrictionRightSide(true);
 	m_mpBar.SetLimitedX(x);
-
-	Heal();
-
-	m_mpBar.Update();
-	m_mpFrame.Update();
 }
 
 void Mp::Heal()

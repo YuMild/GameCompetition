@@ -32,6 +32,29 @@ public:
 		return m_shineMagazine;
 	}
 
+	//クールタイマー
+	float GetFireCoolTime() const {
+		return m_fireCoolTimer;
+	}
+	float GetWindCoolTime() const {
+		return m_windCoolTimer;
+	}
+	float GetShineCoolTime() const {
+		return m_shineCoolTimer;
+	}
+
+	const float COOLTIME_BULLET = 1.0f;
+	const float COOLTIME_BRINK = 5.0f;
+	const float COOLTIME_FIRE = 10.0f;
+	const float COOLTIME_WIND = 10.0f;
+	const float COOLTIME_SHINE = 15.0f;
+
+	const float MP_BULLET = 1.0f;
+	const float MP_BRINK = 5.0f;
+	const float MP_FIRE = 10.0f;
+	const float MP_WIND = 10.0f;
+	const float MP_SHINE = 15.0f;
+
 	Player();
 	~Player();
 	bool Start();
@@ -79,10 +102,6 @@ private:
 	SoundSource* m_dryFireSE;
 	SoundSource* m_enemyDeathSE;
 
-	SoundSource* m_damage1SE;
-	SoundSource* m_damage2SE;
-	SoundSource* m_damage3SE;
-
 	//参照
 	Bullet* m_bullet;
 	Fire* m_fire;
@@ -97,15 +116,11 @@ private:
 	bool m_windMagazine = true;
 	bool m_brinkMagazine = true;
 
-	//bool m_1Damage = true;
-	//bool m_2Damage = true;
-	//bool m_3Damage = true;
-
-	float m_bulletCoolTimer = 0;
-	float m_fireCoolTimer = 0;
-	float m_shineCoolTimer = 0;
-	float m_windCoolTimer = 0;
-	float m_brinkCoolTimer = 0;
+	float m_bulletCoolTimer = 1.0f;
+	float m_fireCoolTimer = 10.0f;
+	float m_windCoolTimer = 15.0f;
+	float m_shineCoolTimer = 20.0f;
+	float m_brinkCoolTimer = 5.0f;
 
 	int m_playerState = 0;
 };

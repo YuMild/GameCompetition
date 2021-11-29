@@ -4,6 +4,7 @@
 #include "Bullet.h"
 #include "Player.h"
 #include "Fire.h"
+#include "Hp.h"
 #include "Map.h"
 #include "Shine.h"
 #include "Wind.h"
@@ -26,6 +27,7 @@ bool Enemy::Start()
 	m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
 	m_enemyMap.Init("Assets/sprite/EnemyMap.dds", 200.0f, 200.0f);
 
+	m_hp = FindGO<Hp>("hp");
 	m_map = FindGO<Map>("map");
 	m_player = FindGO<Player>("player");
 
@@ -106,6 +108,7 @@ void Enemy::Magic()
 	const auto& windList = FindGOs<Wind>("wind");
 	int windSize = windList.size();
 	m_windMoving = false;
+
 	//風魔法が活性化時、風魔法の座標に向かう
 	for (m_windUnit = 0; m_windUnit < windSize; m_windUnit++) {
 		m_windDiff = windList[m_windUnit]->GetPosition() - m_position;
@@ -135,10 +138,15 @@ void Enemy::Death()
 			DeleteGO(this);
 			m_enemyDeathSE = NewGO<SoundSource>(11);
 			m_enemyDeathSE->Init(11);
-			m_enemyDeathSE->SetVolume(0.1f);
 			m_enemyDeathSE->Play(false);
 		}
 	}
+
+	Vector3 unitydiff = m_player->GetPosition() - m_position;
+		if (unitydiff.Length() <= 10.0f) {
+			DeleteGO(this);
+			m_hp->SubHP(1);
+		}
 }
 
 void Enemy::PlayAnimation() 

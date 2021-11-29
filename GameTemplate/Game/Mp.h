@@ -24,6 +24,7 @@ public:
 	~Mp();
 	bool Start();
 	void Update();
+	void Cut();
 	void Heal();
 	void Render(RenderContext& rc);
 

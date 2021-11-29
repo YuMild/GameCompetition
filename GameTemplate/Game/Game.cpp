@@ -66,10 +66,12 @@ bool Game::Start()
 	g_soundEngine->ResistWaveFileBank(1, "Assets/sound/BackGround.wav");
 	m_backGroundBGM = NewGO<SoundSource>(1);
 	m_backGroundBGM->Init(1);
+	m_backGroundBGM->SetVolume(0.5f);
 	m_backGroundBGM->Play(true);
 	g_sceneLight->SetDirectionLight(0, Vector3(0.5f,-0.5f,0.5f), Vector3(2.5f,2.5f,2.5f));
 	
 	m_hp = FindGO<Hp>("hp");
+	m_player = FindGO<Player>("player");
 
 	return true;
 }
@@ -119,7 +121,7 @@ void Game::EnemyGenerate()
 		position.z = distr(eng);
 		position.y = 0.0f;
 
-		if ((position - m_player->GetPosition()).Length() <= 50.0f)
+		if ((position - m_player->GetPosition()).Length() <= 100.0f)
 		{
 			return;
 		}

@@ -14,7 +14,6 @@ Fire::~Fire() {
 bool Fire::Start() {
 
 	m_player = FindGO<Player>("player");
-	
 
 	//‰¹º
 	g_soundEngine->ResistWaveFileBank(4, "Assets/sound/Fire.wav");

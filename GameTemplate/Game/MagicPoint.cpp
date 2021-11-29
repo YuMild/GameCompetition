@@ -21,6 +21,8 @@ bool MagicPoint::Start()
 	m_magicPointEF->Play();
 
 	EffectEngine::GetInstance()->ResistEffect(12, u"Assets/effect/MagicPointDelete.efk");
+
+	g_soundEngine->ResistWaveFileBank(12, "Assets/sound/MagicPoint.wav");
 	
 	m_mp = FindGO<Mp>("mp");
 	m_player = FindGO<Player>("player");
@@ -38,6 +40,7 @@ void MagicPoint::Update()
 	m_diff = m_player->GetPosition() - m_position;
 
 	if (m_aliveTimer > 5.0f) {
+		//エフェクト再生
 		m_magicPointDeleteEF = NewGO<EffectEmitter>(12);
 		m_magicPointDeleteEF->Init(12);
 		m_magicPointDeleteEF->SetScale(Vector3::One * 50.0f);
@@ -47,12 +50,18 @@ void MagicPoint::Update()
 		DeleteGO(this);
 	}
 	if (m_diff.Length() <= 70.0f) {
+		//エフェクト再生
 		m_magicPointDeleteEF = NewGO<EffectEmitter>(12);
 		m_magicPointDeleteEF->Init(12);
 		m_magicPointDeleteEF->SetScale(Vector3::One * 50.0f);
 		m_magicPointDeleteEF->Play();
 		m_magicPointDeleteEF->SetPosition(m_position);
+		//音声再生
+		m_magicPointSE = NewGO<SoundSource>(12);
+		m_magicPointSE->Init(12);
+		m_magicPointSE->Play(false);
 		m_magicPointEF->Stop();
+		//MP減算
 		m_mp->AddMp(10.0f);
 		DeleteGO(this);
 	}

@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "Map.h"
 
-#include "Player.h"
 #include "Enemy.h"
+#include "MagicPoint.h"
+#include "Player.h"
 
 Map::Map() {
 }
@@ -32,6 +33,10 @@ void Map::Update() {
 	m_playerMapPosition = m_player->GetPosition();
 	m_playerMap.SetPosition({ m_playerMapPosition.x * -0.15f + m_mapCenterPosition.x,m_playerMapPosition.z * -0.15f + m_mapCenterPosition.y,0.0f });
 
+	Quaternion playerRotation;
+	playerRotation.SetRotationZ(atan2(g_camera3D->GetForward().x, -g_camera3D->GetForward().z));
+	m_playerMap.SetRotation(playerRotation);
+
 	m_mapBackGround.Update();
 	m_playerMap.Update();
 	m_mapFrame.Update();
@@ -48,6 +53,14 @@ void Map::Render(RenderContext& rc) {
 	{
 		enemys[i]->DrawMap(rc);
 	}
+
+	//const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");
+	//const int size = magicPoints.size();
+
+	//for (int i = 0; i < size; i++) 
+	//{
+	//	magicPoints[i]->Draw
+	//}
 
 	m_playerMap.Draw(rc);
 	m_mapFrame.Draw(rc);
