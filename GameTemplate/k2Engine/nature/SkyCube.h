@@ -40,17 +40,25 @@ namespace nsK2Engine {
 			m_isDirty = true;
 		}
 
+		void SetRotation(const Vector3& rotation)
+		{
+			m_rotation = rotation;
+			m_isDirty = true;
+		}
+
 		void SetScale(const Vector3& scale)
 		{
 			m_scale = scale;
 			m_isDirty = true;
 		}
+
 		void SetScale(const float scale)
 		{
 			m_scale = g_vec3One;
 			m_scale.Scale(scale);
 			m_isDirty = true;
 		}
+
 		/// <summary>
 		/// スカイキューブのタイプを設定。
 		/// </summary>
@@ -59,14 +67,17 @@ namespace nsK2Engine {
 		{
 			m_type = type;
 		}
+
 		/// <summary>
 		/// 明るさを設定。
 		/// </summary>
 		/// <param name="lum"></param>
+		
 		void SetLuminance(float lum)
 		{
 			m_luminance = lum;
 		}
+
 		const wchar_t* GetTextureFilePath()
 		{
 			return m_textureFilePaths[m_type];
@@ -77,6 +88,7 @@ namespace nsK2Engine {
 		const wchar_t* m_textureFilePaths[enSkyCubeType_Num];
 		Vector3 m_position = g_vec3Zero;
 		Vector3 m_scale = g_vec3One * 1000.0f;
+		Vector3 m_rotation;
 		float m_luminance = 3.8f;
 		bool m_isDirty = false;
 		EnSkyCubeType m_type = enSkyCubeType_Day;

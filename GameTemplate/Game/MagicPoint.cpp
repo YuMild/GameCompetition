@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "MagicPoint.h"
 
+#include "Map.h"
 #include "Mp.h"
 #include "Player.h"
 
@@ -14,6 +15,8 @@ MagicPoint::~MagicPoint()
 
 bool MagicPoint::Start()
 {
+	m_magicPointMap.Init("Assets/sprite/MagicPoint.DDS",30.0f,30.0f);
+
 	EffectEngine::GetInstance()->ResistEffect(11, u"Assets/effect/MagicPoint.efk");
 	m_magicPointEF = NewGO<EffectEmitter>(11);
 	m_magicPointEF->Init(11);
@@ -24,6 +27,7 @@ bool MagicPoint::Start()
 
 	g_soundEngine->ResistWaveFileBank(12, "Assets/sound/MagicPoint.wav");
 	
+	m_map = FindGO<Map>("map");
 	m_mp = FindGO<Mp>("mp");
 	m_player = FindGO<Player>("player");
 
@@ -65,4 +69,11 @@ void MagicPoint::Update()
 		m_mp->AddMp(10.0f);
 		DeleteGO(this);
 	}
+	MapMove();
+}
+
+void MagicPoint::MapMove()
+{
+	m_magicPointMap.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
+	m_magicPointMap.Update();
 }

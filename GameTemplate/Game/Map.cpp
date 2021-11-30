@@ -47,20 +47,20 @@ void Map::Render(RenderContext& rc) {
 	m_mapBackGround.Draw(rc);
 
 	const auto& enemys = FindGOs<Enemy>("Enemy");
-	const int size = enemys.size();
+	const int enemySize = enemys.size();
 
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < enemySize; i++)
 	{
-		enemys[i]->DrawMap(rc);
+		enemys[i]->EnemyMap(rc);
 	}
 
-	//const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");
-	//const int size = magicPoints.size();
+	const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");
+	const int magicSize = magicPoints.size();
 
-	//for (int i = 0; i < size; i++) 
-	//{
-	//	magicPoints[i]->Draw
-	//}
+	for (int i = 0; i < magicSize; i++)
+	{
+		magicPoints[i]->MagicPointMap(rc);
+	}
 
 	m_playerMap.Draw(rc);
 	m_mapFrame.Draw(rc);

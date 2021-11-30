@@ -1,5 +1,6 @@
 #pragma once
 
+class Map;
 class Mp;
 class Player;
 class MagicPoint :public IGameObject
@@ -13,8 +14,19 @@ public:
 	~MagicPoint();
 	bool Start();
 	void Update();
+	void MapMove();
+	void MagicPointMap(RenderContext& rc)
+	{
+		if (m_isStart == false)
+		{
+			return;
+		}
+		m_magicPointMap.Draw(rc);
+	}
 
 private:
+
+	SpriteRender m_magicPointMap;
 
 	//ベクトル
 	Vector3 m_position;
@@ -28,6 +40,7 @@ private:
 	SoundSource* m_magicPointSE;
 
 	//参照
+	Map* m_map;
 	Mp* m_mp;
 	Player* m_player;
 

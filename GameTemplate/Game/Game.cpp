@@ -79,7 +79,7 @@ bool Game::Start()
 void Game::Update()
 {
 	//ƒŒƒxƒ‹
-	if (m_timer > 10.0f)
+	if (m_timer > 12.0f)
 	{
 		if (m_level <= 1.5) {
 			m_level += 0.1f;

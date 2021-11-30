@@ -24,7 +24,7 @@ public:
 	void Update();
 	void MapMove();
 	void Render(RenderContext& rc);
-	void DrawMap(RenderContext& rc)
+	void EnemyMap(RenderContext& rc)
 	{
 		if (m_isStart == false)
 		{
