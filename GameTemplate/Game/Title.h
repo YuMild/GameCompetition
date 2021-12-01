@@ -2,6 +2,7 @@
 
 #include "sound/SoundSource.h"
 
+class Loading;
 class TitleUi;
 
 class Title : public IGameObject
@@ -17,9 +18,14 @@ public:
 private:
 
 	//âÊëú
-	SpriteRender m_render;
+	SpriteRender m_titleRender;
+	SpriteRender m_pressButton;
 	//âπê∫
 	SoundSource* m_titleBGM;
 
+	Loading* m_loading;
 	TitleUi* m_titleUi;
+
+	bool m_isWaitFadeOut = false;
+	float m_alpha = 0.0f;
 };

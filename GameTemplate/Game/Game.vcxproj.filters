@@ -48,6 +48,7 @@
     <ClCompile Include="TitleUi.cpp">
       <Filter>Ui</Filter>
     </ClCompile>
+    <ClCompile Include="Loading.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -94,6 +95,7 @@
     <ClInclude Include="TitleUi.h">
       <Filter>Ui</Filter>
     </ClInclude>
+    <ClInclude Include="Loading.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">
