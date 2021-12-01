@@ -2,6 +2,8 @@
 
 #include "sound/SoundSource.h"
 
+class TitleUi;
+
 class Title : public IGameObject
 {
 public:
@@ -18,4 +20,6 @@ private:
 	SpriteRender m_render;
 	//âπê∫
 	SoundSource* m_titleBGM;
+
+	TitleUi* m_titleUi;
 };

@@ -45,6 +45,9 @@
     <ClCompile Include="Hp.cpp">
       <Filter>Ui</Filter>
     </ClCompile>
+    <ClCompile Include="TitleUi.cpp">
+      <Filter>Ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -86,6 +89,9 @@
     </ClInclude>
     <ClInclude Include="MagicPoint.h" />
     <ClInclude Include="Hp.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleUi.h">
       <Filter>Ui</Filter>
     </ClInclude>
   </ItemGroup>

@@ -29,16 +29,16 @@ bool Magic::Start()
 	m_typeShineCoolTime.Update();
 
 	//–‚–@
-	m_typeFire.Init("Assets/sprite/TypeFire.DDS", 110.0f, 110.0f);
+	m_typeFire.Init("Assets/sprite/TypeFireInside.DDS", 110.0f, 110.0f);
 	m_typeFire.SetPosition(Vector3(840.0f, -270.0f, 0.0f));
 	m_typeFire.Update();
-	m_typeWater.Init("Assets/sprite/TypeWater.DDS", 110.0f, 110.0f);
+	m_typeWater.Init("Assets/sprite/TypeWaterInside.DDS", 110.0f, 110.0f);
 	m_typeWater.SetPosition(Vector3(640.0f, -270.0f, 0.0f));
 	m_typeWater.Update();
-	m_typeWind.Init("Assets/sprite/TypeWind.DDS", 110.0f, 110.0f);
+	m_typeWind.Init("Assets/sprite/TypeWindInside.DDS", 110.0f, 110.0f);
 	m_typeWind.SetPosition(Vector3(740.0f, -370.0f, 0.0f));
 	m_typeWind.Update();
-	m_typeShine.Init("Assets/sprite/TypeShine.DDS", 110.0f, 110.0f);
+	m_typeShine.Init("Assets/sprite/TypeShineInside.DDS", 110.0f, 110.0f);
 	m_typeShine.SetPosition(Vector3(740.0f, -170.0f, 0.0f));
 	m_typeShine.Update();
 

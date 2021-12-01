@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Title.h"
+
 #include "Game.h"
+#include "TitleUi.h"
 
 Title::Title()
 {
@@ -20,6 +22,10 @@ bool Title::Start()
 	m_titleBGM = NewGO<SoundSource>(0);
 	m_titleBGM->Init(0);
 	m_titleBGM->Play(true);
+
+	//m_titleUi = NewGO<TitleUi>(0,"titleUi");
+	//m_titleUi->SetPosition(Vector3{ 300.0f,-300.0f,0.0f });
+	//m_titleUi->SetScale(0.1f);
 
 	return true;
 }

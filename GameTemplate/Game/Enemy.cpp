@@ -24,8 +24,7 @@ bool Enemy::Start()
 	m_animationClips[enAnimationClip_Idle].SetLoopFlag(true);
 	m_animationClips[enAnimationClip_Walk].Load("Assets/animData/walk.tka");
 	m_animationClips[enAnimationClip_Walk].SetLoopFlag(true);
-	m_render.Init("Assets/modelData/box.tkm");
-	//m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
+	m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
 	m_enemyMap.Init("Assets/sprite/EnemyMap.dds", 200.0f, 200.0f);
 
 	m_hp = FindGO<Hp>("hp");
@@ -49,7 +48,7 @@ void Enemy::Update()
 	Move();
 	Magic();
 	Death();
-	//PlayAnimation();
+	PlayAnimation();
 }
 
 void Enemy::MapMove()
@@ -150,7 +149,7 @@ void Enemy::Death()
 		}
 }
 
-/*void Enemy::PlayAnimation()
+void Enemy::PlayAnimation()
 {
 	//魔法が活性化時、待機アニメーションを再生する
 	if (m_shineMoving == true || m_windMoving == true) {
@@ -160,4 +159,4 @@ void Enemy::Death()
 	{
 		m_render.PlayAnimation(enAnimationClip_Walk);
 	}
-}*/
+}
