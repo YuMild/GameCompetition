@@ -305,6 +305,10 @@ namespace nsK2Engine {
 
         // 2D描画
         Render2D(rc);
+        
+        //2Dエフェクト
+        EffectEngine::GetInstance()->Update2D(g_gameTime->GetFrameDeltaTime());
+        EffectEngine::GetInstance()->Draw2D();
 
         // メインレンダリングターゲットの内容をフレームバッファにコピー
         CopyMainRenderTargetToFrameBuffer(rc);

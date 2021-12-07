@@ -78,6 +78,9 @@ public:
 
 private:
 
+	EffectEmitter* m_fireMagicCircleEF2D;
+
+
 	//•`‰æ
 	AnimationClip m_animationClips[enAnimationClip_Num];
 	CharacterController m_characterController;

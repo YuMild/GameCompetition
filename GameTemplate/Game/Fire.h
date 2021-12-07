@@ -21,6 +21,7 @@ private:
 	SoundSource* m_fireSE;
 	EffectEmitter* m_fireEF;
 	EffectEmitter* m_fireMagicCircleEF;
+	
 	Player* m_player;
 	bool m_isMoving = false;
 	float m_aliveTimer = 0.0f;

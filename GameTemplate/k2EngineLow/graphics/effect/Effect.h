@@ -21,6 +21,7 @@ namespace nsK2EngineLow {
 		/// </remark>
 		/// <param name="number"></param>
 		void Init(const int number);
+		void Init2D(const int number);
 		/// <summary>
 		/// 再生開始
 		/// </summary>
@@ -28,6 +29,7 @@ namespace nsK2EngineLow {
 		/// この関数を呼び出すとエフェクトの再生が開始されます。
 		/// </remark>
 		void Play();
+		void Play2D();
 		/// <summary>
 		/// 停止。
 		/// </summary>              
@@ -35,6 +37,11 @@ namespace nsK2EngineLow {
 		{
 			//再生中のエフェクトを停止する。
 			EffectEngine::GetInstance()->Stop(m_handle);
+		}
+		void Stop2D()
+		{
+			//再生中のエフェクトを停止する。
+			EffectEngine::GetInstance()->Stop2D(m_handle);
 		}
 		/*!
 		*@brief	座標を設定。
@@ -88,10 +95,15 @@ namespace nsK2EngineLow {
 		{
 			return EffectEngine::GetInstance()->IsPlay(m_handle);
 		}
+		bool IsPlay2D() const
+		{
+			return EffectEngine::GetInstance()->IsPlay2D(m_handle);
+		}
 		/*!
 		 *@brief	更新。
 		 */
 		void Update();
+		void Update2D();
 	private:
 		Effekseer::EffectRef m_effect;	//エフェクト
 		int	m_handle = -1;				//再生中のエフェクトのハンドル。

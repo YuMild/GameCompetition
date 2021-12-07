@@ -41,6 +41,7 @@ bool Player::Start()
 	g_soundEngine->ResistWaveFileBank(10, "Assets/sound/damage3.wav");
 
 	EffectEngine::GetInstance()->ResistEffect(6, u"Assets/effect/MagicCircleBrink.efk");
+	EffectEngine::GetInstance()->ResistEffect2D(100, u"Assets/effect/Fire.efk");
 
 	//描画
 	m_render.SetPosition(m_position);//初期値だから実は書かなくてもいい
@@ -156,6 +157,12 @@ void Player::Magic()
 		m_bulletCoolTimer = 0;//クールタイマーのリセット
 		m_bulletMagazine = false;//クールタイムを活性化
 		m_mp->SubMp(MP_BULLET);
+
+		m_fireMagicCircleEF2D = NewGO<EffectEmitter>(100);
+		m_fireMagicCircleEF2D->Init2D(100);
+		m_fireMagicCircleEF2D->SetScale(Vector3::One * 1.0f);
+		m_fireMagicCircleEF2D->SetPosition(Vector3{ 100.0f,100.0f,0.0f });
+		m_fireMagicCircleEF2D->Play2D();
 	}
 
 	//炎魔法

@@ -69,6 +69,9 @@ bool Game::Start()
 	m_backGroundBGM->SetVolume(0.5f);
 	m_backGroundBGM->Play(true);
 	g_sceneLight->SetDirectionLight(0, Vector3(0.5f,-0.5f,0.5f), Vector3(2.5f,2.5f,2.5f));
+
+	EffectEngine::GetInstance()->ResistEffect2D(0, u"Assets/effect/MagicCircleFire.efk");
+	
 	
 	m_hp = FindGO<Hp>("hp");
 	m_player = FindGO<Player>("player");
@@ -92,6 +95,8 @@ void Game::Update()
 		m_gameOver = NewGO<GameOver>(0, "GameOver");
 		DeleteGO(this);
 	}
+
+	
 
 	Timer();
 	EnemyGenerate();

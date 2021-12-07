@@ -28,6 +28,7 @@ public:
 
 private:
 
+	
 	//•`‰æ
 	ModelRender m_modelRender;
 

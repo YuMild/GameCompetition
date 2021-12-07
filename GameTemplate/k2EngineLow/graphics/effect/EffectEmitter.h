@@ -25,6 +25,7 @@ namespace nsK2EngineLow {
 		/// </summary>
 		/// <param name="number">EffectEngine::GetInstance()->ResistEffectで指定した番号。</param>
 		void Init(const int number);
+		void Init2D(const int number);
 		/// <summary>
 		/// エフェクトを再生する。
 		/// </summary>
@@ -32,12 +33,20 @@ namespace nsK2EngineLow {
 		{
 			m_effect.Play();
 		}
+		void Play2D()
+		{
+			m_effect.Play2D();
+		}
 		/// <summary>
 		/// エフェクトを停止する。
 		/// </summary>
 		void Stop()
 		{
 			m_effect.Stop();
+		}
+		void Stop2D()
+		{
+			m_effect.Stop2D();
 		}
 		/// <summary>
 		/// 座標を設定。
@@ -93,9 +102,15 @@ namespace nsK2EngineLow {
 		/// <returns>再生中ならtrue。</returns>
 		const bool IsPlay() const
 		{
-			return m_effect.IsPlay();
+			if (m_flag2D == false) {
+				return m_effect.IsPlay();
+			}
+			else {
+				return m_effect.IsPlay2D();
+			}
 		}
 	private:
 		Effect m_effect;					//エフェクト。
+		bool m_flag2D = false;				//2Dフラグ。
 	};
 }

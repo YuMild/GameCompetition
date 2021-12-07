@@ -32,7 +32,7 @@ bool Fire::Start() {
 	m_fireMagicCircleEF->Init(7);
 	m_fireMagicCircleEF->SetScale(Vector3::One * 50.0f);
 	m_fireMagicCircleEF->Play();
-	
+
 	return true;
 }
 

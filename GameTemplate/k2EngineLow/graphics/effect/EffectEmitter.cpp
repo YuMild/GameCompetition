@@ -16,14 +16,31 @@ namespace nsK2EngineLow {
 	{
 		m_effect.Init(number);
 	}
+	void EffectEmitter::Init2D(const int number)
+	{
+		m_effect.Init2D(number);
+		m_flag2D = true;	//このエフェクトを2Dにする。
+	}
 
 	void EffectEmitter::Update()
 	{
-		m_effect.Update();
+		if (m_flag2D == false) {
+			m_effect.Update();
 
-		if (!IsPlay())
-		{
-			DeleteGO(this);
+			if (!IsPlay())
+			{
+				DeleteGO(this);
+			}
 		}
+		else {
+			m_effect.Update2D();
+
+			if (!IsPlay())
+			{
+				DeleteGO(this);
+			}
+
+		}
+
 	}
 }
