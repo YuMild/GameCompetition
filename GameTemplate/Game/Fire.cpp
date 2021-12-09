@@ -28,7 +28,7 @@ bool Fire::Start() {
 	m_fireEF->Play();
 
 	EffectEngine::GetInstance()->ResistEffect(7, u"Assets/effect/MagicCircleFire.efk");
-	m_fireMagicCircleEF = NewGO<EffectEmitter>(7);
+	m_fireMagicCircleEF = NewGO<EffectEmitter>(7); 
 	m_fireMagicCircleEF->Init(7);
 	m_fireMagicCircleEF->SetScale(Vector3::One * 50.0f);
 	m_fireMagicCircleEF->Play();

@@ -8,6 +8,7 @@ public:
 	bool Start();
 	void Update();
 	void State();
+	void Timer();
 	void Move();
 	void Render(RenderContext& rc);
 
@@ -24,8 +25,28 @@ private:
 	SpriteRender m_shine1;
 	SpriteRender m_shine2;
 
-	int m_state = 0;
+	Vector3 m_heart1Position;
+	Vector3 m_heart2Position;
+	Vector3 m_heart3Position;
+	Vector3 m_fire1Position;
+	Vector3 m_fire2Position;
+	Vector3 m_water1Position;
+	Vector3 m_water2Position;
+	Vector3 m_wind1Position;
+	Vector3 m_wind2Position;
+	Vector3 m_shine1Position;
+	Vector3 m_shine2Position;
 
-	float m_up = 0.0f;
-	float m_down = 0.0f;
+	float m_timer1 = 0;
+	float m_upDown1 = 0;
+	float m_timer2 = 0;
+	float m_upDown2 = 0;
+	float m_timer3 = 0;
+	float m_upDown3 = 0;
+	float m_timer4 = 0;
+	float m_upDown4 = 0;
+	float m_timer5 = 0;
+	float m_upDown5 = 0;
+
+	int m_state = 0;
 };
