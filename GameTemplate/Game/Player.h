@@ -33,23 +33,33 @@ public:
 	}
 
 	//クールタイマー
-	float GetFireCoolTime() const {
+	float GetFireCoolTimer() const {
 		return m_fireCoolTimer;
 	}
-	float GetWindCoolTime() const {
+	float GetWindCoolTimer() const {
 		return m_windCoolTimer;
 	}
-	float GetShineCoolTime() const {
+	float GetShineCoolTimer() const {
 		return m_shineCoolTimer;
 	}
 
-	const float COOLTIME_BULLET = 1.0f;
-	const float COOLTIME_BRINK = 5.0f;
-	const float COOLTIME_FIRE = 10.0f;
-	const float COOLTIME_WIND = 10.0f;
-	const float COOLTIME_SHINE = 15.0f;
+	//MP消費量
+	float GetFireMP() const {
+		return MP_FIRE;
+	}
+	float GetWindMP() const {
+		return MP_WIND;
+	}
+	float GetShineMP() const {
+		return MP_SHINE;
+	}
 
-	const float MP_BULLET = 1.0f;
+	const float COOLTIME_BULLET = 1.0f;
+	const float COOLTIME_BRINK = 1.0f;
+	const float COOLTIME_FIRE = 1.0f;
+	const float COOLTIME_WIND = 1.0f;
+	const float COOLTIME_SHINE = 1.0f;
+
 	const float MP_BRINK = 5.0f;
 	const float MP_FIRE = 10.0f;
 	const float MP_WIND = 10.0f;
@@ -78,9 +88,6 @@ public:
 
 private:
 
-	EffectEmitter* m_fireMagicCircleEF2D;
-
-
 	//描画
 	AnimationClip m_animationClips[enAnimationClip_Num];
 	CharacterController m_characterController;
@@ -100,6 +107,9 @@ private:
 	
 	//エフェクト
 	EffectEmitter* m_brinkEF;
+	EffectEmitter* m_coolTimeCompleteFireEF;
+	EffectEmitter* m_coolTimeCompleteWindEF;
+	EffectEmitter* m_coolTimeCompleteShineEF;
 
 	//音声
 	SoundSource* m_dryFireSE;

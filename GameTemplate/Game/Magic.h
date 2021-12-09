@@ -23,6 +23,10 @@ private:
 	SpriteRender m_typeWaterCoolTime;
 	SpriteRender m_typeWindCoolTime;
 	SpriteRender m_typeShineCoolTime;
+	SpriteRender m_fireChain;
+	SpriteRender m_waterChain;
+	SpriteRender m_windChain;
+	SpriteRender m_shineChain;
 
 	Mp* m_mp;
 	Player* m_player;

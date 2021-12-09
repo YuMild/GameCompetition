@@ -41,7 +41,9 @@ bool Player::Start()
 	g_soundEngine->ResistWaveFileBank(10, "Assets/sound/damage3.wav");
 
 	EffectEngine::GetInstance()->ResistEffect(6, u"Assets/effect/MagicCircleBrink.efk");
-	EffectEngine::GetInstance()->ResistEffect2D(100, u"Assets/effect/Fire.efk");
+	EffectEngine::GetInstance()->ResistEffect2D(100, u"Assets/effect/CoolTimeCompleteFire.efk");
+	EffectEngine::GetInstance()->ResistEffect2D(101, u"Assets/effect/CoolTimeCompleteWind.efk");
+	EffectEngine::GetInstance()->ResistEffect2D(102, u"Assets/effect/CoolTimeCompleteShine.efk");
 
 	//描画
 	m_render.SetPosition(m_position);//初期値だから実は書かなくてもいい
@@ -72,20 +74,36 @@ void Player::Update()
 void Player::Timer() 
 {
 	m_bulletCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_bulletCoolTimer > COOLTIME_BULLET && m_mp->GetMP() >= MP_BULLET) {//クールタイムが非活性化且つMPが必要以上の時
+	if (m_bulletCoolTimer > COOLTIME_BULLET) {//クールタイムが非活性化且つMPが必要以上の時
 		m_bulletMagazine = true;//クールタイムを非活性化
+		
 	}
 	m_fireCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_fireCoolTimer > COOLTIME_FIRE && m_mp->GetMP() >= MP_FIRE) {//クールタイムが非活性化且つMPが必要以上の時
+	if (m_fireMagazine == false && m_fireCoolTimer > COOLTIME_FIRE && m_mp->GetMP() >= MP_FIRE) {//クールタイムが非活性化且つMPが必要以上の時
 		m_fireMagazine = true;//クールタイムを非活性化
+		m_coolTimeCompleteFireEF = NewGO<EffectEmitter>(100);
+		m_coolTimeCompleteFireEF->Init2D(100);
+		m_coolTimeCompleteFireEF->SetScale(Vector3::One * 5.0f);
+		m_coolTimeCompleteFireEF->SetPosition(Vector3{ 700.0f,-225.0f,0.0f });
+		m_coolTimeCompleteFireEF->Play2D();
 	}
 	m_windCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_windCoolTimer > COOLTIME_WIND && m_mp->GetMP() >= MP_WIND) {//クールタイムが非活性化且つMPが必要以上の時
+	if (m_windMagazine == false && m_windCoolTimer > COOLTIME_WIND && m_mp->GetMP() >= MP_WIND) {//クールタイムが非活性化且つMPが必要以上の時
 		m_windMagazine = true;//クールタイムを非活性化
+		m_coolTimeCompleteWindEF = NewGO<EffectEmitter>(101);
+		m_coolTimeCompleteWindEF->Init2D(101);
+		m_coolTimeCompleteWindEF->SetScale(Vector3::One * 5.0f);
+		m_coolTimeCompleteWindEF->SetPosition(Vector3{ 618.0f, -310.0f, 0.0f });
+		m_coolTimeCompleteWindEF->Play2D();
 	}
 	m_shineCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_shineCoolTimer > COOLTIME_SHINE && m_mp->GetMP() >= MP_SHINE) {//クールタイムが非活性化且つMPが必要以上の時
+	if (m_shineMagazine == false && m_shineCoolTimer > COOLTIME_SHINE && m_mp->GetMP() >= MP_SHINE) {//クールタイムが非活性化且つMPが必要以上の時
 		m_shineMagazine = true;//クールタイムを非活性化
+		m_coolTimeCompleteShineEF = NewGO<EffectEmitter>(102);
+		m_coolTimeCompleteShineEF->Init2D(102);
+		m_coolTimeCompleteShineEF->SetScale(Vector3::One * 5.0f);
+		m_coolTimeCompleteShineEF->SetPosition(Vector3{ 618.0f, -140.0f, 0.0f });
+		m_coolTimeCompleteShineEF->Play2D();
 	}
 	m_brinkCoolTimer += g_gameTime->GetFrameDeltaTime();
 	if (m_brinkCoolTimer > COOLTIME_BRINK && m_mp->GetMP() >= MP_BRINK) {//クールタイムが非活性化且つMPが必要以上の時
@@ -156,13 +174,6 @@ void Player::Magic()
 		m_bullet->SetPosition(m_position);//最初の1fだけステージ中央に判定が生じるのを防ぐ
 		m_bulletCoolTimer = 0;//クールタイマーのリセット
 		m_bulletMagazine = false;//クールタイムを活性化
-		m_mp->SubMp(MP_BULLET);
-
-		m_fireMagicCircleEF2D = NewGO<EffectEmitter>(100);
-		m_fireMagicCircleEF2D->Init2D(100);
-		m_fireMagicCircleEF2D->SetScale(Vector3::One * 1.0f);
-		m_fireMagicCircleEF2D->SetPosition(Vector3{ 100.0f,100.0f,0.0f });
-		m_fireMagicCircleEF2D->Play2D();
 	}
 
 	//炎魔法
