@@ -9,11 +9,11 @@ TitleUi::~TitleUi() {
 }
 bool TitleUi::Start()
 {
-	m_heart1.Init("Assets/sprite/HP.DDS", 650.0f, 650.0f);
-	m_heart2.Init("Assets/sprite/HP.DDS", 350.0f, 350.0f);
-	m_heart3.Init("Assets/sprite/HP.DDS", 300.0f, 300.0f);
-	m_fire1.Init("Assets/sprite/TypeFire.DDS", 420.0f, 420.0f);
-	m_fire2.Init("Assets/sprite/TypeFire.DDS", 280.0f, 280.0f);
+	m_heart1.Init("Assets/sprite/HP1.DDS", 650.0f, 650.0f);
+	m_heart2.Init("Assets/sprite/HP2.DDS", 350.0f, 350.0f);
+	m_heart3.Init("Assets/sprite/HP3.DDS", 300.0f, 300.0f);
+	m_fire1.Init("Assets/sprite/TypeFire.DDS", 340.0f, 340.0f);
+	m_fire2.Init("Assets/sprite/TypeFire.DDS", 520.0f, 520.0f);
 	m_water1.Init("Assets/sprite/TypeWater.DDS", 430.0f, 430.0f);
 	m_water2.Init("Assets/sprite/TypeWater.DDS", 340.0f, 340.0f);
 	m_wind1.Init("Assets/sprite/TypeWind.DDS", 550.0f, 550.0f);
@@ -30,41 +30,41 @@ void TitleUi::Update()
 	Timer();
 	Move();
 
-	m_heart1Position = { 820.0f,-390.0f + m_upDown1,0.0f };
+	m_heart1Position = { 800.0f,-440.0f + m_upDown1,0.0f };
 	m_heart1.SetPosition(m_heart1Position);
 	m_heart1.Update();
-	m_wind2Position = { -350.0f,-450.0f + m_upDown1,0.0f };
-	m_wind2.SetPosition(m_fire1Position);
+	m_wind2Position = { -300.0f,-550.0f + m_upDown1,0.0f };
+	m_wind2.SetPosition(m_wind2Position);
 	m_wind2.Update();
 
-	m_shine2Position = { -800.0f,-400.0f + m_upDown2,0.0f };
+	m_shine2Position = { -850.0f,-450.0f + m_upDown2,0.0f };
 	m_shine2.SetPosition(m_shine2Position);
 	m_shine2.Update();
-	m_heart3Position = { -180.0f,-580.0f + m_upDown2,0.0f };
+	m_heart3Position = { 180.0f,-570.0f + m_upDown2,0.0f };
 	m_heart3.SetPosition(m_heart3Position);
 	m_heart3.Update();
 
-	m_water1Position = { -530.0f,-480.0f + m_upDown3,0.0f };
+	m_water1Position = { -530.0f,-490.0f + m_upDown3,0.0f };
 	m_water1.SetPosition(m_water1Position);
 	m_water1.Update();
-	m_water2Position = { 180.0f,-470.0f + m_upDown3,0.0f };
+	m_water2Position = { 180.0f,-480.0f + m_upDown3,0.0f };
 	m_water2.SetPosition(m_water2Position);
 	m_water2.Update();
 
-	m_fire2Position = { -350.0f,-450.0f + m_upDown4,0.0f };
+	m_fire2Position = { -430.0f,-500.0f + m_upDown4,0.0f };
 	m_fire2.SetPosition(m_fire2Position);
 	m_fire2.Update();
-	m_wind1Position = { 450.0f,-500.0f + m_upDown4,0.0f };
+	m_wind1Position = { 450.0f,-520.0f + m_upDown4,0.0f };
 	m_wind1.SetPosition(m_wind1Position);
 	m_wind1.Update();
 
-	m_heart2Position = { -720.0f,-520.0f + m_upDown5,0.0f };
+	m_heart2Position = { -720.0f,-500.0f + m_upDown5,0.0f };
 	m_heart2.SetPosition(m_heart2Position);
 	m_heart2.Update();
-	m_shine1Position = { -40.0f,-520.0f + m_upDown5,0.0f };
+	m_shine1Position = { -40.0f,-530.0f + m_upDown5,0.0f };
 	m_shine1.SetPosition(m_shine1Position);
 	m_shine1.Update();
-	m_fire1Position = { 620.0f,-520.0f + m_upDown5,0.0f };
+	m_fire1Position = { 570.0f,-500.0f + m_upDown5,0.0f };
 	m_fire1.SetPosition(m_fire1Position);
 	m_fire1.Update();
 }
@@ -163,10 +163,10 @@ void TitleUi::Render(RenderContext& rc)
 	m_wind2.Draw(rc);
 	m_wind1.Draw(rc);
 	m_heart3.Draw(rc);
-	m_heart2.Draw(rc);
+	m_heart1.Draw(rc);
 	m_shine2.Draw(rc);
 	m_water1.Draw(rc);
-	m_heart1.Draw(rc);
+	m_heart2.Draw(rc);
 	m_shine1.Draw(rc);
 	m_fire1.Draw(rc);
 }
