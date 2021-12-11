@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "Mp.h"
 
-Mp::Mp() {
+Mp::Mp()
+{
 
 }
 
-Mp::~Mp() {
+Mp::~Mp()
+{
 
 }
 
@@ -29,7 +31,8 @@ void Mp::Update()
 	m_mpFrame.Update();
 }
 
-void Mp::Cut() {
+void Mp::Cut()
+{
 	float x = m_mp / 100;
 	m_mpBar.SetIsDisplayRestrictionRightSide(true);
 	m_mpBar.SetLimitedX(x);

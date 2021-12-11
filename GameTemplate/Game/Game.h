@@ -13,6 +13,7 @@ class MagicPoint;
 class Map;
 class Mp;
 class Player;
+class Score;
 
 class Game : public IGameObject
 {
@@ -28,7 +29,6 @@ public:
 
 private:
 
-	
 	//•`‰æ
 	ModelRender m_modelRender;
 
@@ -47,6 +47,7 @@ private:
 	Map* m_map;
 	Mp* m_mp;
 	Player* m_player;
+	Score* m_score;
 	SkyCube* m_skyCube;
 
 	float m_timer = 0;

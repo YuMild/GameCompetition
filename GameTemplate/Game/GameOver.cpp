@@ -5,11 +5,18 @@
 
 GameOver::GameOver()
 {
-   m_render.Init("Assets/sprite/GameOver.dds", 1920.0f, 1080.0f);
+  
 }
 
 GameOver::~GameOver()
 {
+
+}
+
+bool GameOver::Start()
+{
+    m_render.Init("Assets/sprite/GameOver.dds", 1920.0f, 1080.0f);
+    return true;
 }
 
 void GameOver::Update()

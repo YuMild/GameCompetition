@@ -1,12 +1,14 @@
 #include "stdafx.h"
 #include "TitleUi.h"
 
-TitleUi::TitleUi() {
-
+TitleUi::TitleUi() 
+{
 }
-TitleUi::~TitleUi() {
 
+TitleUi::~TitleUi() 
+{
 }
+
 bool TitleUi::Start()
 {
 	m_heart1.Init("Assets/sprite/HP1.DDS", 650.0f, 650.0f);
@@ -26,6 +28,11 @@ bool TitleUi::Start()
 
 void TitleUi::Update()
 {
+	if (g_pad[0]->IsTrigger(enButtonStart))
+	{
+		DeleteGO(this);
+	}
+
 	State();
 	Timer();
 	Move();
@@ -44,10 +51,10 @@ void TitleUi::Update()
 	m_heart3.SetPosition(m_heart3Position);
 	m_heart3.Update();
 
-	m_water1Position = { -530.0f,-490.0f + m_upDown3,0.0f };
+	m_water1Position = { -530.0f,-510.0f + m_upDown3,0.0f };
 	m_water1.SetPosition(m_water1Position);
 	m_water1.Update();
-	m_water2Position = { 180.0f,-480.0f + m_upDown3,0.0f };
+	m_water2Position = { 180.0f,-540.0f + m_upDown3,0.0f };
 	m_water2.SetPosition(m_water2Position);
 	m_water2.Update();
 
@@ -72,73 +79,78 @@ void TitleUi::Update()
 void TitleUi::State()
 {
 	//タイマー1
-	if (m_timer1 >= 0.5f && m_timer1 <= 0.6f)
+	if (m_timer1 > 0.5f && m_timer1 < 0.7f)
 	{
 		m_upDown1 += 10.0f;
 	}
-	else if (m_timer1 >= 0.7 && m_timer1 <= 0.8f) 
+	else if (m_timer1 > 0.8 && m_timer1 < 1.0f) 
 	{
 		m_upDown1 -= 10.0f;
 	}
-	else if (m_timer1 >= 0.9f)
+	else if (m_timer1 > 1.0f)
 	{
 		m_timer1 = 0;
+		m_upDown1 = 0;
 	}
 
 	//タイマー2
-	if (m_timer2 >= 1.0f && m_timer2 <= 1.1f)
+	if (m_timer2 > 1.1f && m_timer2 < 1.3f)
 	{
 		m_upDown2 += 10.0f;
 	}
-	else if (m_timer2 >= 1.2 && m_timer2 <= 1.3f)
+	else if (m_timer2 > 1.4 && m_timer2 < 1.6f)
 	{
 		m_upDown2 -= 10.0f;
 	}
-	else if (m_timer2 >= 1.4f)
+	else if (m_timer2 > 1.6f)
 	{
 		m_timer2 = 0;
+		m_upDown2 = 0;
 	}
 
 	//タイマー3
-	if (m_timer3 >= 1.5f && m_timer3 <= 1.6f)
+	if (m_timer3 > 1.7f && m_timer3 < 1.9f)
 	{
 		m_upDown3 += 10.0f;
 	}
-	else if (m_timer3 >= 1.7 && m_timer3 <= 1.8f)
+	else if (m_timer3 > 2.0 && m_timer3 < 2.2f)
 	{
 		m_upDown3 -= 10.0f;
 	}
-	else if (m_timer3 >= 1.9f)
+	else if (m_timer3 > 2.2f)
 	{
 		m_timer3 = 0;
+		m_upDown3 = 0;
 	}
 
 	//タイマー4
-	if (m_timer4 >= 2.0f && m_timer4 <= 2.1f)
+	if (m_timer4 > 2.3f && m_timer4 < 2.5f)
 	{
 		m_upDown4 += 10.0f;
 	}
-	else if (m_timer4 >= 2.2 && m_timer4 <= 2.3f)
+	else if (m_timer4 > 2.6 && m_timer4 < 2.8f)
 	{
 		m_upDown4 -= 10.0f;
 	}
-	else if (m_timer4 >= 2.4f)
+	else if (m_timer4 > 2.8f)
 	{
 		m_timer4 = 0;
+		m_upDown4 = 0;
 	}
 
 	//タイマー5
-	if (m_timer5 >= 2.5f && m_timer5 <= 2.6f)
+	if (m_timer5 > 2.9f && m_timer5 < 3.1f)
 	{
 		m_upDown5 += 10.0f;
 	}
-	else if (m_timer5 >= 2.7 && m_timer5 <= 2.8f)
+	else if (m_timer5 > 3.2 && m_timer5 < 3.4f)
 	{
 		m_upDown5 -= 10.0f;
 	}
-	else if (m_timer5 >= 2.9f)
+	else if (m_timer5 > 3.4f)
 	{
 		m_timer5 = 0;
+		m_upDown5 = 0;
 	}
 }
 
@@ -153,7 +165,6 @@ void TitleUi::Timer()
 
 void TitleUi::Move() 
 {
-	
 }
 
 void TitleUi::Render(RenderContext& rc)

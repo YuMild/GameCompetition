@@ -1,16 +1,18 @@
 #include "stdafx.h"
 #include "Clock.h"
 
-Clock::Clock() {
+Clock::Clock()
+{
 
 }
 
-Clock::~Clock() {
+Clock::~Clock()
+{
 
 }
 
-bool Clock::Start() {
-
+bool Clock::Start() 
+{
 	m_clockCenterPosition = { -740.0f, 330.0f, 0.0f };
 
 	m_clockBackGround.Init("Assets/sprite/ClockBackGround.DDS", 300.0f, 300.0f);
@@ -29,8 +31,8 @@ bool Clock::Start() {
 	return true;
 }
 
-void Clock::Update() {
-
+void Clock::Update() 
+{
 	m_clockBackGround.Update();
 	m_clockMinuteHund.Update();
 	m_clockSecondHund.Update();
@@ -38,14 +40,16 @@ void Clock::Update() {
 	Rotation();
 }
 
-void Clock::Render(RenderContext& rc) {
+void Clock::Render(RenderContext& rc)
+{
 	m_clockBackGround.Draw(rc);
 	m_clockMinuteHund.Draw(rc);
 	m_clockSecondHund.Draw(rc);
 	m_clockFrame.Draw(rc);
 }
 
-void Clock::Rotation() {
+void Clock::Rotation()
+{
 	m_timer += g_gameTime->GetFrameDeltaTime();
 	m_secondRotation = m_timer * 30.0f;
 	m_minuteRotation = m_timer * 2.5;

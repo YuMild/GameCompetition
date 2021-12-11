@@ -166,6 +166,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mp.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="system\system.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Shine.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="MagicPoint.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mp.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="system\system.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Shine.h" />

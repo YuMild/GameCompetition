@@ -58,7 +58,8 @@ void Hp::Render(RenderContext& rc)
 	}
 }
 
-void Hp::Damage() {
+void Hp::Damage()
+{
 	if (m_hp == 2 && m_damage1Judge) {
 		m_damage1SE = NewGO<SoundSource>(8);
 		m_damage1SE->Init(8);

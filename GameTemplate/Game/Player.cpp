@@ -15,10 +15,12 @@ namespace {
 
 Player::Player() 
 {
+
 }
 
 Player::~Player()
 {
+
 }
 
 bool Player::Start() 

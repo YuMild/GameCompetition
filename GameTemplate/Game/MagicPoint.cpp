@@ -7,10 +7,12 @@
 
 MagicPoint::MagicPoint()
 {
+
 }
 
 MagicPoint::~MagicPoint()
 {
+
 }
 
 bool MagicPoint::Start()
@@ -40,7 +42,6 @@ void MagicPoint::Update()
 	m_magicPointEF->SetPosition(m_position);
 	
 	m_aliveTimer += g_gameTime->GetFrameDeltaTime();
-
 	m_diff = m_player->GetPosition() - m_position;
 
 	if (m_aliveTimer > 5.0f) {

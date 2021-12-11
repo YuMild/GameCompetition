@@ -5,14 +5,16 @@
 #include "MagicPoint.h"
 #include "Player.h"
 
-Map::Map() {
+Map::Map() 
+{
 }
 
-Map::~Map() {
+Map::~Map() 
+{
 }
 
-bool Map::Start() {
-
+bool Map::Start() 
+{
 	m_mapCenterPosition = { 740.0f, 330.0f, 0.0f };
 
 	m_mapBackGround.Init("Assets/sprite/MapBackGround.DDS", 300.0f, 300.0f);
@@ -28,8 +30,8 @@ bool Map::Start() {
 	return true;
 }
 
-void Map::Update() {
-
+void Map::Update() 
+{
 	m_playerMapPosition = m_player->GetPosition();
 	m_playerMap.SetPosition({ m_playerMapPosition.x * -0.15f + m_mapCenterPosition.x,m_playerMapPosition.z * -0.15f + m_mapCenterPosition.y,0.0f });
 
@@ -42,11 +44,11 @@ void Map::Update() {
 	m_mapFrame.Update();
 }
 
-void Map::Render(RenderContext& rc) {
-
+void Map::Render(RenderContext& rc) 
+{
 	m_mapBackGround.Draw(rc);
 
-	const auto& enemys = FindGOs<Enemy>("Enemy");
+	const auto& enemys = FindGOs<Enemy>("enemy");
 	const int enemySize = enemys.size();
 
 	for (int i = 0; i < enemySize; i++)

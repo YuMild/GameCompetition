@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "BackGround.h"
 
-bool BackGround::Start() {
-
+bool BackGround::Start()
+{
 	m_render.Init("Assets/modelData/stage.tkm");
 	m_render.SetScale({ 1.5f,1.5f,1.5f });
 
@@ -18,11 +18,11 @@ bool BackGround::Start() {
 	return true;
 }
 
-void BackGround::Update() {
-
+void BackGround::Update()
+{
 }
 
-void BackGround::Render(RenderContext& rc) {
-
+void BackGround::Render(RenderContext& rc) 
+{
 	m_render.Draw(rc);
 }

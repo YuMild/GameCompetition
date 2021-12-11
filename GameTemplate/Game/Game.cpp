@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Game.h"
-
 #include "BackGround.h"
 #include "Clock.h"
 #include "Enemy.h"
@@ -12,6 +11,7 @@
 #include "Map.h"
 #include "Mp.h"
 #include "Player.h"
+#include "Score.h"
 
 #include "nature/SkyCube.h"
 
@@ -26,21 +26,28 @@ Game::Game()
 Game::~Game()
 {
 	//DeleteGO
-	const auto& enemys = FindGOs<Enemy>("Enemy");//全てのエネミーの削除
-	int size = enemys.size();
-	for (int i = 0; i < size; i++)
-	{
-		DeleteGO(enemys[i]);
-	}
 	DeleteGO(m_backGround);
 	DeleteGO(m_backGroundBGM);
 	DeleteGO(m_clock);
+	const auto& enemys = FindGOs<Enemy>("enemy");//全てのエネミーの削除
+	int enemySize = enemys.size();
+	for (int i = 0; i < enemySize; i++)
+	{
+		DeleteGO(enemys[i]);
+	}
 	DeleteGO(m_gameCamera);
 	DeleteGO(m_hp);
 	DeleteGO(m_magic);
+	const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");
+	int magicPointSize = magicPoints.size();
+	for (int i = 0; i < enemySize; i++)
+	{
+		DeleteGO(magicPoints[i]);
+	}
 	DeleteGO(m_map);
 	DeleteGO(m_mp);
 	DeleteGO(m_player);
+	DeleteGO(m_score);
 	DeleteGO(m_skyCube);
 }
 
@@ -55,6 +62,7 @@ bool Game::Start()
 	m_map = NewGO<Map>(0, "map");
 	m_mp = NewGO<Mp>(0, "mp");
 	m_player = NewGO<Player>(0, "player");
+	m_score = NewGO<Score>(0, "score");
 	m_skyCube = NewGO<SkyCube>(0, "skyCube");
 
 	//背景
@@ -71,10 +79,7 @@ bool Game::Start()
 	g_sceneLight->SetDirectionLight(0, Vector3(0.5f,-0.5f,0.5f), Vector3(2.5f,2.5f,2.5f));
 
 	EffectEngine::GetInstance()->ResistEffect2D(0, u"Assets/effect/MagicCircleFire.efk");
-	
-	
-	m_hp = FindGO<Hp>("hp");
-	m_player = FindGO<Player>("player");
+
 
 	return true;
 }
@@ -92,11 +97,9 @@ void Game::Update()
 
 	//HPが0になるかプレイヤーがステージ外に落下した時
 	if (m_hp->GetHP() == 0 || m_player->GetPosition().y <= -300.0f) {
-		m_gameOver = NewGO<GameOver>(0, "GameOver");
+		m_gameOver = NewGO<GameOver>(0, "gameOver");
 		DeleteGO(this);
 	}
-
-	
 
 	Timer();
 	EnemyGenerate();
@@ -131,7 +134,7 @@ void Game::EnemyGenerate()
 			return;
 		}
 
-		m_enemy = NewGO<Enemy>(0, "Enemy");
+		m_enemy = NewGO<Enemy>(0, "enemy");
 		m_enemy->SetPosition(position);
 		m_enemySpawnTimer = 0.0f;
 	}
@@ -163,4 +166,3 @@ void Game::MagicPointGenerate()
 		m_magicSpawnTimer = 0.0f;
 	}
 }
-

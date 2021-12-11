@@ -10,12 +10,12 @@
 #include "Wind.h"
 #include <random>
 
-Enemy::Enemy() {
-	
+Enemy::Enemy() 
+{
 }
 
-Enemy::~Enemy() {
-
+Enemy::~Enemy()
+{
 }
 
 bool Enemy::Start()
