@@ -26,9 +26,9 @@ Player::~Player()
 bool Player::Start() 
 {
 	//アニメーションファイル
-	m_animationClips[enAnimationClip_Idle].Load("Assets/animData/idle.tka");
+	m_animationClips[enAnimationClip_Idle].Load("Assets/animData/Idle.tka");
 	m_animationClips[enAnimationClip_Idle].SetLoopFlag(true);
-	m_animationClips[enAnimationClip_Walk].Load("Assets/animData/walk.tka");
+	m_animationClips[enAnimationClip_Walk].Load("Assets/animData/Walk.tka");
 	m_animationClips[enAnimationClip_Walk].SetLoopFlag(true);
 	m_animationClips[enAnimationClip_Jump].Load("Assets/animData/jump.tka");
 	m_animationClips[enAnimationClip_Jump].SetLoopFlag(false);
@@ -170,7 +170,7 @@ void Player::Magic()
 {
 	//通常攻撃
 	//クールタイム非活性化時
-	if (g_pad[0]->IsTrigger(enButtonRB1) && m_bulletMagazine == true)
+	if (g_pad[0]->IsTrigger(enButtonRB2) && m_bulletMagazine == true)
 	{
 		m_bullet = NewGO<Bullet>(0, "bullet");//砲丸を生成
 		m_bullet->SetPosition(m_position);//最初の1fだけステージ中央に判定が生じるのを防ぐ

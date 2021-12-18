@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "GameOver.h"
+
+#include "FontNumber.h"
 #include "Title.h"
 #include "sound/SoundEngine.h"
 
@@ -15,6 +17,7 @@ GameOver::~GameOver()
 
 bool GameOver::Start()
 {
+    m_fontNumber = NewGO<FontNumber>(0, "fontNumber");
     m_render.Init("Assets/sprite/GameOver.dds", 1920.0f, 1080.0f);
     return true;
 }

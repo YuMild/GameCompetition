@@ -156,6 +156,7 @@
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fire.cpp" />
+    <ClCompile Include="FontNumber.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameOver.cpp" />
@@ -166,6 +167,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mp.cpp" />
+    <ClCompile Include="Pudding.cpp" />
+    <ClCompile Include="Result.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="system\system.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -184,6 +187,7 @@
     <ClInclude Include="Clock.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fire.h" />
+    <ClInclude Include="FontNumber.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameOver.h" />
@@ -193,6 +197,8 @@
     <ClInclude Include="MagicPoint.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mp.h" />
+    <ClInclude Include="Pudding.h" />
+    <ClInclude Include="Result.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="system\system.h" />
     <ClInclude Include="Player.h" />

@@ -2,15 +2,18 @@
 class Mp :public IGameObject
 {
 public:
+
 	//‰ÁŽZ
-	void AddMp(const float addMp) {
+	void AddMp(const float addMp) 
+	{
 		m_mp += addMp;
 		if (m_mp >= 100) {
 			m_mp = 100;
 		}
 	}
 	//Œ¸ŽZ
-	void SubMp(const float subMp) {
+	void SubMp(const float subMp) 
+	{
 		m_mp -= subMp;
 		if (m_mp < 0)
 		{

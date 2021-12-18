@@ -2,18 +2,29 @@
 
 using namespace std;
 
+class FontNumber;
+class Pudding;
+
 class Score : public IGameObject
 {
 public:
 
-	bool Start() override;
+	//‰ÁŽZ
+	void AddScore(const float addScore)
+	{
+		m_timer += addScore;
+	}
+	bool Start();
 	void Update();
-	void Render(RenderContext& rc);
+	void Output();
 
 private:
 
 	FontRender m_fontRender;
-	wstring m_text;
+
+	FontNumber* m_fontNumber;
+	Pudding* m_pudding;
+
 	int m_score = 0;
 	float m_timer = 0.0f;
 };

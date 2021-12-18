@@ -26,6 +26,7 @@ public:
 
 private:
 
+	//‰æ‘œ
 	SpriteRender m_magicPointMap;
 
 	//ƒxƒNƒgƒ‹

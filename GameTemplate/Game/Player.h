@@ -8,7 +8,7 @@ class Mp;
 class Shine;
 class Wind;
 
-class Player:public IGameObject
+class Player :public IGameObject
 {
 public:
 
@@ -55,15 +55,15 @@ public:
 	}
 
 	const float COOLTIME_BULLET = 1.0f;
-	const float COOLTIME_BRINK = 1.0f;
-	const float COOLTIME_FIRE = 1.0f;
-	const float COOLTIME_WIND = 1.0f;
-	const float COOLTIME_SHINE = 1.0f;
+	const float COOLTIME_BRINK = 3.0f;
+	const float COOLTIME_FIRE = 10.0f;
+	const float COOLTIME_WIND = 5.0f;
+	const float COOLTIME_SHINE = 20.0f;
 
-	const float MP_BRINK = 5.0f;
+	const float MP_BRINK = 3.0f;
 	const float MP_FIRE = 10.0f;
-	const float MP_WIND = 10.0f;
-	const float MP_SHINE = 15.0f;
+	const float MP_WIND = 5.0f;
+	const float MP_SHINE = 20.0f;
 
 	Player();
 	~Player();

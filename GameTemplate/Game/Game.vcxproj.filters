@@ -49,7 +49,14 @@
       <Filter>Ui</Filter>
     </ClCompile>
     <ClCompile Include="Loading.cpp" />
-    <ClCompile Include="Score.cpp" />
+    <ClCompile Include="Result.cpp">
+      <Filter>Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Pudding.cpp" />
+    <ClCompile Include="FontNumber.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -97,7 +104,14 @@
       <Filter>Ui</Filter>
     </ClInclude>
     <ClInclude Include="Loading.h" />
-    <ClInclude Include="Score.h" />
+    <ClInclude Include="Result.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Pudding.h" />
+    <ClInclude Include="FontNumber.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">

@@ -63,7 +63,7 @@ bool Magic::Start()
 	positionList[2] = Vector3(640.0f, -270.0f, 0.0f);
 	positionList[3] = Vector3(740.0f, -170.0f, 0.0f);
 
-	for (int j = 0; j < m_num; j++) 
+	for (int j = 0; j < m_num; j++)
 	{
 		m_typeFrame[j].Init("Assets/sprite/TypeFrame.DDS", 130.0f, 130.0f);
 		m_typeFrame[j].SetPosition(positionList[j]);

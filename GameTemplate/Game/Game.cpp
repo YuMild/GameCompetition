@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "Mp.h"
 #include "Player.h"
+#include "Pudding.h"
 #include "Score.h"
 
 #include "nature/SkyCube.h"
@@ -38,15 +39,17 @@ Game::~Game()
 	DeleteGO(m_gameCamera);
 	DeleteGO(m_hp);
 	DeleteGO(m_magic);
-	const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");
+	/*const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");
 	int magicPointSize = magicPoints.size();
 	for (int i = 0; i < enemySize; i++)
 	{
 		DeleteGO(magicPoints[i]);
-	}
+	}*/
+	DeleteGO(m_magicPoint);
 	DeleteGO(m_map);
 	DeleteGO(m_mp);
 	DeleteGO(m_player);
+	DeleteGO(m_pudding);
 	DeleteGO(m_score);
 	DeleteGO(m_skyCube);
 }
@@ -80,7 +83,6 @@ bool Game::Start()
 
 	EffectEngine::GetInstance()->ResistEffect2D(0, u"Assets/effect/MagicCircleFire.efk");
 
-
 	return true;
 }
 
@@ -104,13 +106,15 @@ void Game::Update()
 	Timer();
 	EnemyGenerate();
 	MagicPointGenerate();
+	PuddingGenerate();
 }
 
 void Game::Timer() 
 {
 	m_timer += g_gameTime->GetFrameDeltaTime();
 	m_enemySpawnTimer += g_gameTime->GetFrameDeltaTime();
-	m_magicSpawnTimer += g_gameTime->GetFrameDeltaTime();
+	m_magicPointSpawnTimer += g_gameTime->GetFrameDeltaTime();
+	m_puddingSpawnTimer += g_gameTime->GetFrameDeltaTime();
 }
 
 void Game::EnemyGenerate()
@@ -142,7 +146,7 @@ void Game::EnemyGenerate()
 
 void Game::MagicPointGenerate()
 {
-	if (m_magicSpawnTimer > 12.0f)
+	if (m_magicPointSpawnTimer > 12.0f)
 	{
 		constexpr int MIN = -500;//乱数の範囲最低値
 		constexpr int MAX = 500;//乱数の範囲最大値
@@ -163,6 +167,33 @@ void Game::MagicPointGenerate()
 
 		m_magicPoint = NewGO<MagicPoint>(0, "magicPoint");
 		m_magicPoint->SetPosition(position);
-		m_magicSpawnTimer = 0.0f;
+		m_magicPointSpawnTimer = 0.0f;
+	}
+}
+
+void Game::PuddingGenerate()
+{
+	if (m_puddingSpawnTimer > 12.0f)
+	{
+		constexpr int MIN = -500;//乱数の範囲最低値
+		constexpr int MAX = 500;//乱数の範囲最大値
+
+		Vector3 position;
+		random_device rd;
+		default_random_engine eng(rd());
+		uniform_int_distribution<int> distr(MIN, MAX);
+
+		position.x = distr(eng);
+		position.z = distr(eng);
+		position.y = 0.0f;
+
+		if ((position - m_player->GetPosition()).Length() <= 50.0f)
+		{
+			return;
+		}
+
+		m_pudding = NewGO<Pudding>(0, "pudding");
+		m_pudding->SetPosition(position);
+		m_puddingSpawnTimer = 0.0f;
 	}
 }

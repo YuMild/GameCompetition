@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "MagicPoint.h"
 #include "Player.h"
+#include "Pudding.h"
 
 Map::Map() 
 {
@@ -48,6 +49,7 @@ void Map::Render(RenderContext& rc)
 {
 	m_mapBackGround.Draw(rc);
 
+	//エネミー
 	const auto& enemys = FindGOs<Enemy>("enemy");
 	const int enemySize = enemys.size();
 
@@ -56,12 +58,22 @@ void Map::Render(RenderContext& rc)
 		enemys[i]->EnemyMap(rc);
 	}
 
+	//マジックポイント
 	const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");
 	const int magicSize = magicPoints.size();
 
 	for (int i = 0; i < magicSize; i++)
 	{
 		magicPoints[i]->MagicPointMap(rc);
+	}
+
+	//プリン
+	const auto& puddings = FindGOs<Pudding>("pudding");
+	const int puddingSize = puddings.size();
+
+	for (int i = 0; i < puddingSize; i++)
+	{
+		puddings[i]->PuddingMap(rc);
 	}
 
 	m_playerMap.Draw(rc);

@@ -1,6 +1,8 @@
 #pragma once
 #include "sound/SoundSource.h"
 
+class FontNumber;
+
 class GameOver : public IGameObject
 {
 public:
@@ -13,4 +15,6 @@ public:
 
 private:
     SpriteRender m_render;
+
+    FontNumber* m_fontNumber;
 };

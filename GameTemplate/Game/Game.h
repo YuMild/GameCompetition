@@ -13,6 +13,7 @@ class MagicPoint;
 class Map;
 class Mp;
 class Player;
+class Pudding;
 class Score;
 
 class Game : public IGameObject
@@ -26,6 +27,7 @@ public:
 	void Timer();
 	void EnemyGenerate();
 	void MagicPointGenerate();
+	void PuddingGenerate();
 
 private:
 
@@ -47,12 +49,14 @@ private:
 	Map* m_map;
 	Mp* m_mp;
 	Player* m_player;
+	Pudding* m_pudding;
 	Score* m_score;
 	SkyCube* m_skyCube;
 
 	float m_timer = 0;
 	float m_level = 0;
 	float m_enemySpawnTimer = 0;
-	float m_magicSpawnTimer = 0;
+	float m_magicPointSpawnTimer = 0;
+	float m_puddingSpawnTimer = 6.0;
 };
 
