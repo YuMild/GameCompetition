@@ -159,7 +159,6 @@
     <ClCompile Include="FontNumber.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
-    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Hp.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="Magic.cpp" />
@@ -190,7 +189,6 @@
     <ClInclude Include="FontNumber.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
-    <ClInclude Include="GameOver.h" />
     <ClInclude Include="Hp.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="Magic.h" />

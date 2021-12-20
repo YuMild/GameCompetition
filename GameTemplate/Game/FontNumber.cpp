@@ -42,7 +42,7 @@ void FontNumber::Update()
 {
 	for (int i = 0; i < m_fontNumberList.size(); i++)
 	{
-		m_fontNumberList[i]->SetPosition(m_position);
+		m_fontNumberList[i]->SetPosition({ m_position.x + 100.0f * i, m_position.y, m_position.z });
 		m_fontNumberList[i]->SetScale(m_scale);
 		m_fontNumberList[i]->Update();
 	}

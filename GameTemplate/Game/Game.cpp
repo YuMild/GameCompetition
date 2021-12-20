@@ -4,7 +4,6 @@
 #include "Clock.h"
 #include "Enemy.h"
 #include "GameCamera.h"
-#include "GameOver.h"
 #include "Hp.h"
 #include "Magic.h"
 #include "MagicPoint.h"
@@ -12,6 +11,7 @@
 #include "Mp.h"
 #include "Player.h"
 #include "Pudding.h"
+#include "Result.h"
 #include "Score.h"
 
 #include "nature/SkyCube.h"
@@ -50,7 +50,7 @@ Game::~Game()
 	DeleteGO(m_mp);
 	DeleteGO(m_player);
 	DeleteGO(m_pudding);
-	DeleteGO(m_score);
+	//DeleteGO(m_score);
 	DeleteGO(m_skyCube);
 }
 
@@ -91,16 +91,15 @@ void Game::Update()
 	//レベル
 	if (m_timer > 12.0f)
 	{
-		if (m_level <= 1.5) {
-			m_level += 0.1f;
+		if (m_levelTimer <= 1.5) {
+			m_levelTimer += 0.1f;
 		}
 		m_timer = 0;
 	}
 
 	//HPが0になるかプレイヤーがステージ外に落下した時
 	if (m_hp->GetHP() == 0 || m_player->GetPosition().y <= -300.0f) {
-		m_gameOver = NewGO<GameOver>(0, "gameOver");
-		DeleteGO(this);
+		m_gameState = 1;
 	}
 
 	Timer();
@@ -119,7 +118,7 @@ void Game::Timer()
 
 void Game::EnemyGenerate()
 {
-	if (m_enemySpawnTimer > 2.0f - m_level)
+	if (m_enemySpawnTimer > 2.0f - m_levelTimer)
 	{
 		constexpr int MIN = -500;//乱数の範囲最低値
 		constexpr int MAX = 500;//乱数の範囲最大値
@@ -195,5 +194,29 @@ void Game::PuddingGenerate()
 		m_pudding = NewGO<Pudding>(0, "pudding");
 		m_pudding->SetPosition(position);
 		m_puddingSpawnTimer = 0.0f;
+	}
+}
+
+void Game::GameState()
+{
+	switch (m_gameState)
+	{
+		//ノーマル
+	case 0:
+		break;
+
+		//スロー
+	case 1:
+		g_renderingEngine->SetIsGrayScale(true);
+		break;
+
+		//フィニッシュ
+	case 2:
+		break;
+
+		//リザルト表示
+	case 3:
+		m_result = NewGO<Result>(0, "result");
+		break;
 	}
 }

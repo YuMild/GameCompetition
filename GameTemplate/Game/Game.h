@@ -6,7 +6,6 @@ class BackGround;
 class Clock;
 class Enemy;
 class GameCamera;
-class GameOver;
 class Hp;
 class Magic;
 class MagicPoint;
@@ -14,6 +13,7 @@ class Map;
 class Mp;
 class Player;
 class Pudding;
+class Result;
 class Score;
 
 class Game : public IGameObject
@@ -28,6 +28,7 @@ public:
 	void EnemyGenerate();
 	void MagicPointGenerate();
 	void PuddingGenerate();
+	void GameState();
 
 private:
 
@@ -42,7 +43,6 @@ private:
 	BackGround* m_backGround;
 	Clock* m_clock;
 	GameCamera* m_gameCamera;
-	GameOver* m_gameOver;
 	Hp* m_hp;
 	Magic* m_magic;
 	MagicPoint* m_magicPoint;
@@ -50,13 +50,17 @@ private:
 	Mp* m_mp;
 	Player* m_player;
 	Pudding* m_pudding;
+	Result* m_result;
 	Score* m_score;
 	SkyCube* m_skyCube;
 
 	float m_timer = 0;
-	float m_level = 0;
+	float m_slowTimer = 0;
+	float m_levelTimer = 0;
 	float m_enemySpawnTimer = 0;
 	float m_magicPointSpawnTimer = 0;
 	float m_puddingSpawnTimer = 6.0;
+
+	int m_gameState = 0;
 };
 

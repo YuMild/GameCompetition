@@ -14,9 +14,14 @@ public:
 	{
 		m_timer += addScore;
 	}
+
+	int GetScore() const
+	{
+		return m_score;
+	}
+
 	bool Start();
 	void Update();
-	void Output();
 
 private:
 

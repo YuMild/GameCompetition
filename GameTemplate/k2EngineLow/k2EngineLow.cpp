@@ -53,7 +53,6 @@ namespace nsK2EngineLow {
 		m_graphicsEngine->EndRender();
 		m_fpsLimitter.Wait();
 		m_gameTime.EndMeasurement();
-
 	}
 
 	void K2EngineLow::ExecuteUpdate()
@@ -74,7 +73,6 @@ namespace nsK2EngineLow {
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
 		// ゲームオブジェクトマネージャーの描画処理を実行。
 		GameObjectManager::GetInstance()->ExecuteRender(renderContext);
-		
 	}
 
 	/// <summary>

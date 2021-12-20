@@ -7,7 +7,6 @@
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="system\system.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -41,7 +40,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="MagicPoint.cpp" />
     <ClCompile Include="Hp.cpp">
       <Filter>Ui</Filter>
     </ClCompile>
@@ -57,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="Pudding.cpp" />
     <ClCompile Include="FontNumber.cpp" />
+    <ClCompile Include="MagicPoint.cpp">
+      <Filter>Magic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -65,7 +66,6 @@
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="GameOver.h" />
     <ClInclude Include="Fire.h">
       <Filter>Magic</Filter>
     </ClInclude>
@@ -96,7 +96,6 @@
     <ClInclude Include="Mp.h">
       <Filter>Ui</Filter>
     </ClInclude>
-    <ClInclude Include="MagicPoint.h" />
     <ClInclude Include="Hp.h">
       <Filter>Ui</Filter>
     </ClInclude>
@@ -112,6 +111,9 @@
     </ClInclude>
     <ClInclude Include="Pudding.h" />
     <ClInclude Include="FontNumber.h" />
+    <ClInclude Include="MagicPoint.h">
+      <Filter>Magic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">

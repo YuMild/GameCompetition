@@ -10,11 +10,11 @@ public:
 	~FontNumber();
 	bool Start();
 	void Init(int number);
-	void SetPosition(Vector3& position)
+	void SetPosition(const Vector3& position)
 	{
 		m_position = position;
 	}
-	void SetScale(Vector3& scale)
+	void SetScale(const Vector3& scale)
 	{
 		m_scale = scale;
 	}

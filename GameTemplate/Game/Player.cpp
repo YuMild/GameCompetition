@@ -245,7 +245,8 @@ void Player::ManageState()
 void Player::PlayAnimation()
 {
 	//プレイヤーの状態の描画
-	switch (m_playerState) {
+	switch (m_playerState)
+	{
 	case 0://プレイヤーが地面の上で静止している時
 		m_render.PlayAnimation(enAnimationClip_Idle);
 		break;

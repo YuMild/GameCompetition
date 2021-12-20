@@ -14,9 +14,3 @@ void Score::Update()
 	m_timer += g_gameTime->GetFrameDeltaTime();
 	m_score = m_timer * 100.0f;
 }
-
-void Score::Output()
-{
-	NewGO<FontNumber>(0, "fontNumber");
-	m_fontNumber->Init(m_score);
-}
