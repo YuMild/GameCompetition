@@ -1,8 +1,9 @@
 #pragma once
 
-class Enemy;
 class Bullet;
+class Enemy;
 class Fire;
+class Game;
 class Hp;
 class Mp;
 class Shine;
@@ -54,6 +55,11 @@ public:
 		return MP_SHINE;
 	}
 
+	int SetState(const int state) {
+		m_playerState = state;
+		return m_playerState;
+	}
+
 	const float COOLTIME_BULLET = 1.0f;
 	const float COOLTIME_BRINK = 3.0f;
 	const float COOLTIME_FIRE = 10.0f;
@@ -73,7 +79,6 @@ public:
 	void Render(RenderContext& rc);
 	void Move();
 	void Magic();
-	void Death();
 	void Rotation();
 	void ManageState();
 	void PlayAnimation();
@@ -83,6 +88,7 @@ public:
 		enAnimationClip_Idle,
 		enAnimationClip_Walk,
 		enAnimationClip_Jump,
+		enAnimationClip_kneelDown,
 		enAnimationClip_Num,
 	};
 
@@ -118,6 +124,7 @@ private:
 	//éQè∆
 	Bullet* m_bullet;
 	Fire* m_fire;
+	Game* m_game;
 	Hp* m_hp;
 	Mp* m_mp;
 	Shine* m_shine;

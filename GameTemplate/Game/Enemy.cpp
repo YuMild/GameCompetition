@@ -43,12 +43,16 @@ bool Enemy::Start()
 
 void Enemy::Update() 
 {
+	if (m_hp->GetHP() >= 1)
+	{
+		Move();
+		Magic();
+		PlayAnimation();
+	}
 	m_render.Update();
+	Rotation();
 	MapMove();
-	Move();
-	Magic();
 	Death();
-	PlayAnimation();
 }
 
 void Enemy::MapMove()
@@ -67,16 +71,17 @@ void Enemy::Move()
 	m_target = m_player->GetPosition() - m_position;
 	m_target.Normalize();
 	m_moveSpeed = m_target * 10.0f;
-
 	g_k2Engine->DrawVector(m_target, m_player->GetPosition());
+	m_render.SetPosition(m_position);
+}
 
+void Enemy::Rotation()
+{
 	Vector3 direction = m_moveSpeed;
 	direction.y = 0.0f;
 	direction.Normalize();
 	Quaternion quaternion;
 	quaternion.SetRotationY(atan2f(direction.x, direction.z));
-
-	m_render.SetPosition(m_position);
 	m_render.SetRotation(quaternion);
 }
 

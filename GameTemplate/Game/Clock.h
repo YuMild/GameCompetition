@@ -1,4 +1,7 @@
 #pragma once
+
+class Hp;
+
 class Clock :public IGameObject
 {
 public:
@@ -18,6 +21,8 @@ private:
 	Vector3 m_clockCenterPosition;
 	Quaternion m_secondHundRotation;
 	Quaternion m_minuteHundRotation;
+
+	Hp* m_hp;
 
 	float m_timer = 0;
 	float m_secondRotation = 0;

@@ -60,6 +60,7 @@ private:
 	float m_enemySpawnTimer = 0;
 	float m_magicPointSpawnTimer = 0;
 	float m_puddingSpawnTimer = 6.0;
+	float m_deathTimer = 0.0f;
 
 	int m_gameState = 0;
 };

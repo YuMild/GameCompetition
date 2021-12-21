@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "Fire.h"
+#include "Game.h"
 #include "Hp.h"
 #include "Mp.h"
 #include "Shine.h"
@@ -32,6 +33,8 @@ bool Player::Start()
 	m_animationClips[enAnimationClip_Walk].SetLoopFlag(true);
 	m_animationClips[enAnimationClip_Jump].Load("Assets/animData/jump.tka");
 	m_animationClips[enAnimationClip_Jump].SetLoopFlag(false);
+	m_animationClips[enAnimationClip_kneelDown].Load("Assets/animData/kneelDown.tka");
+	m_animationClips[enAnimationClip_kneelDown].SetLoopFlag(false);
 	m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
 
 	//当たり判定
@@ -66,7 +69,6 @@ void Player::Update()
 	Magic();
 	Move();
 	Timer();
-	Death();
 	ManageState();
 	PlayAnimation();
 	Rotation();
@@ -132,8 +134,10 @@ void Player::Move()
 	m_cameraRight.y = 0.0f;
 	m_cameraForward.Normalize();
 	m_cameraRight.Normalize();
-	m_moveSpeed += m_cameraForward * lStickY * 170.0f;//前後
-	m_moveSpeed += m_cameraRight * lStickX * 170.0f;//左右
+	if (m_hp->GetHP() >= 1) {
+		m_moveSpeed += m_cameraForward * lStickY * 170.0f;//前後
+		m_moveSpeed += m_cameraRight * lStickX * 170.0f;//左右
+	}
 
 	//瞬間移動魔法
 	//クールタイム非活性化時
@@ -209,11 +213,6 @@ void Player::Magic()
 	}
 }
 
-void Player::Death()
-{
-
-}
-
 void Player::Rotation() 
 {
 	//プレイヤーの回転
@@ -222,20 +221,24 @@ void Player::Rotation()
 	forward.Normalize();
 	Quaternion quaternion;
 	quaternion.SetRotationY(atan2f(forward.x, forward.z));
-	m_render.SetRotation(quaternion);
+	if (m_hp->GetHP() >= 1) {
+		m_render.SetRotation(quaternion);
+	}
 }
 
 void Player::ManageState() 
 {
 	//プレイヤーの状態
-	if (m_characterController.IsOnGround() == false) {
-		//プレイヤーが地面の上に立っていない時
+	if (m_characterController.IsOnGround() == false) {//プレイヤーが地面の上に立っていない時
 		m_playerState = 1;//ジャンプアニメーションを再生する
 		return;
 	}
-	if (fabsf(m_moveSpeed.x) >= 0.001f || fabsf(m_moveSpeed.z) >= 0.001f) {
-		//プレイヤーがxzの方向に動いている時
+	if (fabsf(m_moveSpeed.x) >= 0.001f || fabsf(m_moveSpeed.z) >= 0.001f) {//プレイヤーがxzの方向に動いている時
 		m_playerState = 2;//歩行アニメーションを再生する
+	}
+	else if (m_hp->GetHP() <= 0)
+	{
+		m_playerState = 3;
 	}
 	else {//上以外の時
 		m_playerState = 0;//立ちアニメーションを再生する
@@ -255,6 +258,9 @@ void Player::PlayAnimation()
 		break;
 	case 2://プレイヤーがxzの方向に動いている時
 		m_render.PlayAnimation(enAnimationClip_Walk);
+		break;
+	case 3://プレイヤーが死亡した時
+		m_render.PlayAnimation(enAnimationClip_kneelDown);
 		break;
 	}
 }

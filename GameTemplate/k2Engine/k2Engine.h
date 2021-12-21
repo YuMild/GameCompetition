@@ -98,14 +98,22 @@ namespace nsK2Engine {
 		{
 
 		}
+
 		void SetDrawVectorEnable()
 		{
 
 		}
+
 		void SetDrawVectorDisable()
 		{
 
 		}
+
+		K2EngineLow* GetK2EngineLow()
+		{
+			return &m_k2EngineLow;
+		}
+
 #endif // #ifdef K2_DEBUG
 	private:
 		K2EngineLow m_k2EngineLow;							// 

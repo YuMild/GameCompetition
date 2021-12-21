@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Clock.h"
 
+#include "Hp.h"
+
 Clock::Clock()
 {
 
@@ -28,16 +30,21 @@ bool Clock::Start()
 	m_clockFrame.SetPosition(m_clockCenterPosition);
 	m_clockFrame.Update();
 
+	m_hp = FindGO<Hp>("hp");
+
 	return true;
 }
 
 void Clock::Update() 
 {
-	m_clockBackGround.Update();
-	m_clockMinuteHund.Update();
-	m_clockSecondHund.Update();
-	m_clockFrame.Update();
-	Rotation();
+	if (m_hp->GetHP() >= 1) 
+	{
+		m_clockBackGround.Update();
+		m_clockMinuteHund.Update();
+		m_clockSecondHund.Update();
+		m_clockFrame.Update();
+		Rotation();
+	}
 }
 
 void Clock::Render(RenderContext& rc)

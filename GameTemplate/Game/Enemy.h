@@ -12,10 +12,12 @@ class Enemy:public IGameObject
 {
 public:
 
-	void SetPosition( Vector3 & position) {
+	void SetPosition(Vector3& position) 
+	{
 		m_position = position;
 	}
-	Vector3 GetPosition() const {
+	Vector3 GetPosition() const
+	{
 		return m_position;
 	}
 	Enemy();
@@ -33,6 +35,7 @@ public:
 		m_enemyMap.Draw(rc);
 	}
 	void Move();
+	void Rotation();
 	void Magic();
 	void Death();
 	void PlayAnimation();

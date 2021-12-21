@@ -83,10 +83,28 @@ bool Game::Start()
 
 	EffectEngine::GetInstance()->ResistEffect2D(0, u"Assets/effect/MagicCircleFire.efk");
 
+	
 	return true;
 }
 
 void Game::Update()
+{
+	//HPが0になるかプレイヤーがステージ外に落下した時
+	if (m_hp->GetHP() == 0 || m_player->GetPosition().y <= -100.0f) {
+		m_player->SetState(3);
+		m_gameState = 1;
+	}
+
+	if (m_hp->GetHP() >= 1) {
+		EnemyGenerate();
+		MagicPointGenerate();
+		PuddingGenerate();
+		Timer();
+	}
+	GameState();
+}
+
+void Game::Timer() 
 {
 	//レベル
 	if (m_timer > 12.0f)
@@ -96,20 +114,6 @@ void Game::Update()
 		}
 		m_timer = 0;
 	}
-
-	//HPが0になるかプレイヤーがステージ外に落下した時
-	if (m_hp->GetHP() == 0 || m_player->GetPosition().y <= -300.0f) {
-		m_gameState = 1;
-	}
-
-	Timer();
-	EnemyGenerate();
-	MagicPointGenerate();
-	PuddingGenerate();
-}
-
-void Game::Timer() 
-{
 	m_timer += g_gameTime->GetFrameDeltaTime();
 	m_enemySpawnTimer += g_gameTime->GetFrameDeltaTime();
 	m_magicPointSpawnTimer += g_gameTime->GetFrameDeltaTime();
@@ -207,11 +211,24 @@ void Game::GameState()
 
 		//スロー
 	case 1:
+		//モノクロ
 		g_renderingEngine->SetIsGrayScale(true);
+
+		//FPSを下げる
+		g_k2Engine->GetK2EngineLow()->SetFrameRateMode(K2EngineLow::enFrameRateMode_Variable, 20.0f);
+
+		//フィニッシュまでのカウントダウン
+		m_deathTimer += g_gameTime->GetFrameDeltaTime();
+		if (m_deathTimer >= 3.0f)
+		{
+			m_gameState = 2;
+		}
 		break;
 
 		//フィニッシュ
 	case 2:
+
+
 		break;
 
 		//リザルト表示
