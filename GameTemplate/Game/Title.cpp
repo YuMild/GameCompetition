@@ -16,7 +16,7 @@ Title::~Title()
 bool Title::Start()
 {
 	//‰æ‘œ
-	m_titleRender.Init("Assets/sprite/Title.dds", 1920.0f, 1080.0f);
+	m_titleRender.Init("Assets/sprite/Windows/Title.dds", 1920.0f, 1080.0f);
 
 	//‰¹º
 	g_soundEngine->ResistWaveFileBank(0, "Assets/sound/Title.wav");

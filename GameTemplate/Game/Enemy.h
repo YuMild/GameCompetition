@@ -3,6 +3,7 @@
 class Bullet;
 class Player;
 class Fire;
+class Game;
 class Hp;
 class Map;
 class Shine;
@@ -34,6 +35,14 @@ public:
 		}
 		m_enemyMap.Draw(rc);
 	}
+	void EnemyMapGray(RenderContext& rc)
+	{
+		if (m_isStart == false)
+		{
+			return;
+		}
+		m_enemyMapGray.Draw(rc);
+	}
 	void Move();
 	void Rotation();
 	void Magic();
@@ -54,6 +63,7 @@ private:
 	Quaternion m_rotation;
 	ModelRender m_render;
 	SpriteRender m_enemyMap;
+	SpriteRender m_enemyMapGray;
 
 	//ベクトル
 	Vector3 m_enemyMapPosition;
@@ -68,6 +78,7 @@ private:
 	//参照
 	Bullet* m_bullet;
 	Fire* m_fire;
+	Game* m_game;
 	Hp* m_hp;
 	Player* m_player;
 	Shine* m_shine;

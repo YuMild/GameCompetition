@@ -20,6 +20,11 @@ class Game : public IGameObject
 {
 
 public:
+
+	int GetManageState() const
+	{
+		return m_gameState;
+	}
 	Game();
 	~Game();
 	bool Start();
@@ -28,7 +33,7 @@ public:
 	void EnemyGenerate();
 	void MagicPointGenerate();
 	void PuddingGenerate();
-	void GameState();
+	void ManageState();
 
 private:
 
@@ -54,6 +59,8 @@ private:
 	Score* m_score;
 	SkyCube* m_skyCube;
 
+	bool m_isStart = true;
+
 	float m_timer = 0;
 	float m_slowTimer = 0;
 	float m_levelTimer = 0;
@@ -61,6 +68,7 @@ private:
 	float m_magicPointSpawnTimer = 0;
 	float m_puddingSpawnTimer = 6.0;
 	float m_deathTimer = 0.0f;
+	float m_finishTimer = 0.0f;
 
 	int m_gameState = 0;
 };

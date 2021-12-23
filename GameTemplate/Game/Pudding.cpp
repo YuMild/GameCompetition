@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Pudding.h"
 
+#include "Game.h"
 #include "Map.h"
 #include "Player.h"
 #include "Score.h"
@@ -18,7 +19,8 @@ Pudding::~Pudding()
 bool Pudding::Start()
 {
 	//画像
-	m_puddingMap.Init("Assets/sprite/Pudding.DDS", 30.0f, 30.0f);
+	m_puddingMap.Init("Assets/sprite/Map/Pudding.DDS", 30.0f, 30.0f);
+	m_puddingMapGray.Init("Assets/sprite/Map/PuddingGray.DDS", 30.0f, 30.0f);
 
 	//エフェクト
 	EffectEngine::GetInstance()->ResistEffect(13, u"Assets/effect/Pudding.efk");
@@ -30,9 +32,12 @@ bool Pudding::Start()
 	//サウンド
 	g_soundEngine->ResistWaveFileBank(13, "Assets/sound/PuddingGet.wav");
 
+	m_game = FindGO<Game>("game");
 	m_map = FindGO<Map>("map");
 	m_player = FindGO<Player>("player");
 	m_score = FindGO<Score>("score");
+
+	m_isStart = true;
 
 	return true;
 }
@@ -62,6 +67,11 @@ void Pudding::Update()
 
 void Pudding::MapMove()
 {
-	m_puddingMap.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
-	m_puddingMap.Update();
+	if (m_game->GetManageState() == 0)
+	{
+		m_puddingMap.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
+		m_puddingMap.Update();
+	}
+	m_puddingMapGray.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
+	m_puddingMapGray.Update();
 }

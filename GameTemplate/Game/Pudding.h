@@ -1,5 +1,6 @@
 #pragma once
 
+class Game;
 class Map;
 class Player;
 class Score;
@@ -24,11 +25,20 @@ public:
 		}
 		m_puddingMap.Draw(rc);
 	}
+	void  PuddingMapGray(RenderContext& rc)
+	{
+		if (m_isStart == false)
+		{
+			return;
+		}
+		m_puddingMapGray.Draw(rc);
+	}
 
 private:
 
 	//画像
 	SpriteRender m_puddingMap;
+	SpriteRender m_puddingMapGray;
 
 	//ベクトル
 	Vector3 m_position;
@@ -41,6 +51,7 @@ private:
 	SoundSource* m_puddingGetSE;
 
 	//参照
+	Game* m_game;
 	Map* m_map;
 	Player* m_player;
 	Score* m_score;

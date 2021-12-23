@@ -1,5 +1,6 @@
 #pragma once
 
+class Game;
 class Mp;
 class Player;
 
@@ -15,6 +16,7 @@ public:
 
 private:
 	SpriteRender m_typeFrame[4];
+	SpriteRender m_typeFrameGray[4];
 	SpriteRender m_typeFire;
 	SpriteRender m_typeWater;
 	SpriteRender m_typeWind;
@@ -28,6 +30,7 @@ private:
 	SpriteRender m_windChain;
 	SpriteRender m_shineChain;
 
+	Game* m_game;
 	Mp* m_mp;
 	Player* m_player;
 

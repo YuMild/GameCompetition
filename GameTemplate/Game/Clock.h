@@ -1,6 +1,6 @@
 #pragma once
 
-class Hp;
+class Game;
 
 class Clock :public IGameObject
 {
@@ -15,6 +15,7 @@ public:
 private:
 	SpriteRender m_clockBackGround;
 	SpriteRender m_clockFrame;
+	SpriteRender m_clockFrameGray;
 	SpriteRender m_clockSecondHund;
 	SpriteRender m_clockMinuteHund;
 
@@ -22,7 +23,7 @@ private:
 	Quaternion m_secondHundRotation;
 	Quaternion m_minuteHundRotation;
 
-	Hp* m_hp;
+	Game* m_game;
 
 	float m_timer = 0;
 	float m_secondRotation = 0;

@@ -47,10 +47,16 @@ namespace nsK2Engine {
             m_tonemap.NotifyChangeScene(changeSceneTime);
         }
 
+        void SetIsAllGrayScale(bool isAllGrayScale)
+        {
+            m_isAllGrayScale = isAllGrayScale;
+        }
+
         void SetIsGrayScale(bool isGrayScale)
         {
             m_isGrayScale = isGrayScale;
         }
+
     private:
         Bloom m_bloom;	    //ブルーム
         Dof m_dof;		    //被写界深度
@@ -59,6 +65,7 @@ namespace nsK2Engine {
         Ssao m_ssao;        //SSAO(スクリーンスペースアンビエントオクルージョン)。
         Ssr m_ssr;          //SSR(スクリーンスペースリフレクション)。
 
+        bool m_isAllGrayScale = false;
         bool m_isGrayScale = false;
     };
 }

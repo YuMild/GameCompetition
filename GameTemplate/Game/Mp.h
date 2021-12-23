@@ -1,4 +1,7 @@
 #pragma once
+
+class Game;
+
 class Mp :public IGameObject
 {
 public:
@@ -33,7 +36,11 @@ public:
 
 private:
 	SpriteRender m_mpBar;
+	SpriteRender m_mpBarGray;
 	SpriteRender m_mpFrame;
+	SpriteRender m_mpFrameGray;
+
+	Game* m_game;
 
 	float m_mp = 100.0f;
 	float m_timer = 0.0f;

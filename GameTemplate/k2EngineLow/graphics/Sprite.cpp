@@ -26,6 +26,7 @@ namespace nsK2EngineLow {
                 m_textures[texNo].InitFromDDSFile(wddsFilePath);
                 texNo++;
             }
+            m_filePath = initData.m_ddsFilePath[0];
             m_numTexture = texNo;
         }
         else if (initData.m_textures[0] != nullptr) {

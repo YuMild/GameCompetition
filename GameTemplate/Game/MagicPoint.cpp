@@ -33,6 +33,8 @@ bool MagicPoint::Start()
 	m_mp = FindGO<Mp>("mp");
 	m_player = FindGO<Player>("player");
 
+	m_isStart = true;
+
 	return true;
 }
 

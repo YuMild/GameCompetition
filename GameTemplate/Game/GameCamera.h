@@ -2,6 +2,7 @@
 
 #include "camera/SpringCamera.h"
 
+class Game;
 class Player;
 
 class GameCamera : public IGameObject
@@ -21,6 +22,7 @@ private:
 	Vector3 m_toCameraPos = Vector3::One;
 
 	//éQè∆
+	Game* m_game;
 	Player* m_player;
 	SpringCamera m_springCamera;
 };

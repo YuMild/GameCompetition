@@ -77,6 +77,10 @@ namespace nsK2Engine {
 		/// エンジンの処理を実行。
 		/// </summary>
 		void Execute();
+		K2EngineLow* GetK2EngineLow()
+		{
+			return &m_k2EngineLow;
+		}
 #ifdef K2_DEBUG
 		/// <summary>
 		/// ベクトルのデバッグ出力
@@ -109,10 +113,7 @@ namespace nsK2Engine {
 
 		}
 
-		K2EngineLow* GetK2EngineLow()
-		{
-			return &m_k2EngineLow;
-		}
+	
 
 #endif // #ifdef K2_DEBUG
 	private:

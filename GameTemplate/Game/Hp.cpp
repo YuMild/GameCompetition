@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Hp.h"
+#include "Game.h"
 
 Hp::Hp() {
 
@@ -18,17 +19,22 @@ bool Hp::Start()
 
 	for (m_num = 0; m_num < m_hp; m_num++)
 	{
-		m_hpInside[m_num].Init("Assets/sprite/HPInside.DDS", 100.0f, 100.0f);
+		m_hpInside[m_num].Init("Assets/sprite/Hp/HPInside.DDS", 100.0f, 100.0f);
 		m_hpInside[m_num].SetPosition(positionList[m_num]);
 		m_hpInside[m_num].Update();
-		m_hpFrame[m_num].Init("Assets/sprite/HPFrame.DDS", 100.0f, 100.0f);
+		m_hpFrame[m_num].Init("Assets/sprite/Hp/HPFrame.DDS", 100.0f, 100.0f);
 		m_hpFrame[m_num].SetPosition(positionList[m_num]);
 		m_hpFrame[m_num].Update();
+		m_hpFrameGray[m_num].Init("Assets/sprite/Hp/HPGray.DDS", 100.0f, 100.0f);
+		m_hpFrameGray[m_num].SetPosition(positionList[m_num]);
+		m_hpFrameGray[m_num].Update();
 	}
 
 	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/Damage1.wav");
 	g_soundEngine->ResistWaveFileBank(9, "Assets/sound/Damage2.wav");
 	g_soundEngine->ResistWaveFileBank(10, "Assets/sound/Damage3.wav");
+
+	m_game = FindGO<Game>("game");
 
 	return true;
 }
@@ -39,9 +45,10 @@ void Hp::Update()
 	{
 		m_hpInside[m_num].Update();
 	}
-	for (m_num = 0; m_num < m_frameNum; m_num++)
+	
+	for (m_num = 0; m_num < m_hpFrameNum; m_num++)
 	{
-		m_hpFrame[m_frameNum].Update();
+		m_hpFrame[m_hpFrameNum].Update();
 	}
 	Damage();
 }
@@ -52,9 +59,18 @@ void Hp::Render(RenderContext& rc)
 	{
 		m_hpInside[m_num].Draw(rc);
 	}
-	for (m_num = 0; m_num < m_frameNum; m_num++)
+
+	for (m_num = 0; m_num < m_hpFrameGrayNum; m_num++)
 	{
-		m_hpFrame[m_num].Draw(rc);
+		m_hpFrameGray[m_num].Draw(rc);
+	}
+
+	if (m_game->GetManageState() == 0)
+	{
+		for (m_num = 0; m_num < m_hpFrameNum; m_num++)
+		{
+			m_hpFrame[m_num].Draw(rc);
+		}
 	}
 }
 

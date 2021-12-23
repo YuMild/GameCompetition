@@ -61,17 +61,25 @@ namespace nsK2Engine {
         // SSR
         m_ssr.Render(rc, mainRenderTarget);
 
-        if(m_isGrayScale)
-        { 
+        if (m_isGrayScale)
+        {
             //グレースケール。
             m_tonemap.Render(rc, mainRenderTarget);
         }
+       
         g_renderingEngine->SetMainRenderTargetAndDepthStencilBuffer(rc);
 
         //メインレンダーターゲットをPRESENTからRENDERTARGETへ。
         rc.WaitUntilToPossibleSetRenderTarget(mainRenderTarget);
         //ここでエフェクトドロー。
         EffectEngine::GetInstance()->Draw();
+
+        if (m_isAllGrayScale)
+        {
+            //グレースケール。
+            m_tonemap.Render(rc, mainRenderTarget);
+        }
+
         //メインレンダーターゲットをTARGETからPRESENTへ。
         rc.WaitUntilFinishDrawingToRenderTarget(mainRenderTarget);
         // ブルーム

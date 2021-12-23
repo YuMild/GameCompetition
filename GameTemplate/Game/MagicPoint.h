@@ -15,6 +15,7 @@ public:
 	bool Start();
 	void Update();
 	void MapMove();
+
 	void MagicPointMap(RenderContext& rc)
 	{
 		if (m_isStart == false)
@@ -23,11 +24,20 @@ public:
 		}
 		m_magicPointMap.Draw(rc);
 	}
+	void MagicPointMapGray(RenderContext& rc)
+	{
+		if (m_isStart == false)
+		{
+			return;
+		}
+		m_magicPointMapGray.Draw(rc);
+	}
 
 private:
 
 	//‰æ‘œ
 	SpriteRender m_magicPointMap;
+	SpriteRender m_magicPointMapGray;
 
 	//ƒxƒNƒgƒ‹
 	Vector3 m_position;

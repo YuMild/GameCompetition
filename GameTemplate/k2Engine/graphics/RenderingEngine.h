@@ -254,6 +254,12 @@ namespace nsK2Engine {
         {
             return m_deferredLightingCB;
         }
+
+        void SetIsAllGrayScale(bool isAllGrayScale)
+        {
+            m_postEffect.SetIsAllGrayScale(isAllGrayScale);
+        }
+
         void SetIsGrayScale(bool isGrayScale)
         {
             m_postEffect.SetIsGrayScale(isGrayScale);

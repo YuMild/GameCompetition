@@ -232,5 +232,6 @@ namespace nsK2EngineLow {
 		Shader				m_ps;					//ピクセルシェーダー。
 		Vector4				m_mulColor = Vector4::White;	//乗算カラー。
 		Vector2				m_pivot;
+		const char* m_filePath = nullptr;
 	};
 }

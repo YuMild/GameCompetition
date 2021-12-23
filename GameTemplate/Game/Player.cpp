@@ -58,6 +58,7 @@ bool Player::Start()
 	m_render.SetScale({ 0.7f,0.7f,0.7f });//初期値だから実は書かなくてもいい
 	m_render.Update();
 
+	m_game = FindGO<Game>("game");
 	m_hp = FindGO<Hp>("hp");
 	m_mp = FindGO<Mp>("mp");
 
@@ -66,13 +67,23 @@ bool Player::Start()
 
 void Player::Update()
 {
-	Magic();
-	Move();
-	Timer();
+	if (m_game->GetManageState() == 0)
+	{
+		Magic();
+		Move();
+		Timer();
+		Rotation();
+	}
+	else
+	{
+		m_moveSpeed.x = 0.0f;
+		m_moveSpeed.y = 0.0f;
+		m_moveSpeed.z = 0.0f;
+	}
 	ManageState();
 	PlayAnimation();
-	Rotation();
 	m_render.Update();
+
 }
 
 void Player::Timer() 
@@ -230,10 +241,11 @@ void Player::ManageState()
 {
 	//プレイヤーの状態
 	if (m_characterController.IsOnGround() == false) {//プレイヤーが地面の上に立っていない時
+		m_moveSpeed.y -= 1.0f;
 		m_playerState = 1;//ジャンプアニメーションを再生する
 		return;
 	}
-	if (fabsf(m_moveSpeed.x) >= 0.001f || fabsf(m_moveSpeed.z) >= 0.001f) {//プレイヤーがxzの方向に動いている時
+	if (fabsf(m_moveSpeed.x) >= 0.10f || fabsf(m_moveSpeed.z) >= 0.1f) {//プレイヤーがxzの方向に動いている時
 		m_playerState = 2;//歩行アニメーションを再生する
 	}
 	else if (m_hp->GetHP() <= 0)

@@ -4,6 +4,7 @@
 #include "Bullet.h"
 #include "Player.h"
 #include "Fire.h"
+#include "Game.h"
 #include "Hp.h"
 #include "Map.h"
 #include "Shine.h"
@@ -25,8 +26,10 @@ bool Enemy::Start()
 	m_animationClips[enAnimationClip_Walk].Load("Assets/animData/walk.tka");
 	m_animationClips[enAnimationClip_Walk].SetLoopFlag(true);
 	m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
-	m_enemyMap.Init("Assets/sprite/EnemyMap.dds", 200.0f, 200.0f);
+	m_enemyMap.Init("Assets/sprite/Map/EnemyMap.dds", 200.0f, 200.0f);
+	m_enemyMapGray.Init("Assets/sprite/Map/EnemyMapGray.dds", 200.0f, 200.0f);
 
+	m_game = FindGO<Game>("game");
 	m_hp = FindGO<Hp>("hp");
 	m_map = FindGO<Map>("map");
 	m_player = FindGO<Player>("player");
@@ -37,7 +40,9 @@ bool Enemy::Start()
 
 	//音声
 	g_soundEngine->ResistWaveFileBank(11, "Assets/sound/EnemyDeath.wav");
+
 	m_isStart = true;
+
 	return true;
 }
 
@@ -47,9 +52,9 @@ void Enemy::Update()
 	{
 		Move();
 		Magic();
-		PlayAnimation();
 	}
 	m_render.Update();
+	PlayAnimation();
 	Rotation();
 	MapMove();
 	Death();
@@ -57,8 +62,14 @@ void Enemy::Update()
 
 void Enemy::MapMove()
 {
-	m_enemyMap.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
-	m_enemyMap.Update();
+	if (m_game->GetManageState() == 0)
+	{
+		m_enemyMap.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
+		m_enemyMap.Update();
+	}
+
+	m_enemyMapGray.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
+	m_enemyMapGray.Update();
 }
 
 void Enemy::Render(RenderContext& rc)
@@ -157,7 +168,8 @@ void Enemy::Death()
 void Enemy::PlayAnimation()
 {
 	//魔法が活性化時、待機アニメーションを再生する
-	if (m_shineMoving == true || m_windMoving == true) {
+	if (m_shineMoving == true || m_windMoving == true || m_hp->GetHP() <= 0)
+	{
 		m_render.PlayAnimation(enAnimationClip_Idle);
 	}
 	else
