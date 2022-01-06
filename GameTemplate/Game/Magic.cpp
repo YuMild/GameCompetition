@@ -94,11 +94,14 @@ void Magic::Update()
 void Magic::Cut() 
 {
 	float fire = m_player->GetFireCoolTimer() / m_player->COOLTIME_FIRE;
+	float water = m_player->GetWaterCoolTimer() / m_player->COOLTIME_WATER;
 	float wind = m_player->GetWindCoolTimer() / m_player->COOLTIME_WIND;
 	float shine = m_player->GetShineCoolTimer() / m_player->COOLTIME_SHINE;
 
 	m_typeFire.SetIsDisplayRestrictionDownSide(false);
 	m_typeFire.SetLimitedY(fire);
+	m_typeWater.SetIsDisplayRestrictionDownSide(false);
+	m_typeWater.SetLimitedY(water);
 	m_typeWind.SetIsDisplayRestrictionDownSide(false);
 	m_typeWind.SetLimitedY(wind);
 	m_typeShine.SetIsDisplayRestrictionDownSide(false);
@@ -130,6 +133,9 @@ void Magic::Render(RenderContext& rc)
 
 	if (m_mp->GetMP() < m_player->GetFireMP()) {
 		m_fireChain.Draw(rc);
+	}
+	if (m_mp->GetMP() < m_player->GetWaterMP()) {
+		m_waterChain.Draw(rc);
 	}
 	if (m_mp->GetMP() < m_player->GetWindMP()) {
 		m_windChain.Draw(rc);

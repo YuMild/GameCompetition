@@ -7,6 +7,7 @@ class Game;
 class Hp;
 class Map;
 class Shine;
+class Water;
 class Wind;
 
 class Enemy:public IGameObject
@@ -44,22 +45,11 @@ public:
 		m_enemyMapGray.Draw(rc);
 	}
 	void Move();
-	void Rotation();
 	void Magic();
 	void Death();
-	void PlayAnimation();
-
-	//アニメーション
-	enum EnAnimationClip {
-		enAnimationClip_Idle,
-		enAnimationClip_Walk,
-		enAnimationClip_Num,
-	};
 
 private:
 
-	//描画
-	AnimationClip m_animationClips[enAnimationClip_Num];
 	Quaternion m_rotation;
 	ModelRender m_render;
 	SpriteRender m_enemyMap;
@@ -73,6 +63,7 @@ private:
 	Vector3 m_forward;
 	Vector3 m_spawnDiff;
 	Vector3 m_fireDiff;
+	Vector3 m_waterDiff;
 	Vector3 m_windDiff;
 
 	//参照
@@ -83,12 +74,14 @@ private:
 	Player* m_player;
 	Shine* m_shine;
 	Map* m_map;
+	Water* m_water;
 	Wind* m_wind;
 
 	//音声
 	SoundSource* m_enemyDeathSE;
 
 	int m_fireUnit;
+	int m_waterUnit;
 	int m_windUnit;
 	bool m_shineMoving = false;
 	bool m_windMoving = false;

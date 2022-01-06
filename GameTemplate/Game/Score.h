@@ -2,7 +2,6 @@
 
 using namespace std;
 
-class FontNumber;
 class Game;
 class Pudding;
 
@@ -11,19 +10,31 @@ class Score : public IGameObject
 public:
 
 	//‰ÁŽZ
-	void AddScore(const float addScore)
+	int AddPuddingScore(const int addPuddingScore)
 	{
-		m_timer += addScore;
+		m_puddingScore += addPuddingScore;
+		return m_puddingScore;
 	}
 
-	int GetScore() const
+	float AddTotalScore(const float addTotalScore)
 	{
-		return m_score;
+		m_totalScoreTimer += addTotalScore;
+		return m_totalScore;
 	}
 
-	int GetScoreOld() const
+	int GetTimeScoreOld() const
 	{
-		return m_scoreOld;
+		return m_timeScoreOld;
+	}
+
+	int GetPuddingScoreOld() const
+	{
+		return m_puddingScoreOld;
+	}
+
+	int GetTotalScoreOld() const
+	{
+		return m_totalScoreOld;
 	}
 
 	bool Start();
@@ -33,12 +44,17 @@ private:
 
 	FontRender m_fontRender;
 
-	FontNumber* m_fontNumber;
 	Game* m_game;
 	Pudding* m_pudding;
 
-	int m_score = 0;
-	int m_scoreOld = 0;
-	float m_timer = 0.0f;
+	int m_timeScore = 0;
+	int m_timeScoreOld = 0;
+	int m_puddingScore = 0;
+	int m_puddingScoreOld;
+	float m_totalScore = 0.0f;
+	float m_totalScoreOld = 0.0f;
+
+	float m_timeScoreTimer = 0.0f;
+	float m_totalScoreTimer = 0.0f;
 };
 

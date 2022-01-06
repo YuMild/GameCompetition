@@ -202,6 +202,11 @@ void Game::PuddingGenerate()
 
 void Game::ManageState()
 {
+	if (m_gameState >= 1)
+	{
+		m_stateTimer += g_gameTime->GetFrameDeltaTime();
+	}
+
 	switch (m_gameState)
 	{
 	case 0://生存時
@@ -209,6 +214,7 @@ void Game::ManageState()
 		{
 			m_player->SetState(3);
 			m_gameState = 1;
+			m_backGroundBGM->Stop();
 		}
 		break;
 
@@ -221,21 +227,22 @@ void Game::ManageState()
 		g_k2Engine->GetK2EngineLow()->SetFrameRateMode(K2EngineLow::enFrameRateMode_Variable, 20.0f);
 
 		//フィニッシュまでのカウントアップ
-		m_deathTimer += g_gameTime->GetFrameDeltaTime();
-		if (m_deathTimer >= 3.0f)
+
+		if (m_stateTimer >= 2.0f)
 		{
 			m_gameState = 2;
+			m_stateTimer = 0.0f;
 		}
 		break;
 
 	case 2://フィニッシュ時
 
 		//リザルトまでのカウントアップ
-		m_finishTimer += g_gameTime->GetFrameDeltaTime();
 
-		if (m_finishTimer >= 2.0f)
+		if (m_stateTimer >= 1.5f)
 		{
 			m_gameState = 3;
+			m_stateTimer = 0.0f;
 		}
 		break;
 
@@ -247,9 +254,61 @@ void Game::ManageState()
 			m_isStart = false;
 		}
 
+		if (m_stateTimer >= 1.0f)
+		{
+			m_gameState = 4; m_stateTimer = 0.0f;
+		}
+
 		break;
 
-	case 4:
+	case 4://タイムスコア表示
+
+		if (m_stateTimer >= 0.8f)
+		{
+			m_gameState = 5; m_stateTimer = 0.0f;
+		}
+
+		break;
+
+	case 5://プリンスコア表示
+
+		if (m_stateTimer >= 0.8f)
+		{
+			m_gameState = 6; m_stateTimer = 0.0f;
+		}
+
+		break;
+
+	case 6://トータルスコア表示
+
+		if (m_stateTimer >= 1.5f)
+		{
+			if (m_score->GetTotalScoreOld() < 5000.0f)//Dランク
+			{
+				m_gameState = 7; m_stateTimer = 0.0f;
+			}
+
+			else if (m_score->GetTotalScoreOld() > 5001.0f && m_score->GetTotalScoreOld() < 10000.0f)//Cランク
+			{
+				m_gameState = 8; m_stateTimer = 0.0f;
+			}
+
+			else if (m_score->GetTotalScoreOld() > 10001.0f && m_score->GetTotalScoreOld() < 15000.0f)//Bランク
+			{
+				m_gameState = 9; m_stateTimer = 0.0f;
+			}
+
+			else if (m_score->GetTotalScoreOld() > 15001.0f && m_score->GetTotalScoreOld() < 20000.0f)//Aランク
+			{
+				m_gameState = 10; m_stateTimer = 0.0f;
+			}
+
+			else if (m_score->GetTotalScoreOld() > 20001.0f)//Sランク
+			{
+				m_gameState = 11; m_stateTimer = 0.0f;
+			}
+		}
+
 		break;
 	}
 }

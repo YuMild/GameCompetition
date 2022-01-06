@@ -9,6 +9,10 @@ class Pudding :public IGameObject
 {
 public:
 
+	int GetGetPudding() const
+	{
+		return m_getPudding;
+	}
 	void SetPosition(Vector3& position) {
 		m_position = position;
 	}
@@ -55,6 +59,8 @@ private:
 	Map* m_map;
 	Player* m_player;
 	Score* m_score;
+
+	int m_getPudding = 0;
 
 	float m_aliveTimer = 0;
 };

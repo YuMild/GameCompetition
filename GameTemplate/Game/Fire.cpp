@@ -14,12 +14,6 @@ Fire::~Fire() {
 bool Fire::Start() {
 
 	m_player = FindGO<Player>("player");
-
-	//‰¹º
-	g_soundEngine->ResistWaveFileBank(4, "Assets/sound/Fire.wav");
-	m_fireSE = NewGO<SoundSource>(4);
-	m_fireSE->Init(4);
-	m_fireSE->Play(false);
 	
 	EffectEngine::GetInstance()->ResistEffect(2,u"Assets/effect/Fire.efk");
 	m_fireEF = NewGO<EffectEmitter>(2);
@@ -33,10 +27,17 @@ bool Fire::Start() {
 	m_fireMagicCircleEF->SetScale(Vector3::One * 50.0f);
 	m_fireMagicCircleEF->Play();
 
+	//‰¹º
+	g_soundEngine->ResistWaveFileBank(4, "Assets/sound/Fire.wav");
+	m_fireSE = NewGO<SoundSource>(4);
+	m_fireSE->Init(4);
+	m_fireSE->Play(false);
+
 	return true;
 }
 
-void Fire::Update() {
+void Fire::Update()
+{
 	m_aliveTimer += g_gameTime->GetFrameDeltaTime();
 
 	if (m_aliveTimer <= 0.7f) {//–‚–@w

@@ -7,11 +7,23 @@ class Game;
 class Hp;
 class Mp;
 class Shine;
+class Water;
 class Wind;
 
 class Player :public IGameObject
 {
 public:
+
+	const float COOLTIME_BULLET = 1.0f;
+	const float COOLTIME_FIRE = 10.0f;
+	const float COOLTIME_WATER = 3.0f;
+	const float COOLTIME_WIND = 5.0f;
+	const float COOLTIME_SHINE = 20.0f;
+
+	const float MP_FIRE = 15.0f;
+	const float MP_WATER = 5.0f;
+	const float MP_WIND = 10.0f;
+	const float MP_SHINE = 20.0f;
 
 	Vector3 GetPosition() const
 	{
@@ -26,6 +38,9 @@ public:
 	bool GetFire() const {
 		return m_fireMagazine;
 	}
+	bool GetWater() const {
+		return m_waterMagazine;
+	}
 	bool GetWind() const {
 		return m_windMagazine;
 	}
@@ -36,6 +51,9 @@ public:
 	//クールタイマー
 	float GetFireCoolTimer() const {
 		return m_fireCoolTimer;
+	}
+	float GetWaterCoolTimer() const {
+		return m_waterCoolTimer;
 	}
 	float GetWindCoolTimer() const {
 		return m_windCoolTimer;
@@ -48,6 +66,9 @@ public:
 	float GetFireMP() const {
 		return MP_FIRE;
 	}
+	float GetWaterMP() const {
+		return MP_WATER;
+	}
 	float GetWindMP() const {
 		return MP_WIND;
 	}
@@ -59,17 +80,6 @@ public:
 		m_playerState = state;
 		return m_playerState;
 	}
-
-	const float COOLTIME_BULLET = 1.0f;
-	const float COOLTIME_BRINK = 3.0f;
-	const float COOLTIME_FIRE = 10.0f;
-	const float COOLTIME_WIND = 5.0f;
-	const float COOLTIME_SHINE = 20.0f;
-
-	const float MP_BRINK = 3.0f;
-	const float MP_FIRE = 10.0f;
-	const float MP_WIND = 5.0f;
-	const float MP_SHINE = 20.0f;
 
 	Player();
 	~Player();
@@ -109,11 +119,10 @@ private:
 	Vector3 m_moveSpeed;
 	Vector3 m_forward;
 	Vector3 m_right;
-	Vector3 m_magicCirclePosition;
 	
 	//エフェクト
-	EffectEmitter* m_brinkEF;
 	EffectEmitter* m_coolTimeCompleteFireEF;
+	EffectEmitter* m_coolTimeCompleteWaterEF;
 	EffectEmitter* m_coolTimeCompleteWindEF;
 	EffectEmitter* m_coolTimeCompleteShineEF;
 
@@ -128,19 +137,22 @@ private:
 	Hp* m_hp;
 	Mp* m_mp;
 	Shine* m_shine;
+	Water* m_water;
 	Wind* m_wind;
 
 	bool m_bulletMagazine = true;
 	bool m_fireMagazine = true;
+	bool m_waterMagazine = true;
 	bool m_shineMagazine = true;
 	bool m_windMagazine = true;
-	bool m_brinkMagazine = true;
+	bool m_waterIsExe = false;
 
 	float m_bulletCoolTimer = 1.0f;
 	float m_fireCoolTimer = 10.0f;
-	float m_windCoolTimer = 15.0f;
+	float m_waterCoolTimer = 5.0f;
+	float m_windCoolTimer = 5.0f;
 	float m_shineCoolTimer = 20.0f;
-	float m_brinkCoolTimer = 5.0f;
+	float m_waterExeTimer = 0.0f;
 
 	int m_playerState = 0;
 };

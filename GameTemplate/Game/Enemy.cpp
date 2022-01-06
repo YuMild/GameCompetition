@@ -21,11 +21,7 @@ Enemy::~Enemy()
 
 bool Enemy::Start()
 {
-	m_animationClips[enAnimationClip_Idle].Load("Assets/animData/idle.tka");
-	m_animationClips[enAnimationClip_Idle].SetLoopFlag(true);
-	m_animationClips[enAnimationClip_Walk].Load("Assets/animData/walk.tka");
-	m_animationClips[enAnimationClip_Walk].SetLoopFlag(true);
-	m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
+	m_render.Init("Assets/modelData/teddyBear.tkm");
 	m_enemyMap.Init("Assets/sprite/Map/EnemyMap.dds", 200.0f, 200.0f);
 	m_enemyMapGray.Init("Assets/sprite/Map/EnemyMapGray.dds", 200.0f, 200.0f);
 
@@ -54,8 +50,6 @@ void Enemy::Update()
 		Magic();
 	}
 	m_render.Update();
-	PlayAnimation();
-	Rotation();
 	MapMove();
 	Death();
 }
@@ -79,15 +73,12 @@ void Enemy::Render(RenderContext& rc)
 
 void Enemy::Move() 
 {
+	m_position.y = 10.0f;
 	m_target = m_player->GetPosition() - m_position;
 	m_target.Normalize();
 	m_moveSpeed = m_target * 10.0f;
 	g_k2Engine->DrawVector(m_target, m_player->GetPosition());
 	m_render.SetPosition(m_position);
-}
-
-void Enemy::Rotation()
-{
 	Vector3 direction = m_moveSpeed;
 	direction.y = 0.0f;
 	direction.Normalize();
@@ -107,6 +98,7 @@ void Enemy::Magic()
 			DeleteGO(this);
 			m_enemyDeathSE = NewGO<SoundSource>(11);
 			m_enemyDeathSE->Init(11);
+			m_enemyDeathSE->SetVolume(1.5f);
 			m_enemyDeathSE->Play(false);
 		}
 	}
@@ -115,6 +107,7 @@ void Enemy::Magic()
 	const auto& shineList = FindGOs<Shine>("shine");
 	int shineSize = shineList.size();
 	m_shineMoving = false;
+
 	//光魔法が活性化時、enemyが停止する
 	for (int i = 0; i < shineSize; i++) {
 		m_shineMoving = true;
@@ -131,7 +124,7 @@ void Enemy::Magic()
 		m_target = windList[m_windUnit]->GetPosition() - m_position;
 		m_target.Normalize();
 		if (m_windDiff.Length() <= 300.0f) {
-			m_shineMoving = true;
+			m_windMoving = true;
 			m_moveSpeed = m_target * 2.0f;
 			m_position += m_moveSpeed;
 		}
@@ -159,21 +152,8 @@ void Enemy::Death()
 	}
 
 	Vector3 unitydiff = m_player->GetPosition() - m_position;
-		if (unitydiff.Length() <= 10.0f) {
-			DeleteGO(this);
-			m_hp->SubHP(1);
-		}
-}
-
-void Enemy::PlayAnimation()
-{
-	//魔法が活性化時、待機アニメーションを再生する
-	if (m_shineMoving == true || m_windMoving == true || m_hp->GetHP() <= 0)
-	{
-		m_render.PlayAnimation(enAnimationClip_Idle);
-	}
-	else
-	{
-		m_render.PlayAnimation(enAnimationClip_Walk);
+	if (unitydiff.Length() <= 10.0f) {
+		DeleteGO(this);
+		m_hp->SubHP(1);
 	}
 }

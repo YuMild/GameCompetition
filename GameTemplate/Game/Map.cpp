@@ -46,6 +46,7 @@ void Map::Update()
 	Quaternion playerRotation;
 	playerRotation.SetRotationZ(atan2(g_camera3D->GetForward().x, -g_camera3D->GetForward().z));
 	m_playerMap.SetRotation(playerRotation);
+	m_playerMapGray.SetRotation(playerRotation);
 
 	m_mapBackGround.Update();
 	m_playerMap.Update();

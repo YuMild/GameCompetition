@@ -1,15 +1,16 @@
 #pragma once
 
-#include "sound/SoundSource.h"
-
 class Player;
 
 class Shine :public IGameObject
 {
 public:
-	bool GetMoving()const {
+
+	bool GetMoving()const
+	{
 		return m_isMoving;
 	}
+
 	Shine();
 	~Shine();
 	bool Start();

@@ -54,8 +54,16 @@
       <Filter>Ui</Filter>
     </ClCompile>
     <ClCompile Include="Pudding.cpp" />
-    <ClCompile Include="FontNumber.cpp" />
     <ClCompile Include="MagicPoint.cpp">
+      <Filter>Magic</Filter>
+    </ClCompile>
+    <ClCompile Include="FontBlueNumber.cpp">
+      <Filter>FontNumber</Filter>
+    </ClCompile>
+    <ClCompile Include="FontPurpleNumber.cpp">
+      <Filter>FontNumber</Filter>
+    </ClCompile>
+    <ClCompile Include="Water.cpp">
       <Filter>Magic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,8 +118,16 @@
       <Filter>Ui</Filter>
     </ClInclude>
     <ClInclude Include="Pudding.h" />
-    <ClInclude Include="FontNumber.h" />
     <ClInclude Include="MagicPoint.h">
+      <Filter>Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="FontBlueNumber.h">
+      <Filter>FontNumber</Filter>
+    </ClInclude>
+    <ClInclude Include="FontPurpleNumber.h">
+      <Filter>FontNumber</Filter>
+    </ClInclude>
+    <ClInclude Include="Water.h">
       <Filter>Magic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -130,6 +146,9 @@
     </Filter>
     <Filter Include="Main">
       <UniqueIdentifier>{489c7f04-7e1a-4d51-81e4-4f0ad1bf251d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FontNumber">
+      <UniqueIdentifier>{e3c4d35c-bf3a-439a-834c-c77f64861ee2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Score.h"
 
-#include "FontNumber.h"
 #include "Game.h"
 #include "Pudding.h"
 
@@ -14,11 +13,15 @@ bool Score::Start()
 
 void Score::Update()
 {
-	m_timer += g_gameTime->GetFrameDeltaTime();
-	m_score = m_timer * 100.0f;
+	m_timeScoreTimer += g_gameTime->GetFrameDeltaTime();
+	m_totalScoreTimer += g_gameTime->GetFrameDeltaTime();
+	m_timeScore = m_timeScoreTimer * 100.0f;
+	m_totalScore = m_totalScoreTimer * 100.0f;
 	
 	if (m_game->GetManageState() == 1)
 	{
-		m_scoreOld = m_score;
+		m_timeScoreOld = m_timeScore;
+		m_puddingScoreOld = m_puddingScore;
+		m_totalScoreOld = m_totalScore;
 	}
 }

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "sound/SoundSource.h"
-
 class Player;
 
 class Wind :public IGameObject

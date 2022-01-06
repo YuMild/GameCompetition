@@ -3,24 +3,24 @@
 
 #include "Enemy.h"
 #include "Player.h"
-#include "graphics/effect/EffectEmitter.h"
 
-Wind::Wind() {
-
-}
-
-Wind::~Wind() {
+Wind::Wind()
+{
 
 }
 
-bool Wind::Start() {
+Wind::~Wind()
+{
 
+}
+
+bool Wind::Start() 
+{
 	m_player = FindGO<Player>("player");
 	m_position = m_player->GetPosition() += g_camera3D->GetForward() * 500.0f;
 	m_position.y = 0.0f;
 
 	EffectEngine::GetInstance()->ResistEffect(4, u"Assets/effect/Wind.efk");
-	
 	m_windEF = NewGO<EffectEmitter>(4);
 	m_windEF->Init(4);
 	m_windEF->SetPosition(m_position);
@@ -33,8 +33,8 @@ bool Wind::Start() {
 	m_windMagicCircleEF->SetScale(Vector3::One * 50.0f);
 	m_windMagicCircleEF->Play();
 
+	//‰¹º
 	g_soundEngine->ResistWaveFileBank(6, "Assets/sound/Wind.wav");
-
 	m_windSE = NewGO<SoundSource>(6);
 	m_windSE->Init(6);
 	m_windSE->Play(false);
@@ -42,8 +42,8 @@ bool Wind::Start() {
 	return true;
 }
 
-void Wind::Update() {
-	
+void Wind::Update() 
+{
 	m_aliveTimer += g_gameTime->GetFrameDeltaTime();
 
 	if (m_aliveTimer < 0.7f) {

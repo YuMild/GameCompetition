@@ -55,10 +55,15 @@ void Pudding::Update()
 		DeleteGO(this);
 	}
 	if (m_diff.Length() <= 70.0f) {
+		//サウンド
 		m_puddingGetSE = NewGO<SoundSource>(13);
 		m_puddingGetSE->Init(13);
 		m_puddingGetSE->Play(false);
-		m_score->AddScore(5.0f);
+		//スコア加算
+		m_score->AddTotalScore(5.0f);
+		//個数計算
+		m_score->AddPuddingScore(1);
+		//消去
 		m_puddingEF->Stop();
 		DeleteGO(this);
 	}

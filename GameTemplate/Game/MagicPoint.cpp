@@ -17,7 +17,8 @@ MagicPoint::~MagicPoint()
 
 bool MagicPoint::Start()
 {
-	m_magicPointMap.Init("Assets/sprite/MagicPoint.DDS",30.0f,30.0f);
+	m_magicPointMap.Init("Assets/sprite/Map/MagicPoint.DDS",30.0f,30.0f);
+	m_magicPointMapGray.Init("Assets/sprite/Map/MagicPointGray.DDS", 30.0f, 30.0f);
 
 	EffectEngine::GetInstance()->ResistEffect(11, u"Assets/effect/MagicPoint.efk");
 	m_magicPointEF = NewGO<EffectEmitter>(11);
@@ -68,7 +69,7 @@ void MagicPoint::Update()
 		m_magicPointSE->Init(12);
 		m_magicPointSE->Play(false);
 		m_magicPointEF->Stop();
-		//MPŒ¸ŽZ
+		//MP‰ÁŽZ
 		m_mp->AddMp(10.0f);
 		DeleteGO(this);
 	}
@@ -77,6 +78,9 @@ void MagicPoint::Update()
 
 void MagicPoint::MapMove()
 {
+	m_magicPointMapGray.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
+	m_magicPointMapGray.Update();
+
 	m_magicPointMap.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
 	m_magicPointMap.Update();
 }
