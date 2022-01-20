@@ -3,6 +3,7 @@
 #include "Level3DRender/LevelRender.h"
 
 class BackGround;
+class Bullet;
 class Clock;
 class Enemy;
 class GameCamera;
@@ -18,7 +19,6 @@ class Score;
 
 class Game : public IGameObject
 {
-
 public:
 
 	int GetManageState() const
@@ -29,6 +29,7 @@ public:
 	~Game();
 	bool Start();
 	void Update();
+private:
 	void Timer();
 	void EnemyGenerate();
 	void MagicPointGenerate();
@@ -46,6 +47,7 @@ private:
 	//éQè∆
 	Enemy* m_enemy;
 	BackGround* m_backGround;
+	Bullet* m_bullet;
 	Clock* m_clock;
 	GameCamera* m_gameCamera;
 	Hp* m_hp;

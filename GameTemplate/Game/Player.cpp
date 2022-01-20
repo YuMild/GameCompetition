@@ -11,7 +11,8 @@
 #include "Water.h"
 #include "Wind.h"
 
-namespace {
+namespace
+{
 	
 }
 
@@ -42,21 +43,24 @@ bool Player::Start()
 	m_characterController.Init(20.0f, 5.0f, m_position);
 
 	//音声
-	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/damage1.wav");
-	g_soundEngine->ResistWaveFileBank(9, "Assets/sound/damage2.wav");
-	g_soundEngine->ResistWaveFileBank(10, "Assets/sound/damage3.wav");
 
-	EffectEngine::GetInstance()->ResistEffect2D(100, u"Assets/effect/CoolTimeCompleteFire.efk");
-	EffectEngine::GetInstance()->ResistEffect2D(101, u"Assets/effect/CoolTimeCompleteWater.efk");
-	EffectEngine::GetInstance()->ResistEffect2D(102, u"Assets/effect/CoolTimeCompleteWind.efk");
-	EffectEngine::GetInstance()->ResistEffect2D(103, u"Assets/effect/CoolTimeCompleteShine.efk");
+	//ダメージ音声
+	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/damage1.wav");			//1回目のダメージ
+	g_soundEngine->ResistWaveFileBank(9, "Assets/sound/damage2.wav");			//2回目のダメージ
+	g_soundEngine->ResistWaveFileBank(10, "Assets/sound/damage3.wav");			//3回目のダメージ
+
+	//クールタイム終了時のエフェクト
+	EffectEngine::GetInstance()->ResistEffect2D(100, u"Assets/effect/CoolTimeCompleteFire.efk");		//炎
+	EffectEngine::GetInstance()->ResistEffect2D(101, u"Assets/effect/CoolTimeCompleteWater.efk");		//水
+	EffectEngine::GetInstance()->ResistEffect2D(102, u"Assets/effect/CoolTimeCompleteWind.efk");		//風
+	EffectEngine::GetInstance()->ResistEffect2D(103, u"Assets/effect/CoolTimeCompleteShine.efk");		//光
 
 	//描画
-	m_render.SetPosition(m_position);//初期値だから実は書かなくてもいい
-	m_position.x = 0.0f;//初期値だから実は書かなくてもいい
-	m_position.y = 0.0f;//初期値だから実は書かなくてもいい
-	m_position.z = 0.0f;//初期値だから実は書かなくてもいい
-	m_render.SetScale({ 0.7f,0.7f,0.7f });//初期値だから実は書かなくてもいい
+	m_render.SetPosition(m_position);			//初期値だから実は書かなくてもいい
+	m_position.x = 0.0f;						//初期値だから実は書かなくてもいい
+	m_position.y = 0.0f;						//初期値だから実は書かなくてもいい
+	m_position.z = 0.0f;						//初期値だから実は書かなくてもいい
+	m_render.SetScale({ 0.7f,0.7f,0.7f });
 	m_render.Update();
 
 	m_game = FindGO<Game>("game");
@@ -88,40 +92,57 @@ void Player::Update()
 
 void Player::Timer() 
 {
-	m_bulletCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_bulletCoolTimer > COOLTIME_BULLET) {//クールタイムが非活性化且つMPが必要以上の時
-		m_bulletMagazine = true;//クールタイムを非活性化
+	//	通常魔法クールタイム
+	m_bulletCoolTimer += g_gameTime->GetFrameDeltaTime();												//	時間経過
+	if (m_bulletCoolTimer > COOLTIME_BULLET) {															//	クールタイムが非活性化且つMPが必要以上の時
+		m_bulletMagazine = true;																		//	クールタイムを非活性化
 	}
-	m_fireCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_fireMagazine == false && m_fireCoolTimer > COOLTIME_FIRE && m_mp->GetMP() >= MP_FIRE) {//クールタイムが非活性化且つMPが必要以上の時
-		m_fireMagazine = true;//クールタイムを非活性化
+
+	//	炎魔法クールタイム
+	m_fireCoolTimer += g_gameTime->GetFrameDeltaTime();													//	時間経過
+	if (m_fireMagazine == false && m_fireCoolTimer > COOLTIME_FIRE && m_mp->GetMP() >= MP_FIRE) {		//	クールタイムが非活性化且つMPが必要以上の時
+		m_fireMagazine = true;																			//	クールタイムを非活性化
+
+		//	エフェクト生成
 		m_coolTimeCompleteFireEF = NewGO<EffectEmitter>(100);
 		m_coolTimeCompleteFireEF->Init2D(100);
 		m_coolTimeCompleteFireEF->SetScale(Vector3::One * 5.0f);
 		m_coolTimeCompleteFireEF->SetPosition(Vector3{ 700.0f,-225.0f,0.0f });
 		m_coolTimeCompleteFireEF->Play2D();
 	}
-	m_waterCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_waterMagazine == false && m_waterCoolTimer > COOLTIME_WATER && m_mp->GetMP() >= MP_WATER) {//クールタイムが非活性化且つMPが必要以上の時
-		m_waterMagazine = true;//クールタイムを非活性化
+
+	//	水魔法クールタイム
+	m_waterCoolTimer += g_gameTime->GetFrameDeltaTime();												//	時間経過
+	if (m_waterMagazine == false && m_waterCoolTimer > COOLTIME_WATER && m_mp->GetMP() >= MP_WATER) {	//	クールタイムが非活性化且つMPが必要以上の時
+		m_waterMagazine = true;																			//	クールタイムを非活性化
+
+		//	エフェクト生成
 		m_coolTimeCompleteWaterEF = NewGO<EffectEmitter>(101);
 		m_coolTimeCompleteWaterEF->Init2D(101);
 		m_coolTimeCompleteWaterEF->SetScale(Vector3::One * 5.0f);
 		m_coolTimeCompleteWaterEF->SetPosition(Vector3{ 536.0f,-225.0f,0.0f });
 		m_coolTimeCompleteWaterEF->Play2D();
 	}
-	m_windCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_windMagazine == false && m_windCoolTimer > COOLTIME_WIND && m_mp->GetMP() >= MP_WIND) {//クールタイムが非活性化且つMPが必要以上の時
-		m_windMagazine = true;//クールタイムを非活性化
+
+	//	風魔法クールタイム
+	m_windCoolTimer += g_gameTime->GetFrameDeltaTime();													//	時間経過
+	if (m_windMagazine == false && m_windCoolTimer > COOLTIME_WIND && m_mp->GetMP() >= MP_WIND) {		//	クールタイムが非活性化且つMPが必要以上の時
+		m_windMagazine = true;																			//	クールタイムを非活性化
+
+		//	エフェクト生成
 		m_coolTimeCompleteWindEF = NewGO<EffectEmitter>(102);
 		m_coolTimeCompleteWindEF->Init2D(102);
 		m_coolTimeCompleteWindEF->SetScale(Vector3::One * 5.0f);
 		m_coolTimeCompleteWindEF->SetPosition(Vector3{ 618.0f, -310.0f, 0.0f });
 		m_coolTimeCompleteWindEF->Play2D();
 	}
-	m_shineCoolTimer += g_gameTime->GetFrameDeltaTime();
-	if (m_shineMagazine == false && m_shineCoolTimer > COOLTIME_SHINE && m_mp->GetMP() >= MP_SHINE) {//クールタイムが非活性化且つMPが必要以上の時
-		m_shineMagazine = true;//クールタイムを非活性化
+
+	//	光魔法クールタイム
+	m_shineCoolTimer += g_gameTime->GetFrameDeltaTime();												//	時間経過
+	if (m_shineMagazine == false && m_shineCoolTimer > COOLTIME_SHINE && m_mp->GetMP() >= MP_SHINE) {	//	クールタイムが非活性化且つMPが必要以上の時
+		m_shineMagazine = true;																			//	クールタイムを非活性化
+
+		//	エフェクト生成
 		m_coolTimeCompleteShineEF = NewGO<EffectEmitter>(103);
 		m_coolTimeCompleteShineEF->Init2D(103);
 		m_coolTimeCompleteShineEF->SetScale(Vector3::One * 5.0f);

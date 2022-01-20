@@ -4,10 +4,8 @@
 #include<InitGUID.h>
 #include<dxgidebug.h>
 
+#include "Fade.h"
 #include "Title.h"
-#include "TitleUi.h"
-
-
 
 void ReportLiveObjects()
 {
@@ -36,8 +34,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//////////////////////////////////////
 
 	//Gameクラスのオブジェクトを作成。
+	NewGO<Fade>(0, "fade");
 	NewGO<Title>(0, "title");
-	NewGO<TitleUi>(0, "titleUi");
 
 	//////////////////////////////////////
 	// 初期化を行うコードを書くのはここまで！！！

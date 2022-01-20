@@ -83,10 +83,13 @@ public:
 
 	Player();
 	~Player();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
+	
+	void Render(RenderContext& rc) override;
+
+private:
 	void Timer();
-	void Render(RenderContext& rc);
 	void Move();
 	void Magic();
 	void Rotation();

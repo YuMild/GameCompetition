@@ -9,7 +9,6 @@ public:
 	void Update();
 	void State();
 	void Timer();
-	void Move();
 	void Render(RenderContext& rc);
 
 private:
@@ -47,6 +46,4 @@ private:
 	float m_upDown4 = 0;
 	float m_timer5 = 0;
 	float m_upDown5 = 0;
-
-	int m_state = 0;
 };

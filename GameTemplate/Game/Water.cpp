@@ -31,9 +31,9 @@ bool Water::Start()
 	m_waterMagicCircleEF->Play();
 
 	//‰¹º
-	g_soundEngine->ResistWaveFileBank(6, "Assets/sound/Water.wav");
-	m_waterSE = NewGO<SoundSource>(6);
-	m_waterSE->Init(6);
+	g_soundEngine->ResistWaveFileBank(5, "Assets/sound/Water.wav");
+	m_waterSE = NewGO<SoundSource>(5);
+	m_waterSE->Init(5);
 	m_waterSE->Play(false);
 
 	return true;

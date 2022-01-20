@@ -35,7 +35,6 @@ void TitleUi::Update()
 
 	State();
 	Timer();
-	Move();
 
 	m_heart1Position = { 800.0f,-440.0f + m_upDown1,0.0f };
 	m_heart1.SetPosition(m_heart1Position);
@@ -161,10 +160,6 @@ void TitleUi::Timer()
 	m_timer3 += g_gameTime->GetFrameDeltaTime();
 	m_timer4 += g_gameTime->GetFrameDeltaTime();
 	m_timer5 += g_gameTime->GetFrameDeltaTime();
-}
-
-void TitleUi::Move() 
-{
 }
 
 void TitleUi::Render(RenderContext& rc)

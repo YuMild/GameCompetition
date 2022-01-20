@@ -76,9 +76,11 @@ bool Result::Start()
 
 void Result::Update()
 {
-	if (g_pad[0]->IsTrigger(enButtonA))
+	if (m_resultState >=7 && g_pad[0]->IsTrigger(enButtonA))
 	{
 		NewGO<Title>(0, "title");
+		DeleteGO(m_fontPurpleNumber);
+		DeleteGO(m_game);
 		DeleteGO(this);
 	}
 	ManageState();

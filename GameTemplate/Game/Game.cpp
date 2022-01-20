@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Game.h"
 #include "BackGround.h"
+#include "Bullet.h"
 #include "Clock.h"
 #include "Enemy.h"
 #include "GameCamera.h"
@@ -22,13 +23,24 @@ using namespace std;
 
 Game::Game()
 {
+
 }
 
 Game::~Game()
 {
+
+	g_renderingEngine->SetIsAllGrayScale(false);
+	g_k2Engine->GetK2EngineLow()->SetFrameRateMode(K2EngineLow::enFrameRateMode_Variable, 60.0f);
+
 	//DeleteGO
 	DeleteGO(m_backGround);
 	DeleteGO(m_backGroundBGM);
+	const auto& bullets = FindGOs<Bullet>("bullet");
+	int bulletSize = bullets.size();
+	for (int i = 0; i < bulletSize; i++)
+	{
+		DeleteGO(bullets[i]);
+	}
 	DeleteGO(m_clock);
 	const auto& enemys = FindGOs<Enemy>("enemy");//全てのエネミーの削除
 	int enemySize = enemys.size();
@@ -39,18 +51,17 @@ Game::~Game()
 	DeleteGO(m_gameCamera);
 	DeleteGO(m_hp);
 	DeleteGO(m_magic);
-	/*const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");
+	const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");
 	int magicPointSize = magicPoints.size();
-	for (int i = 0; i < enemySize; i++)
+	for (int i = 0; i < magicPointSize; i++)
 	{
 		DeleteGO(magicPoints[i]);
-	}*/
-	DeleteGO(m_magicPoint);
+	}
 	DeleteGO(m_map);
 	DeleteGO(m_mp);
 	DeleteGO(m_player);
 	DeleteGO(m_pudding);
-	//DeleteGO(m_score);
+	DeleteGO(m_score);
 	DeleteGO(m_skyCube);
 }
 
@@ -93,7 +104,6 @@ void Game::Update()
 		m_hp->SetHP(0);
 	}
 
-
 	if (m_hp->GetHP() >= 1) {
 		EnemyGenerate();
 		MagicPointGenerate();
@@ -105,7 +115,7 @@ void Game::Update()
 
 void Game::Timer() 
 {
-	//レベル
+	//	レベルアップ
 	if (m_timer > 12.0f)
 	{
 		if (m_levelTimer <= 1.5) {
@@ -123,8 +133,8 @@ void Game::EnemyGenerate()
 {
 	if (m_enemySpawnTimer > 2.0f - m_levelTimer)
 	{
-		constexpr int MIN = -500;//乱数の範囲最低値
-		constexpr int MAX = 500;//乱数の範囲最大値
+		constexpr int MIN = -500;																		//	乱数の範囲最低値
+		constexpr int MAX = 500;																		//	乱数の範囲最大値
 
 		Vector3 position;
 		random_device rd;
@@ -150,8 +160,8 @@ void Game::MagicPointGenerate()
 {
 	if (m_magicPointSpawnTimer > 12.0f)
 	{
-		constexpr int MIN = -500;//乱数の範囲最低値
-		constexpr int MAX = 500;//乱数の範囲最大値
+		constexpr int MIN = -500;																		//	乱数の範囲最低値
+		constexpr int MAX = 500;																		//	乱数の範囲最大値
 
 		Vector3 position;
 		random_device rd;
@@ -177,8 +187,8 @@ void Game::PuddingGenerate()
 {
 	if (m_puddingSpawnTimer > 12.0f)
 	{
-		constexpr int MIN = -500;//乱数の範囲最低値
-		constexpr int MAX = 500;//乱数の範囲最大値
+		constexpr int MIN = -500;																		//	乱数の範囲最低値
+		constexpr int MAX = 500;																		//	乱数の範囲最大値
 
 		Vector3 position;
 		random_device rd;
@@ -202,15 +212,16 @@ void Game::PuddingGenerate()
 
 void Game::ManageState()
 {
-	if (m_gameState >= 1)
+	if (m_gameState >= 1)																				//	死亡時
 	{
-		m_stateTimer += g_gameTime->GetFrameDeltaTime();
+		m_stateTimer += g_gameTime->GetFrameDeltaTime();												//	時間経過
 	}
 
 	switch (m_gameState)
 	{
-	case 0://生存時
-		if (m_hp->GetHP() == 0) //HPが0になるかプレイヤーがステージ外に落下した時
+	case 0:																								//	生存時
+
+		if (m_hp->GetHP() == 0)																			//	HPが0になるかプレイヤーがステージ外に落下した時
 		{
 			m_player->SetState(3);
 			m_gameState = 1;
@@ -218,35 +229,28 @@ void Game::ManageState()
 		}
 		break;
 
-	case 1://スロー時
+	case 1:																								//	スロー時
 
-		//モノクロ
-		g_renderingEngine->SetIsAllGrayScale(true);
+		g_renderingEngine->SetIsAllGrayScale(true);														//	モノクロ
+		g_k2Engine->GetK2EngineLow()->SetFrameRateMode(K2EngineLow::enFrameRateMode_Variable, 20.0f);	//	FPSを下げる
 
-		//FPSを下げる
-		g_k2Engine->GetK2EngineLow()->SetFrameRateMode(K2EngineLow::enFrameRateMode_Variable, 20.0f);
-
-		//フィニッシュまでのカウントアップ
-
-		if (m_stateTimer >= 2.0f)
+		if (m_stateTimer >= 2.0f)																		//	フィニッシュまでのカウントアップ
 		{
 			m_gameState = 2;
 			m_stateTimer = 0.0f;
 		}
 		break;
 
-	case 2://フィニッシュ時
+	case 2:																								//	フィニッシュ時
 
-		//リザルトまでのカウントアップ
-
-		if (m_stateTimer >= 1.5f)
+		if (m_stateTimer >= 1.5f)																		//	リザルトまでのカウントアップ
 		{
 			m_gameState = 3;
 			m_stateTimer = 0.0f;
 		}
 		break;
 
-	case 3://リザルト表示
+	case 3:																								//	リザルト表示
 
 		if (m_isStart == true)
 		{
@@ -261,7 +265,7 @@ void Game::ManageState()
 
 		break;
 
-	case 4://タイムスコア表示
+	case 4:																								//	タイムスコア表示
 
 		if (m_stateTimer >= 0.8f)
 		{
@@ -270,7 +274,7 @@ void Game::ManageState()
 
 		break;
 
-	case 5://プリンスコア表示
+	case 5:																								//	プリンスコア表示
 
 		if (m_stateTimer >= 0.8f)
 		{
@@ -279,31 +283,31 @@ void Game::ManageState()
 
 		break;
 
-	case 6://トータルスコア表示
+	case 6:																								//	トータルスコア表示
 
 		if (m_stateTimer >= 1.5f)
 		{
-			if (m_score->GetTotalScoreOld() < 5000.0f)//Dランク
+			if (m_score->GetTotalScoreOld() < 5000.0f)													//	Dランク
 			{
 				m_gameState = 7; m_stateTimer = 0.0f;
 			}
 
-			else if (m_score->GetTotalScoreOld() > 5001.0f && m_score->GetTotalScoreOld() < 10000.0f)//Cランク
+			else if (m_score->GetTotalScoreOld() > 5001.0f && m_score->GetTotalScoreOld() < 10000.0f)	//	Cランク
 			{
 				m_gameState = 8; m_stateTimer = 0.0f;
 			}
 
-			else if (m_score->GetTotalScoreOld() > 10001.0f && m_score->GetTotalScoreOld() < 15000.0f)//Bランク
+			else if (m_score->GetTotalScoreOld() > 10001.0f && m_score->GetTotalScoreOld() < 15000.0f)	//	Bランク
 			{
 				m_gameState = 9; m_stateTimer = 0.0f;
 			}
 
-			else if (m_score->GetTotalScoreOld() > 15001.0f && m_score->GetTotalScoreOld() < 20000.0f)//Aランク
+			else if (m_score->GetTotalScoreOld() > 15001.0f && m_score->GetTotalScoreOld() < 20000.0f)	//	Aランク
 			{
 				m_gameState = 10; m_stateTimer = 0.0f;
 			}
 
-			else if (m_score->GetTotalScoreOld() > 20001.0f)//Sランク
+			else if (m_score->GetTotalScoreOld() > 20001.0f)											//	Sランク
 			{
 				m_gameState = 11; m_stateTimer = 0.0f;
 			}

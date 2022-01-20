@@ -43,10 +43,6 @@
     <ClCompile Include="Hp.cpp">
       <Filter>Ui</Filter>
     </ClCompile>
-    <ClCompile Include="TitleUi.cpp">
-      <Filter>Ui</Filter>
-    </ClCompile>
-    <ClCompile Include="Loading.cpp" />
     <ClCompile Include="Result.cpp">
       <Filter>Ui</Filter>
     </ClCompile>
@@ -66,6 +62,7 @@
     <ClCompile Include="Water.cpp">
       <Filter>Magic</Filter>
     </ClCompile>
+    <ClCompile Include="Fade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -107,10 +104,6 @@
     <ClInclude Include="Hp.h">
       <Filter>Ui</Filter>
     </ClInclude>
-    <ClInclude Include="TitleUi.h">
-      <Filter>Ui</Filter>
-    </ClInclude>
-    <ClInclude Include="Loading.h" />
     <ClInclude Include="Result.h">
       <Filter>Ui</Filter>
     </ClInclude>
@@ -130,6 +123,7 @@
     <ClInclude Include="Water.h">
       <Filter>Magic</Filter>
     </ClInclude>
+    <ClInclude Include="Fade.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">
