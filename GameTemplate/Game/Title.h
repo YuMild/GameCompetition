@@ -4,7 +4,7 @@ class Fade;
 class TitleUi;
 
 /// <summary>
-/// タイトル。
+/// タイトル
 /// </summary>
 class Title : public IGameObject
 {

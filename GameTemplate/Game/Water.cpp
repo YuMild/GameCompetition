@@ -3,6 +3,12 @@
 
 #include "Player.h"
 
+namespace
+{
+	const float MAGIC_SIZE = 30.0f;
+	const float MAGIC_CIRCLE_SIZE = 50.0f;
+}
+
 Water::Water()
 {
 
@@ -21,13 +27,13 @@ bool Water::Start()
 	m_waterEF = NewGO<EffectEmitter>(3);
 	m_waterEF->Init(3);
 	m_waterEF->SetPosition(m_position);
-	m_waterEF->SetScale(Vector3::One * 30.0f);
+	m_waterEF->SetScale(Vector3::One * MAGIC_SIZE);
 	m_waterEF->Play();
 
 	EffectEngine::GetInstance()->ResistEffect(8, u"Assets/effect/MagicCircleWater.efk");
 	m_waterMagicCircleEF = NewGO<EffectEmitter>(8);
 	m_waterMagicCircleEF->Init(8);
-	m_waterMagicCircleEF->SetScale(Vector3::One * 50.0f);
+	m_waterMagicCircleEF->SetScale(Vector3::One * MAGIC_CIRCLE_SIZE);
 	m_waterMagicCircleEF->Play();
 
 	//âπê∫

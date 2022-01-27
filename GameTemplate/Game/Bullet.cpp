@@ -13,13 +13,10 @@ Bullet:: ~Bullet() {
 bool Bullet::Start() {
 
 	m_player = FindGO<Player>("player");
-	m_render.Init("Assets/modelData/bullet.tkm");//レンダー
-	m_render.SetScale({ 0.5f,0.5f,0.5f });//サイズ
-	m_position = m_player->GetPosition();//プレイヤーの場所に生まれる
-	m_position.y += 50.0f;//プレイヤーの50f上に生まれる
-
-	//エフェクトファイル
-	EffectEngine::GetInstance()->ResistEffect(0, u"Assets/effect/Bullet.efk");
+	m_render.Init("Assets/modelData/bullet.tkm");
+	m_render.SetScale({ 0.5f,0.5f,0.5f });
+	m_position = m_player->GetPosition();												//	プレイヤーの場所に生成される
+	m_position.y += 50.0f;																//	プレイヤーの上に生成される
 
 	//方向
 	m_forward = g_camera3D->GetForward();
@@ -27,6 +24,8 @@ bool Bullet::Start() {
 	m_forward.Normalize();
 
 	//エフェクト
+	EffectEngine::GetInstance()->ResistEffect(0, u"Assets/effect/Bullet.efk");
+
 	m_fireBallEF = NewGO<EffectEmitter>(0);
 	m_fireBallEF->Init(0);
 	m_fireBallEF->SetScale(Vector3::One * 20.0f);
@@ -40,32 +39,32 @@ bool Bullet::Start() {
 	m_gunShotSE->Init(2);
 	m_gunShotSE->Play(false);
 
-	m_moveSpeed = m_forward * 20.0f;
+	m_moveSpeed = m_forward * 20.0f;													//	移動速度
 
 	return true;
 }
 
 void Bullet::Update() {
 
-	m_fireBallEF->SetPosition(m_position);
-
-	Move();//Move関数を更新する
 	m_deleteTimer += g_gameTime->GetFrameDeltaTime();
 
-	//タイマーが2.0以上になったら。
+	m_fireBallEF->SetPosition(m_position);
+
+	Move();
+
+	//タイマーが2.0以上の時
 	if (m_deleteTimer >= 2.0f)
 	{
-		//自身を削除。
-		DeleteGO(this);
+		DeleteGO(this);																	//	自身を削除
 	}
 }
 
 void Bullet::Render(RenderContext& rc) {
-	m_render.Draw(rc);//描画の元
+	m_render.Draw(rc);
 }
 
 void Bullet::Move() {
-	m_position += m_moveSpeed;//砲丸のスピード
-	m_render.SetPosition(m_position);//描画する位置
-	m_render.Update();//描画の更新
+	m_position += m_moveSpeed;
+	m_render.SetPosition(m_position);
+	m_render.Update();
 }

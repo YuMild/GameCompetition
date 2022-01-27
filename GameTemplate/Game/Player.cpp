@@ -45,21 +45,21 @@ bool Player::Start()
 	//音声
 
 	//ダメージ音声
-	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/damage1.wav");			//1回目のダメージ
-	g_soundEngine->ResistWaveFileBank(9, "Assets/sound/damage2.wav");			//2回目のダメージ
-	g_soundEngine->ResistWaveFileBank(10, "Assets/sound/damage3.wav");			//3回目のダメージ
+	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/damage1.wav");									//	1回目のダメージ
+	g_soundEngine->ResistWaveFileBank(9, "Assets/sound/damage2.wav");									//	2回目のダメージ
+	g_soundEngine->ResistWaveFileBank(10, "Assets/sound/damage3.wav");									//	3回目のダメージ
 
 	//クールタイム終了時のエフェクト
-	EffectEngine::GetInstance()->ResistEffect2D(100, u"Assets/effect/CoolTimeCompleteFire.efk");		//炎
-	EffectEngine::GetInstance()->ResistEffect2D(101, u"Assets/effect/CoolTimeCompleteWater.efk");		//水
-	EffectEngine::GetInstance()->ResistEffect2D(102, u"Assets/effect/CoolTimeCompleteWind.efk");		//風
-	EffectEngine::GetInstance()->ResistEffect2D(103, u"Assets/effect/CoolTimeCompleteShine.efk");		//光
+	EffectEngine::GetInstance()->ResistEffect2D(100, u"Assets/effect/CoolTimeCompleteFire.efk");		//	炎
+	EffectEngine::GetInstance()->ResistEffect2D(101, u"Assets/effect/CoolTimeCompleteWater.efk");		//	水
+	EffectEngine::GetInstance()->ResistEffect2D(102, u"Assets/effect/CoolTimeCompleteWind.efk");		//	風
+	EffectEngine::GetInstance()->ResistEffect2D(103, u"Assets/effect/CoolTimeCompleteShine.efk");		//	光
 
 	//描画
-	m_render.SetPosition(m_position);			//初期値だから実は書かなくてもいい
-	m_position.x = 0.0f;						//初期値だから実は書かなくてもいい
-	m_position.y = 0.0f;						//初期値だから実は書かなくてもいい
-	m_position.z = 0.0f;						//初期値だから実は書かなくてもいい
+	m_render.SetPosition(m_position);																	//	初期値だから実は書かなくてもいい
+	m_position.x = 0.0f;																				//	初期値だから実は書かなくてもいい
+	m_position.y = 0.0f;																				//	初期値だから実は書かなくてもいい
+	m_position.z = 0.0f;																				//	初期値だから実は書かなくてもいい
 	m_render.SetScale({ 0.7f,0.7f,0.7f });
 	m_render.Update();
 
@@ -72,22 +72,23 @@ bool Player::Start()
 
 void Player::Update()
 {
-	if (m_game->GetManageState() == 0)
-	{
-		Magic();
-		Move();
-		Timer();
-		Rotation();
-	}
-	else
+	Move();
+	ManageState();
+	PlayAnimation();
+
+	m_render.Update();
+	
+	if (m_game->GetManageState() != 0)																	//	プレイヤーが死亡時
 	{
 		m_moveSpeed.x = 0.0f;
 		m_moveSpeed.y = 0.0f;
 		m_moveSpeed.z = 0.0f;
+		return;																							//	関数の処理を終了させる
 	}
-	ManageState();
-	PlayAnimation();
-	m_render.Update();
+
+	Magic();
+	Timer();
+	Rotation();
 }
 
 void Player::Timer() 

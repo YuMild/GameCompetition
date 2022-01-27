@@ -11,6 +11,16 @@
 #include "Wind.h"
 #include <random>
 
+namespace
+{
+	const float ENEMYMAP_WIDTH = 200.0f;
+	const float ENEMYMAP_HEIGHT = 200.0f;
+	const float FIRE_COLLISION_JUDGE = 500.0f;
+	const float WIND_COLLISION_JUDGE = 300.0f;
+	const float BULLET_COLLISION_JUDGE = 75.0f;
+	const float PLAYER_COLLISION_JUDGE = 10.0f;
+}
+
 Enemy::Enemy() 
 {
 }
@@ -22,8 +32,8 @@ Enemy::~Enemy()
 bool Enemy::Start()
 {
 	m_render.Init("Assets/modelData/teddyBear.tkm");
-	m_enemyMap.Init("Assets/sprite/Map/EnemyMap.dds", 200.0f, 200.0f);
-	m_enemyMapGray.Init("Assets/sprite/Map/EnemyMapGray.dds", 200.0f, 200.0f);
+	m_enemyMap.Init("Assets/sprite/Map/EnemyMap.dds", ENEMYMAP_WIDTH, ENEMYMAP_HEIGHT);
+	m_enemyMapGray.Init("Assets/sprite/Map/EnemyMapGray.dds", ENEMYMAP_WIDTH, ENEMYMAP_HEIGHT);
 
 	m_game = FindGO<Game>("game");
 	m_hp = FindGO<Hp>("hp");
@@ -34,7 +44,7 @@ bool Enemy::Start()
 	m_render.SetScale({ 0.5f,0.5f,0.5f });
 	m_render.Update();
 
-	//音声
+	//	音声
 	g_soundEngine->ResistWaveFileBank(11, "Assets/sound/EnemyDeath.wav");
 
 	m_isStart = true;
@@ -89,12 +99,12 @@ void Enemy::Move()
 
 void Enemy::Magic()
 {
-	//炎魔法判定
+	//	炎魔法判定
 	const auto& fireList = FindGOs<Fire>("fire");
 	int fireSize = fireList.size();
 	m_fireDiff = m_position - m_player->GetPosition();
 	for (m_fireUnit = 0; m_fireUnit < fireSize; m_fireUnit++) {
-		if (fireList[m_fireUnit]->GetMoving()==true && m_fireDiff.Length() <= 500.0f) {
+		if (fireList[m_fireUnit]->GetMoving()==true && m_fireDiff.Length() <= FIRE_COLLISION_JUDGE) {
 			DeleteGO(this);
 			m_enemyDeathSE = NewGO<SoundSource>(11);
 			m_enemyDeathSE->Init(11);
@@ -103,34 +113,34 @@ void Enemy::Magic()
 		}
 	}
 
-	//光魔法判定
+	//	光魔法判定
 	const auto& shineList = FindGOs<Shine>("shine");
 	int shineSize = shineList.size();
 	m_shineMoving = false;
 
-	//光魔法が活性化時、enemyが停止する
+	//	光魔法が活性化時、enemyが停止する
 	for (int i = 0; i < shineSize; i++) {
 		m_shineMoving = true;
 	}
 
-	//風魔法判定
+	//	風魔法判定
 	const auto& windList = FindGOs<Wind>("wind");
 	int windSize = windList.size();
 	m_windMoving = false;
 
-	//風魔法が活性化時、風魔法の座標に向かう
+	//	風魔法が活性化時、風魔法の座標に向かう
 	for (m_windUnit = 0; m_windUnit < windSize; m_windUnit++) {
 		m_windDiff = windList[m_windUnit]->GetPosition() - m_position;
 		m_target = windList[m_windUnit]->GetPosition() - m_position;
 		m_target.Normalize();
-		if (m_windDiff.Length() <= 300.0f) {
+		if (m_windDiff.Length() <= WIND_COLLISION_JUDGE) {
 			m_windMoving = true;
 			m_moveSpeed = m_target * 2.0f;
 			m_position += m_moveSpeed;
 		}
 	}
 
-	//光魔法が非活性化時、動作する
+	//	光魔法が非活性化時、動作する
 	if (m_shineMoving == false) {
 		m_position += m_moveSpeed * 15.0f / 30.0f;
 	}
@@ -138,12 +148,12 @@ void Enemy::Magic()
 
 void Enemy::Death()
 {
-	//敵の死亡判定
+	//	敵の死亡判定
 	const auto& bulletList = FindGOs<Bullet>("bullet");
 	int bulletSize = bulletList.size();
 	for (int i = 0; i < bulletSize; i++) {
 		Vector3 bulletdiff = bulletList[i]->GetPosition() - m_position;
-		if (bulletdiff.Length() <= 75.0f) {
+		if (bulletdiff.Length() <= BULLET_COLLISION_JUDGE) {
 			DeleteGO(this);
 			m_enemyDeathSE = NewGO<SoundSource>(11);
 			m_enemyDeathSE->Init(11);
@@ -152,8 +162,8 @@ void Enemy::Death()
 	}
 
 	Vector3 unitydiff = m_player->GetPosition() - m_position;
-	if (unitydiff.Length() <= 10.0f) {
+	if (unitydiff.Length() <= PLAYER_COLLISION_JUDGE) {												//	プレイヤーと衝突した時
 		DeleteGO(this);
-		m_hp->SubHP(1);
+		m_hp->SubHP(1);																				//	プレイヤーのHPを減算する
 	}
 }

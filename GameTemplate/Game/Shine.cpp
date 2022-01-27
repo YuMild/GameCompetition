@@ -5,6 +5,12 @@
 #include "Player.h"
 #include "graphics/effect/EffectEmitter.h"
 
+namespace
+{
+	const float MAGIC_SIZE = 10.0f;
+	const float MAGIC_CIRCLE_SIZE = 50.0f;
+}
+
 Shine::Shine() {
 
 }
@@ -27,12 +33,12 @@ bool Shine::Start() {
 	m_shineEF = NewGO<EffectEmitter>(5);
 	m_shineEF->Init(5);
 	m_shineEF->SetPosition(m_position);
-	m_shineEF->SetScale(Vector3::One * 10.0f);
+	m_shineEF->SetScale(Vector3::One * MAGIC_SIZE);
 
 	EffectEngine::GetInstance()->ResistEffect(10, u"Assets/effect/MagicCircleShine.efk");
 	m_shineMagicCircleEF = NewGO<EffectEmitter>(10);
 	m_shineMagicCircleEF->Init(10);
-	m_shineMagicCircleEF->SetScale(Vector3::One * 50.0f);
+	m_shineMagicCircleEF->SetScale(Vector3::One * MAGIC_CIRCLE_SIZE);
 	m_shineMagicCircleEF->Play();
 
 	Quaternion quaternion;

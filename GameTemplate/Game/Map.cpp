@@ -7,29 +7,39 @@
 #include "Player.h"
 #include "Pudding.h"
 
+namespace
+{
+	const float MAP_WIDTH = 300.0f;
+	const float MAP_HEIGHT = 300.0f;
+	const float PLAYER_WIDTH = 200.0f;
+	const float PLAYER_HEIGHT = 200.0f;
+}
+
 Map::Map() 
 {
+
 }
 
 Map::~Map() 
 {
+
 }
 
 bool Map::Start() 
 {
 	m_mapCenterPosition = { 740.0f, 330.0f, 0.0f };
 
-	m_mapBackGround.Init("Assets/sprite/Map/MapBackGround.DDS", 300.0f, 300.0f);
+	m_mapBackGround.Init("Assets/sprite/Map/MapBackGround.DDS", MAP_WIDTH, MAP_HEIGHT);
 	m_mapBackGround.SetPosition(m_mapCenterPosition);
 	m_mapBackGround.Update();
-	m_mapFrame.Init("Assets/sprite/Map/MapFrame.DDS", 300.0f, 300.0f);
+	m_mapFrame.Init("Assets/sprite/Map/MapFrame.DDS", MAP_WIDTH, MAP_HEIGHT);
 	m_mapFrame.SetPosition(m_mapCenterPosition);
 	m_mapFrame.Update();
-	m_mapFrameGray.Init("Assets/sprite/Map/MapFrameGray.DDS", 300.0f, 300.0f);
+	m_mapFrameGray.Init("Assets/sprite/Map/MapFrameGray.DDS", MAP_WIDTH, MAP_HEIGHT);
 	m_mapFrameGray.SetPosition(m_mapCenterPosition);
 	m_mapFrameGray.Update();
-	m_playerMap.Init("Assets/sprite/Map/PlayerMap.DDS", 200.0f, 200.0f);
-	m_playerMapGray.Init("Assets/sprite/Map/PlayerMapGray.DDS", 200.0f, 200.0f);
+	m_playerMap.Init("Assets/sprite/Map/PlayerMap.DDS", PLAYER_WIDTH, PLAYER_HEIGHT);
+	m_playerMapGray.Init("Assets/sprite/Map/PlayerMapGray.DDS", PLAYER_WIDTH, PLAYER_HEIGHT);
 
 	m_game = FindGO<Game>("game");
 	m_player = FindGO<Player>("player");
@@ -58,7 +68,7 @@ void Map::Render(RenderContext& rc)
 {
 	m_mapBackGround.Draw(rc);
 
-	//エネミー
+	//	エネミー
 	const auto& enemys = FindGOs<Enemy>("enemy");
 	const int enemySize = enemys.size();
 
@@ -75,7 +85,7 @@ void Map::Render(RenderContext& rc)
 		}
 	}
 
-	//マジックポイント
+	//	マジックポイント
 	const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");
 	const int magicSize = magicPoints.size();
 
@@ -92,7 +102,7 @@ void Map::Render(RenderContext& rc)
 		}
 	}
 
-	//プリン
+	//	プリン
 	const auto& puddings = FindGOs<Pudding>("pudding");
 	const int puddingSize = puddings.size();
 

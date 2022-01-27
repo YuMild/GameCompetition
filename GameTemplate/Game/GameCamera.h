@@ -5,6 +5,9 @@
 class Game;
 class Player;
 
+/// <summary>
+/// カメラ
+/// </summary>
 class GameCamera : public IGameObject
 {
 public:
@@ -21,7 +24,7 @@ private:
 	Vector3 m_target;
 	Vector3 m_toCameraPos = Vector3::One;
 
-	//参照
+	//クラス
 	Game* m_game;
 	Player* m_player;
 	SpringCamera m_springCamera;

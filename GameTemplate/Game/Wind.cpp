@@ -4,6 +4,12 @@
 #include "Enemy.h"
 #include "Player.h"
 
+namespace
+{
+	const float MAGIC_SIZE = 100.0f;
+	const float MAGIC_CIRCLE_SIZE = 50.0f;
+}
+
 Wind::Wind()
 {
 
@@ -24,13 +30,13 @@ bool Wind::Start()
 	m_windEF = NewGO<EffectEmitter>(4);
 	m_windEF->Init(4);
 	m_windEF->SetPosition(m_position);
-	m_windEF->SetScale(Vector3::One * 100.0f);
+	m_windEF->SetScale(Vector3::One * MAGIC_SIZE);
 	m_windEF->Play();
 	
 	EffectEngine::GetInstance()->ResistEffect(9, u"Assets/effect/MagicCircleWind.efk");
 	m_windMagicCircleEF = NewGO<EffectEmitter>(9);
 	m_windMagicCircleEF->Init(9);
-	m_windMagicCircleEF->SetScale(Vector3::One * 50.0f);
+	m_windMagicCircleEF->SetScale(Vector3::One * MAGIC_CIRCLE_SIZE);
 	m_windMagicCircleEF->Play();
 
 	//âπê∫

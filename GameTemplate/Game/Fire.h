@@ -4,12 +4,21 @@
 
 class Player;
 
+/// <summary>
+/// 炎魔法
+/// </summary>
 class Fire :public IGameObject
 {
 public:
+
+	/// <summary>
+	/// 実行されているか確認
+	/// </summary>
+	/// <returns></returns>
 	bool GetMoving()const {
 		return m_isMoving;
 	}
+
 	Fire();
 	~Fire();
 	bool Start();

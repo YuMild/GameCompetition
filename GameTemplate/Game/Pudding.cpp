@@ -6,6 +6,13 @@
 #include "Player.h"
 #include "Score.h"
 
+namespace
+{
+	const float SQUARE_WIDTH = 30.0f;
+	const float SQUARE_HEIGHT = 30.0f;
+	const float PUDDING_COLLISION_JUDGE = 70.0f;
+}
+
 Pudding::Pudding()
 {
 
@@ -19,8 +26,8 @@ Pudding::~Pudding()
 bool Pudding::Start()
 {
 	//画像
-	m_puddingMap.Init("Assets/sprite/Map/Pudding.DDS", 30.0f, 30.0f);
-	m_puddingMapGray.Init("Assets/sprite/Map/PuddingGray.DDS", 30.0f, 30.0f);
+	m_puddingMap.Init("Assets/sprite/Map/Pudding.DDS", SQUARE_WIDTH, SQUARE_HEIGHT);
+	m_puddingMapGray.Init("Assets/sprite/Map/PuddingGray.DDS", SQUARE_WIDTH, SQUARE_HEIGHT);
 
 	//エフェクト
 	EffectEngine::GetInstance()->ResistEffect(13, u"Assets/effect/Pudding.efk");
@@ -54,7 +61,7 @@ void Pudding::Update()
 		m_puddingEF->Stop();
 		DeleteGO(this);
 	}
-	if (m_diff.Length() <= 70.0f) {
+	if (m_diff.Length() <= PUDDING_COLLISION_JUDGE) {
 		//サウンド
 		m_puddingGetSE = NewGO<SoundSource>(13);
 		m_puddingGetSE->Init(13);

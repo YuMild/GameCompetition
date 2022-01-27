@@ -1,4 +1,8 @@
 #pragma once
+
+/// <summary>
+/// ステージ
+/// </summary>
 class BackGround :public IGameObject
 {
 public:

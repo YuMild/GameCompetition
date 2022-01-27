@@ -10,42 +10,81 @@ class Shine;
 class Water;
 class Wind;
 
+/// <summary>
+/// 敵機
+/// </summary>
 class Enemy:public IGameObject
 {
 public:
 
-	void SetPosition(Vector3& position) 
-	{
-		m_position = position;
-	}
+	/// <summary>
+	/// 敵機の座標を取得
+	/// </summary>
+	/// <returns></returns>
 	Vector3 GetPosition() const
 	{
 		return m_position;
 	}
+
+	/// <summary>
+	/// 敵機の座標を指定
+	/// </summary>
+	/// <param name="position"></param>
+	void SetPosition(Vector3& position) 
+	{
+		m_position = position;
+	}
+
 	Enemy();
 	~Enemy();
 	bool Start();
 	void Update();
-	void MapMove();
 	void Render(RenderContext& rc);
+
+	/// <summary>
+	/// マップ上の動作
+	/// </summary>
+	void MapMove();
+
+	/// <summary>
+	/// マップ上の画像の動作
+	/// </summary>
+	/// <param name="rc"></param>
 	void EnemyMap(RenderContext& rc)
 	{
-		if (m_isStart == false)
+		if (m_isStart == false)						//	一度だけ実行
 		{
 			return;
 		}
 		m_enemyMap.Draw(rc);
 	}
+
+	/// <summary>
+	/// マップ上のグレー画像の動作
+	/// </summary>
+	/// <param name="rc"></param>
 	void EnemyMapGray(RenderContext& rc)
 	{
-		if (m_isStart == false)
+		if (m_isStart == false)						//	一度だけ実行
 		{
 			return;
 		}
 		m_enemyMapGray.Draw(rc);
 	}
+
+	/// <summary>
+	/// 敵機の動作
+	/// </summary>
 	void Move();
+
+	/// <summary>
+	/// 魔法の存在確認
+	/// </summary>
 	void Magic();
+
+	/// <summary>
+	/// 敵機の死亡判定
+	/// </summary>
 	void Death();
 
 private:

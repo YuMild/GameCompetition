@@ -28,89 +28,96 @@ Game::Game()
 
 Game::~Game()
 {
+	g_renderingEngine->SetIsAllGrayScale(false);														//	グレースケールをOFFに
+	g_k2Engine->GetK2EngineLow()->SetFrameRateMode(K2EngineLow::enFrameRateMode_Variable, 60.0f);		//	FPSを元に戻す
 
-	g_renderingEngine->SetIsAllGrayScale(false);
-	g_k2Engine->GetK2EngineLow()->SetFrameRateMode(K2EngineLow::enFrameRateMode_Variable, 60.0f);
+	//	DeleteGO
 
-	//DeleteGO
-	DeleteGO(m_backGround);
-	DeleteGO(m_backGroundBGM);
-	const auto& bullets = FindGOs<Bullet>("bullet");
+	DeleteGO(m_backGround);																				//	BackGround
+	DeleteGO(m_backGroundBGM);																			//	BGM
+	const auto& bullets = FindGOs<Bullet>("bullet");													//	Bullet
 	int bulletSize = bullets.size();
 	for (int i = 0; i < bulletSize; i++)
 	{
 		DeleteGO(bullets[i]);
 	}
-	DeleteGO(m_clock);
-	const auto& enemys = FindGOs<Enemy>("enemy");//全てのエネミーの削除
+	DeleteGO(m_clock);																					//	Clock
+	const auto& enemys = FindGOs<Enemy>("enemy");														//	Enemy
 	int enemySize = enemys.size();
 	for (int i = 0; i < enemySize; i++)
 	{
 		DeleteGO(enemys[i]);
 	}
-	DeleteGO(m_gameCamera);
-	DeleteGO(m_hp);
-	DeleteGO(m_magic);
-	const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");
+	DeleteGO(m_gameCamera);																				//	GameCamera
+	DeleteGO(m_hp);																						//	HP
+	DeleteGO(m_magic);																					//	Magic
+	const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");										//	MagicPoint
 	int magicPointSize = magicPoints.size();
 	for (int i = 0; i < magicPointSize; i++)
 	{
 		DeleteGO(magicPoints[i]);
 	}
-	DeleteGO(m_map);
-	DeleteGO(m_mp);
-	DeleteGO(m_player);
-	DeleteGO(m_pudding);
-	DeleteGO(m_score);
-	DeleteGO(m_skyCube);
+	DeleteGO(m_map);																					//	Map
+	DeleteGO(m_mp);																						//	MP
+	DeleteGO(m_player);																					//	Player
+	DeleteGO(m_pudding);																				//	Pudding
+	DeleteGO(m_score);																					//	Score
+	DeleteGO(m_skyCube);																				//	SkyCube
 }
 
 bool Game::Start()
 {
-	//NewGO
-	m_backGround = NewGO<BackGround>(0, "backGround");
-	m_clock = NewGO<Clock>(0, "clock");
-	m_gameCamera = NewGO<GameCamera>(0, "gameCamera");
-	m_hp = NewGO<Hp>(0, "hp");
-	m_magic = NewGO<Magic>(0, "magic");
-	m_map = NewGO<Map>(0, "map");
-	m_mp = NewGO<Mp>(0, "mp");
-	m_player = NewGO<Player>(0, "player");
-	m_score = NewGO<Score>(0, "score");
-	m_skyCube = NewGO<SkyCube>(0, "skyCube");
+	//	NewGO
 
-	//背景
-	m_skyCube->SetScale({ 300.0f, 300.0f, 300.0f });
-	m_skyCube->SetType(enSkyCubeType_NightToon);
-	m_skyCube->SetLuminance(0.5);
+	m_backGround = NewGO<BackGround>(0, "backGround");													//	BackGround
+	m_clock = NewGO<Clock>(0, "clock");																	//	Clock
+	m_gameCamera = NewGO<GameCamera>(0, "gameCamera");													//	GameCamera
+	m_hp = NewGO<Hp>(0, "hp");																			//	HP
+	m_magic = NewGO<Magic>(0, "magic");																	//	Magic
+	m_map = NewGO<Map>(0, "map");																		//	Map
+	m_mp = NewGO<Mp>(0, "mp");																			//	MP
+	m_player = NewGO<Player>(0, "player");																//	Player
+	m_score = NewGO<Score>(0, "score");																	//	Score
+	m_skyCube = NewGO<SkyCube>(0, "skyCube");															//	SkyCube
 
-	//音声
-	g_soundEngine->ResistWaveFileBank(1, "Assets/sound/BackGround.wav");
+	//	背景
+
+	m_skyCube->SetScale({ 300.0f, 300.0f, 300.0f });													//	サイズ
+	m_skyCube->SetType(enSkyCubeType_NightToon);														//	SkyCubeの種類
+	m_skyCube->SetLuminance(0.5);																		//	輝度
+
+	//	音声
+
+	g_soundEngine->ResistWaveFileBank(1, "Assets/sound/BackGround.wav");								//	BGM
 	m_backGroundBGM = NewGO<SoundSource>(1);
 	m_backGroundBGM->Init(1);
 	m_backGroundBGM->SetVolume(0.5f);
 	m_backGroundBGM->Play(true);
-	g_sceneLight->SetDirectionLight(0, Vector3(0.5f,-0.5f,0.5f), Vector3(2.5f,2.5f,2.5f));
-
-	EffectEngine::GetInstance()->ResistEffect2D(0, u"Assets/effect/MagicCircleFire.efk");
+	g_sceneLight->SetDirectionLight(0, Vector3(0.5f,-0.5f,0.5f), Vector3(2.5f,2.5f,2.5f));				//	ディレクションライト
 	
 	return true;
 }
 
 void Game::Update()
 {
+	Fall();
+	ManageState();
+	if (m_hp->GetHP() == 0)																				//	プレイヤーのHPが0の時
+	{
+		return;																							//	関数の処理を終了させる
+	}
+	EnemyGenerate();
+	MagicPointGenerate();
+	PuddingGenerate();
+	Timer();
+}
+
+void Game::Fall()
+{
 	if (m_player->GetPosition().y <= -100.0f)
 	{
 		m_hp->SetHP(0);
 	}
-
-	if (m_hp->GetHP() >= 1) {
-		EnemyGenerate();
-		MagicPointGenerate();
-		PuddingGenerate();
-		Timer();
-	}
-	ManageState();
 }
 
 void Game::Timer() 
@@ -145,11 +152,6 @@ void Game::EnemyGenerate()
 		position.z = distr(eng);
 		position.y = 0.0f;
 
-		if ((position - m_player->GetPosition()).Length() <= 100.0f)
-		{
-			return;
-		}
-
 		m_enemy = NewGO<Enemy>(0, "enemy");
 		m_enemy->SetPosition(position);
 		m_enemySpawnTimer = 0.0f;
@@ -166,20 +168,15 @@ void Game::MagicPointGenerate()
 		Vector3 position;
 		random_device rd;
 		default_random_engine eng(rd());
-		uniform_int_distribution<int> distr(MIN, MAX);
+		uniform_int_distribution<int> distr(MIN, MAX);													//	MINとMAXの間でランダムな値を作成
 
 		position.x = distr(eng);
 		position.z = distr(eng);
 		position.y = 0.0f;
 
-		if ((position - m_player->GetPosition()).Length() <= 50.0f)
-		{
-			return;
-		}
-
 		m_magicPoint = NewGO<MagicPoint>(0, "magicPoint");
 		m_magicPoint->SetPosition(position);
-		m_magicPointSpawnTimer = 0.0f;
+		m_magicPointSpawnTimer = 0.0f;																	//	タイマーのリセット
 	}
 }
 
@@ -193,16 +190,11 @@ void Game::PuddingGenerate()
 		Vector3 position;
 		random_device rd;
 		default_random_engine eng(rd());
-		uniform_int_distribution<int> distr(MIN, MAX);
+		uniform_int_distribution<int> distr(MIN, MAX);													//	MINとMAXの間でランダムな値を作成
 
 		position.x = distr(eng);
 		position.z = distr(eng);
 		position.y = 0.0f;
-
-		if ((position - m_player->GetPosition()).Length() <= 50.0f)
-		{
-			return;
-		}
 
 		m_pudding = NewGO<Pudding>(0, "pudding");
 		m_pudding->SetPosition(position);
@@ -212,47 +204,54 @@ void Game::PuddingGenerate()
 
 void Game::ManageState()
 {
-	if (m_gameState >= 1)																				//	死亡時
+
+	//	死亡時
+	if (m_gameState >= 1)
 	{
 		m_stateTimer += g_gameTime->GetFrameDeltaTime();												//	時間経過
 	}
 
 	switch (m_gameState)
 	{
-	case 0:																								//	生存時
+
+	//	生存時
+	case 0:
 
 		if (m_hp->GetHP() == 0)																			//	HPが0になるかプレイヤーがステージ外に落下した時
 		{
-			m_player->SetState(3);
-			m_gameState = 1;
-			m_backGroundBGM->Stop();
+			m_player->SetState(3);																		//	プレイヤーの死亡アニメーションを再生させる
+			m_gameState = 1;																			//	スローに移行
+			m_backGroundBGM->Stop();																	//	BGMをストップさせる
 		}
 		break;
 
-	case 1:																								//	スロー時
+	//	スロー時
+	case 1:
 
 		g_renderingEngine->SetIsAllGrayScale(true);														//	モノクロ
 		g_k2Engine->GetK2EngineLow()->SetFrameRateMode(K2EngineLow::enFrameRateMode_Variable, 20.0f);	//	FPSを下げる
 
 		if (m_stateTimer >= 2.0f)																		//	フィニッシュまでのカウントアップ
 		{
-			m_gameState = 2;
-			m_stateTimer = 0.0f;
+			m_gameState = 2;																			//	フィニッシュに移行
+			m_stateTimer = 0.0f;																		//	タイマーのリセット
 		}
 		break;
 
-	case 2:																								//	フィニッシュ時
+	//	フィニッシュ時
+	case 2:
 
 		if (m_stateTimer >= 1.5f)																		//	リザルトまでのカウントアップ
 		{
-			m_gameState = 3;
-			m_stateTimer = 0.0f;
+			m_gameState = 3;																			//	リザルトに移行
+			m_stateTimer = 0.0f;																		//	タイマーのリセット
 		}
 		break;
 
-	case 3:																								//	リザルト表示
+	//	リザルト時
+	case 3:
 
-		if (m_isStart == true)
+		if (m_isStart == true)																			//	一度だけ実行
 		{
 			m_result = NewGO<Result>(0, "result");
 			m_isStart = false;
@@ -260,56 +259,72 @@ void Game::ManageState()
 
 		if (m_stateTimer >= 1.0f)
 		{
-			m_gameState = 4; m_stateTimer = 0.0f;
+			m_gameState = 4;																			//	タイムスコアに移行
+			m_stateTimer = 0.0f;																		//	タイマーのリセット
 		}
 
 		break;
 
-	case 4:																								//	タイムスコア表示
+	//	タイムスコア表示
+	case 4:
 
 		if (m_stateTimer >= 0.8f)
 		{
-			m_gameState = 5; m_stateTimer = 0.0f;
+			m_gameState = 5;																			//	プリンスコアに移行
+			m_stateTimer = 0.0f;																		//	タイマーのリセット
 		}
 
 		break;
 
-	case 5:																								//	プリンスコア表示
+	//	プリンスコア表示
+	case 5:
 
 		if (m_stateTimer >= 0.8f)
 		{
-			m_gameState = 6; m_stateTimer = 0.0f;
+			m_gameState = 6;																			//	トータルスコアに移行
+			m_stateTimer = 0.0f;																		//	タイマーのリセット
 		}
 
 		break;
 
-	case 6:																								//	トータルスコア表示
+	//	トータルスコア表示
+	case 6:
 
 		if (m_stateTimer >= 1.5f)
 		{
-			if (m_score->GetTotalScoreOld() < 5000.0f)													//	Dランク
+			//	Dランク
+			if (m_score->GetTotalScoreOld() < 5000.0f)													
 			{
-				m_gameState = 7; m_stateTimer = 0.0f;
+				m_gameState = 7;
+				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
 
-			else if (m_score->GetTotalScoreOld() > 5001.0f && m_score->GetTotalScoreOld() < 10000.0f)	//	Cランク
+			//	Cランク
+			else if (m_score->GetTotalScoreOld() > 5001.0f && m_score->GetTotalScoreOld() < 10000.0f)
 			{
-				m_gameState = 8; m_stateTimer = 0.0f;
+				m_gameState = 8;
+				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
 
-			else if (m_score->GetTotalScoreOld() > 10001.0f && m_score->GetTotalScoreOld() < 15000.0f)	//	Bランク
+			//	Bランク
+			else if (m_score->GetTotalScoreOld() > 10001.0f && m_score->GetTotalScoreOld() < 15000.0f)
 			{
-				m_gameState = 9; m_stateTimer = 0.0f;
+				m_gameState = 9;
+				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
 
-			else if (m_score->GetTotalScoreOld() > 15001.0f && m_score->GetTotalScoreOld() < 20000.0f)	//	Aランク
+			//	Aランク
+			else if (m_score->GetTotalScoreOld() > 15001.0f && m_score->GetTotalScoreOld() < 20000.0f)
 			{
-				m_gameState = 10; m_stateTimer = 0.0f;
+				m_gameState = 10;
+				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
 
-			else if (m_score->GetTotalScoreOld() > 20001.0f)											//	Sランク
+			//	Sランク
+			else if (m_score->GetTotalScoreOld() > 20001.0f)
 			{
-				m_gameState = 11; m_stateTimer = 0.0f;
+				m_gameState = 11;
+				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
 		}
 

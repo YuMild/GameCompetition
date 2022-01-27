@@ -21,19 +21,50 @@ class Game : public IGameObject
 {
 public:
 
+	/// <summary>
+	/// ManageStateの値を得る
+	/// </summary>
+	/// <returns></returns>
 	int GetManageState() const
 	{
 		return m_gameState;
 	}
+
 	Game();
 	~Game();
 	bool Start();
 	void Update();
+
 private:
+
+	/// <summary>
+	/// 落下死の判定
+	/// </summary>
+	void Fall();
+
+	/// <summary>
+	/// 時間の加算
+	/// </summary>
 	void Timer();
+
+	/// <summary>
+	/// 敵機を発生させる
+	/// </summary>
 	void EnemyGenerate();
+
+	/// <summary>
+	/// MagicPointを発生させる
+	/// </summary>
 	void MagicPointGenerate();
+
+	/// <summary>
+	/// プリンを発生させる
+	/// </summary>
 	void PuddingGenerate();
+
+	/// <summary>
+	/// Manageを管理する
+	/// </summary>
 	void ManageState();
 
 private:
@@ -61,16 +92,15 @@ private:
 	Score* m_score;
 	SkyCube* m_skyCube;
 
-	bool m_isStart = true;
+	bool m_isStart = true;												//一度だけ判定を取る
 
-	float m_timer = 0;
-	float m_slowTimer = 0;
-	float m_levelTimer = 0;
-	float m_enemySpawnTimer = 0;
-	float m_magicPointSpawnTimer = 0;
-	float m_puddingSpawnTimer = 6.0;
-	float m_stateTimer = 0.0f;
+	float m_timer = 0;													//全体のタイマー
+	float m_levelTimer = 0;												//レベルアップ
+	float m_enemySpawnTimer = 0;										//敵機のスポーン
+	float m_magicPointSpawnTimer = 0;									//MagicPointのスポーン
+	float m_puddingSpawnTimer = 6.0;									//プリンのスポーン
+	float m_stateTimer = 0.0f;											//Stateの移行
 
-	int m_gameState = 0;
+	int m_gameState = 0;												//シーンの移行
 };
 

@@ -35,6 +35,10 @@ bool Mp::Start()
 
 void Mp::Update() 
 {
+	if (m_game->GetManageState() >= 1)
+	{
+		return;
+	}
 	Cut();
 	Heal();
 	m_mpBar.Update();
@@ -45,14 +49,11 @@ void Mp::Update()
 
 void Mp::Cut()
 {
-	if (m_game->GetManageState() == 0)
-	{
-		float x = m_mp / 100;
-		m_mpBarGray.SetIsDisplayRestrictionRightSide(true);
-		m_mpBarGray.SetLimitedX(x);
-		m_mpBar.SetIsDisplayRestrictionRightSide(true);
-		m_mpBar.SetLimitedX(x);
-	}
+	float x = m_mp / 100;
+	m_mpBarGray.SetIsDisplayRestrictionRightSide(true);
+	m_mpBarGray.SetLimitedX(x);
+	m_mpBar.SetIsDisplayRestrictionRightSide(true);
+	m_mpBar.SetLimitedX(x);
 }
 
 void Mp::Heal()

@@ -39,8 +39,7 @@ void GameCamera::Update()
 {
 	if (m_game->GetManageState() != 0)
 	{
-		//早期リターン。
-		return;
+		return;													//早期リターン
 	}
 	//カメラを更新
 	//注視点を計算する
@@ -73,12 +72,10 @@ void GameCamera::Update()
 	Vector3 toPosDir = m_toCameraPos;
 	toPosDir.Normalize();
 	if (toPosDir.y < -0.5f) {
-		//カメラが上向きすぎ
-		m_toCameraPos = toCameraPosOld;
+		m_toCameraPos = toCameraPosOld;							//カメラが上に向き過ぎるのを防ぐ
 	}
 	else if (toPosDir.y > 0.8f) {
-		//カメラが下向きすぎ
-		m_toCameraPos = toCameraPosOld;
+		m_toCameraPos = toCameraPosOld;							//カメラが下に向き過ぎるのを防ぐ
 	}
 
 	//視点を計算する

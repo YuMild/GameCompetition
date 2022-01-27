@@ -6,6 +6,9 @@ class Game;
 class Pudding;
 class Score;
 
+/// <summary>
+/// リザルト
+/// </summary>
 class Result :public IGameObject
 {
 public:
@@ -15,28 +18,33 @@ public:
 	bool Start();
 	void Update();
 	void Render(RenderContext& rc);
+
+	/// <summary>
+	/// Stateの管理
+	/// </summary>
 	void ManageState();
 
 private:
 
-	SpriteRender m_resultBackGroundRender;
-	SpriteRender m_resultRender;
-	SpriteRender m_timeRender;
-	SpriteRender m_puddingRender;
-	SpriteRender m_totalScoreRender;
+	SpriteRender m_resultBackGroundRender;						//	リザルト背景
+	SpriteRender m_resultRender;								//	リザルト
+	SpriteRender m_timeRender;									//	タイム
+	SpriteRender m_puddingRender;								//	プリン
+	SpriteRender m_totalScoreRender;							//	トータルスコア
 
-	SpriteRender m_sRender;
-	SpriteRender m_aRender;
-	SpriteRender m_bRender;
-	SpriteRender m_cRender;
-	SpriteRender m_dRender;
+	//	ランク画像
+	SpriteRender m_sRender;										//	S
+	SpriteRender m_aRender;										//	A
+	SpriteRender m_bRender;										//	B
+	SpriteRender m_cRender;										//	C
+	SpriteRender m_dRender;										//	D
 
 	SoundSource* m_drumRollSE;
 	SoundSource* m_drumSE;
 
-	FontBlueNumber* m_timeNumber;
-	FontBlueNumber* m_puddingNumber;
-	FontPurpleNumber* m_fontPurpleNumber;
+	FontBlueNumber* m_timeScoreFont;							//	タイムスコア
+	FontBlueNumber* m_puddingScoreFont;							//	プリンスコア
+	FontPurpleNumber* m_totalScoreFont;							//	トータルスコア
 	Game* m_game;
 	Pudding* m_pudding;
 	Score* m_score;

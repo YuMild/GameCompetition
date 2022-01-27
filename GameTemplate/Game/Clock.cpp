@@ -3,6 +3,12 @@
 
 #include "Game.h"
 
+namespace
+{
+	const float SQUARE_WIDTH = 300.0f;
+	const float SQUARE_HEIGHT = 300.0f;
+}
+
 Clock::Clock()
 {
 
@@ -17,19 +23,19 @@ bool Clock::Start()
 {
 	m_clockCenterPosition = { -740.0f, 330.0f, 0.0f };
 
-	m_clockBackGround.Init("Assets/sprite/Clock/ClockBackGround.DDS", 300.0f, 300.0f);
+	m_clockBackGround.Init("Assets/sprite/Clock/ClockBackGround.DDS", SQUARE_WIDTH, SQUARE_HEIGHT);
 	m_clockBackGround.SetPosition(m_clockCenterPosition);
 	m_clockBackGround.Update();
-	m_clockMinuteHund.Init("Assets/sprite/Clock/ClockMinuteHund.DDS", 300.0f, 300.0f);
+	m_clockMinuteHund.Init("Assets/sprite/Clock/ClockMinuteHund.DDS", SQUARE_WIDTH, SQUARE_HEIGHT);
 	m_clockMinuteHund.SetPosition(m_clockCenterPosition);
 	m_clockMinuteHund.Update();
-	m_clockSecondHund.Init("Assets/sprite/Clock/ClockSecondHund.DDS", 300.0f, 300.0f);
+	m_clockSecondHund.Init("Assets/sprite/Clock/ClockSecondHund.DDS", SQUARE_WIDTH, SQUARE_HEIGHT);
 	m_clockSecondHund.SetPosition(m_clockCenterPosition);
 	m_clockSecondHund.Update();
-	m_clockFrame.Init("Assets/sprite/Clock/ClockFrame.DDS", 300.0f, 300.0f);
+	m_clockFrame.Init("Assets/sprite/Clock/ClockFrame.DDS", SQUARE_WIDTH, SQUARE_HEIGHT);
 	m_clockFrame.SetPosition(m_clockCenterPosition);
 	m_clockFrame.Update();
-	m_clockFrameGray.Init("Assets/sprite/Clock/ClockFrameGray.DDS", 300.0f, 300.0f);
+	m_clockFrameGray.Init("Assets/sprite/Clock/ClockFrameGray.DDS", SQUARE_WIDTH, SQUARE_HEIGHT);
 	m_clockFrameGray.SetPosition(m_clockCenterPosition);
 	m_clockFrameGray.Update();
 

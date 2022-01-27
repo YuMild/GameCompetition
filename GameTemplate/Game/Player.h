@@ -10,31 +10,50 @@ class Shine;
 class Water;
 class Wind;
 
+/// <summary>
+///	自機
+/// </summary>
 class Player :public IGameObject
 {
 public:
 
+	//	他のクラスで使用しているのでpublicに
+
+	//	クールタイム
 	const float COOLTIME_BULLET = 1.0f;
 	const float COOLTIME_FIRE = 10.0f;
 	const float COOLTIME_WATER = 3.0f;
 	const float COOLTIME_WIND = 5.0f;
 	const float COOLTIME_SHINE = 20.0f;
 
+	//	MP消費量
 	const float MP_FIRE = 15.0f;
 	const float MP_WATER = 5.0f;
 	const float MP_WIND = 10.0f;
 	const float MP_SHINE = 20.0f;
 
+	/// <summary>
+	/// プレイヤーの座標を取得
+	/// </summary>
+	/// <returns></returns>
 	Vector3 GetPosition() const
 	{
 		return m_position;
 	}
+
+	/// <summary>
+	/// プレイヤーの向いている方向を取得
+	/// </summary>
+	/// <returns></returns>
 	Vector3 GetDirection() const
 	{
 		return m_forward;
 	}
 
-	//動作確認
+	/// <summary>
+	/// 各魔法が実行されているか確認
+	/// </summary>
+	/// <returns></returns>
 	bool GetFire() const {
 		return m_fireMagazine;
 	}
@@ -48,7 +67,10 @@ public:
 		return m_shineMagazine;
 	}
 
-	//クールタイマー
+	/// <summary>
+	/// 各魔法のクールタイムを取得
+	/// </summary>
+	/// <returns></returns>
 	float GetFireCoolTimer() const {
 		return m_fireCoolTimer;
 	}
@@ -62,7 +84,10 @@ public:
 		return m_shineCoolTimer;
 	}
 
-	//MP消費量
+	/// <summary>
+	/// 各魔法のMP消費量を取得
+	/// </summary>
+	/// <returns></returns>
 	float GetFireMP() const {
 		return MP_FIRE;
 	}
@@ -76,6 +101,11 @@ public:
 		return MP_SHINE;
 	}
 
+	/// <summary>
+	/// プレイヤーのStateを指定
+	/// </summary>
+	/// <param name="state"></param>
+	/// <returns></returns>
 	int SetState(const int state) {
 		m_playerState = state;
 		return m_playerState;
@@ -89,11 +119,35 @@ public:
 	void Render(RenderContext& rc) override;
 
 private:
+
+	/// <summary>
+	/// 時間の加算
+	/// </summary>
 	void Timer();
+
+	/// <summary>
+	/// プレイヤーの動作
+	/// </summary>
 	void Move();
+
+	/// <summary>
+	/// 魔法
+	/// </summary>
 	void Magic();
+
+	/// <summary>
+	/// プレイヤーの回転
+	/// </summary>
 	void Rotation();
+
+	/// <summary>
+	/// プレイヤーの状態
+	/// </summary>
 	void ManageState();
+
+	/// <summary>
+	/// アニメーション
+	/// </summary>
 	void PlayAnimation();
 
 	//アニメーション

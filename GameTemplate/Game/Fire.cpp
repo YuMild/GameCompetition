@@ -3,6 +3,12 @@
 
 #include "Player.h"
 
+namespace
+{
+	const float MAGIC_SIZE = 50.0f;
+	const float MAGIC_CIRCLE_SIZE = 50.0f;
+}
+
 Fire::Fire() {
 
 }
@@ -18,13 +24,13 @@ bool Fire::Start() {
 	EffectEngine::GetInstance()->ResistEffect(2,u"Assets/effect/Fire.efk");
 	m_fireEF = NewGO<EffectEmitter>(2);
 	m_fireEF->Init(2);
-	m_fireEF->SetScale(Vector3::One * 50.0f);
+	m_fireEF->SetScale(Vector3::One * MAGIC_SIZE);
 	m_fireEF->Play();
 
 	EffectEngine::GetInstance()->ResistEffect(7, u"Assets/effect/MagicCircleFire.efk");
 	m_fireMagicCircleEF = NewGO<EffectEmitter>(7); 
 	m_fireMagicCircleEF->Init(7);
-	m_fireMagicCircleEF->SetScale(Vector3::One * 50.0f);
+	m_fireMagicCircleEF->SetScale(Vector3::One * MAGIC_CIRCLE_SIZE);
 	m_fireMagicCircleEF->Play();
 
 	//âπê∫

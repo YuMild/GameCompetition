@@ -5,6 +5,12 @@
 #include "Mp.h"
 #include "Player.h"
 
+namespace
+{
+	const float SQUARE_WIDTH = 30.0f;
+	const float SQUARE_HEIGHT = 30.0f;
+}
+
 MagicPoint::MagicPoint()
 {
 
@@ -17,8 +23,8 @@ MagicPoint::~MagicPoint()
 
 bool MagicPoint::Start()
 {
-	m_magicPointMap.Init("Assets/sprite/Map/MagicPoint.DDS",30.0f,30.0f);
-	m_magicPointMapGray.Init("Assets/sprite/Map/MagicPointGray.DDS", 30.0f, 30.0f);
+	m_magicPointMap.Init("Assets/sprite/Map/MagicPoint.DDS", SQUARE_WIDTH, SQUARE_HEIGHT);
+	m_magicPointMapGray.Init("Assets/sprite/Map/MagicPointGray.DDS", SQUARE_WIDTH, SQUARE_HEIGHT);
 
 	EffectEngine::GetInstance()->ResistEffect(11, u"Assets/effect/MagicPoint.efk");
 	m_magicPointEF = NewGO<EffectEmitter>(11);

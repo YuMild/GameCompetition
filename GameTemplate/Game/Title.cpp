@@ -6,8 +6,46 @@
 
 namespace
 {
-	const float WIDTH = 1920.0f;	//幅
-	const float HEIGHT = 1080.0f;	//高さ
+	//	画像
+	const float WIDTH = 1920.0f;
+	const float HEIGHT = 1080.0f;
+	const float SQUARE_WIDTH = 1000.0f;
+	const float SQUARE_HEIGHT = 1000.0f;
+	const float HEART_1_SIZE = 650.0f;
+	const float HEART_2_SIZE = 460.0f;
+	const float HEART_3_SIZE = 300.0f;
+	const float FIRE_1_SIZE = 380.0f;
+	const float FIRE_2_SIZE = 520.0f;
+	const float WATER_1_SIZE = 330.0f;
+	const float WATER_2_SIZE = 370.0f;
+	const float WIND_1_SIZE = 550.0f;
+	const float WIND_2_SIZE = 340.0f;
+	const float SHINE_1_SIZE = 360.0f;
+	const float SHINE_2_SIZE = 800.0f;
+
+	//ポジション
+	const float HEART_1_X = 800.0f;
+	const float HEART_1_Y = -440.0f;
+	const float HEART_2_X = -670.0f;
+	const float HEART_2_Y = -500.0f;
+	const float HEART_3_X = 180.0f;
+	const float HEART_3_Y = -570.0f;
+	const float FIRE_1_X = 570.0f;
+	const float FIRE_1_Y = -530.0f;
+	const float FIRE_2_X = -460.0f;
+	const float FIRE_2_Y = -470.0f;
+	const float WATER_1_X = -420.0f;
+	const float WATER_1_Y = -560.0f;
+	const float WATER_2_X = 180.0f;
+	const float WATER_2_Y = -490.0f;
+	const float WIND_1_X = 450.0f;
+	const float WIND_1_Y = -520.0f;
+	const float WIND_2_X = -250.0f;
+	const float WIND_2_Y = -510.0f;
+	const float SHINE_1_X = -40.0f;
+	const float SHINE_1_Y = -520.0f;
+	const float SHINE_2_X = -850.0f;
+	const float SHINE_2_Y = -450.0f;
 }
 
 Title::Title()
@@ -22,21 +60,21 @@ Title::~Title()
 bool Title::Start()
 {
 	//背景
-	m_titleRender.Init("Assets/sprite/Windows/Title.dds", WIDTH, 1080.0f);
+	m_titleRender.Init("Assets/sprite/Windows/Title.dds", WIDTH, HEIGHT);
 	//PressStart
-	m_pressStartRender.Init("Assets/sprite/Windows/PressStart.dds", 1000.0f, 1000.0f);
+	m_pressStartRender.Init("Assets/sprite/Windows/PressStart.dds", SQUARE_WIDTH, SQUARE_HEIGHT);
 	//アイコン
-	m_heart1.Init("Assets/sprite/Hp/HP1.DDS", 650.0f, 650.0f);
-	m_heart2.Init("Assets/sprite/Hp/HP2.DDS", 460.0f, 460.0f);
-	m_heart3.Init("Assets/sprite/Hp/HP3.DDS", 300.0f, 300.0f);
-	m_fire1.Init("Assets/sprite/Magic/TypeFire.DDS", 380.0f, 380.0f);
-	m_fire2.Init("Assets/sprite/Magic/TypeFire.DDS", 520.0f, 520.0f);
-	m_water1.Init("Assets/sprite/Magic/TypeWater.DDS", 330.0f, 330.0f);
-	m_water2.Init("Assets/sprite/Magic/TypeWater.DDS", 370.0f, 370.0f);
-	m_wind1.Init("Assets/sprite/Magic/TypeWind.DDS", 550.0f, 550.0f);
-	m_wind2.Init("Assets/sprite/Magic/TypeWind.DDS", 340.0f, 340.0f);
-	m_shine1.Init("Assets/sprite/Magic/TypeShine.DDS", 360.0f, 360.0f);
-	m_shine2.Init("Assets/sprite/Magic/TypeShine.DDS", 800.0f, 800.0f);
+	m_heart1.Init("Assets/sprite/Hp/HP1.DDS", HEART_1_SIZE, HEART_1_SIZE);
+	m_heart2.Init("Assets/sprite/Hp/HP2.DDS", HEART_2_SIZE, HEART_2_SIZE);
+	m_heart3.Init("Assets/sprite/Hp/HP3.DDS", HEART_3_SIZE, HEART_3_SIZE);
+	m_fire1.Init("Assets/sprite/Magic/TypeFire.DDS", FIRE_1_SIZE, FIRE_1_SIZE);
+	m_fire2.Init("Assets/sprite/Magic/TypeFire.DDS", FIRE_2_SIZE, FIRE_2_SIZE);
+	m_water1.Init("Assets/sprite/Magic/TypeWater.DDS", WATER_1_SIZE, WATER_1_SIZE);
+	m_water2.Init("Assets/sprite/Magic/TypeWater.DDS", WATER_2_SIZE, WATER_2_SIZE);
+	m_wind1.Init("Assets/sprite/Magic/TypeWind.DDS", WIND_1_SIZE, WIND_1_SIZE);
+	m_wind2.Init("Assets/sprite/Magic/TypeWind.DDS", WIND_2_SIZE, WIND_2_SIZE);
+	m_shine1.Init("Assets/sprite/Magic/TypeShine.DDS", SHINE_1_SIZE, SHINE_1_SIZE);
+	m_shine2.Init("Assets/sprite/Magic/TypeShine.DDS", SHINE_2_SIZE, SHINE_2_SIZE);
 
 	//音声
 	g_soundEngine->ResistWaveFileBank(0, "Assets/sound/Title.wav");
@@ -96,41 +134,41 @@ void Title::Update()
 	m_pressStartRender.Update();
 
 	//アイコン
-	m_heart1Position = { 800.0f,-440.0f + m_upDown1,0.0f };
+	m_heart1Position = { HEART_1_X,HEART_1_Y + m_upDown1,0.0f };
 	m_heart1.SetPosition(m_heart1Position);
 	m_heart1.Update();
-	m_wind2Position = { -250.0f,-510.0f + m_upDown1,0.0f };
+	m_wind2Position = { WIND_2_X,WIND_2_Y + m_upDown1,0.0f };
 	m_wind2.SetPosition(m_wind2Position);
 	m_wind2.Update();
 
-	m_shine2Position = { -850.0f,-450.0f + m_upDown2,0.0f };
+	m_shine2Position = { SHINE_2_X,SHINE_2_Y + m_upDown2,0.0f };
 	m_shine2.SetPosition(m_shine2Position);
 	m_shine2.Update();
-	m_heart3Position = { 180.0f,-570.0f + m_upDown2,0.0f };
+	m_heart3Position = { HEART_3_X,HEART_3_Y + m_upDown2,0.0f };
 	m_heart3.SetPosition(m_heart3Position);
 	m_heart3.Update();
 
-	m_water1Position = { -420.0f,-560.0f + m_upDown3,0.0f };
+	m_water1Position = { WATER_1_X,WATER_1_Y + m_upDown3,0.0f };
 	m_water1.SetPosition(m_water1Position);
 	m_water1.Update();
-	m_water2Position = { 180.0f,-490.0f + m_upDown3,0.0f };
+	m_water2Position = { WATER_2_X,WATER_2_Y + m_upDown3,0.0f };
 	m_water2.SetPosition(m_water2Position);
 	m_water2.Update();
 
-	m_fire2Position = { -460.0f,-470.0f + m_upDown4,0.0f };
+	m_fire2Position = { FIRE_2_X,FIRE_2_Y + m_upDown4,0.0f };
 	m_fire2.SetPosition(m_fire2Position);
 	m_fire2.Update();
-	m_wind1Position = { 450.0f,-520.0f + m_upDown4,0.0f };
+	m_wind1Position = { WIND_1_X,WIND_1_Y + m_upDown4,0.0f };
 	m_wind1.SetPosition(m_wind1Position);
 	m_wind1.Update();
 
-	m_heart2Position = { -670.0f,-500.0f + m_upDown5,0.0f };
+	m_heart2Position = { HEART_2_X,HEART_2_Y + m_upDown5,0.0f };
 	m_heart2.SetPosition(m_heart2Position);
 	m_heart2.Update();
-	m_shine1Position = { -40.0f,-520.0f + m_upDown5,0.0f };
+	m_shine1Position = { SHINE_1_X,SHINE_1_Y + m_upDown5,0.0f };
 	m_shine1.SetPosition(m_shine1Position);
 	m_shine1.Update();
-	m_fire1Position = { 570.0f,-530.0f + m_upDown5,0.0f };
+	m_fire1Position = { FIRE_1_X,FIRE_1_Y + m_upDown5,0.0f };
 	m_fire1.SetPosition(m_fire1Position);
 	m_fire1.Update();
 }

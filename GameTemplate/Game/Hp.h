@@ -2,30 +2,55 @@
 
 class Game;
 
+/// <summary>
+/// ヒットポイント
+/// </summary>
 class Hp :public IGameObject
 {
 public:
+
+	/// <summary>
+	/// 値を減算
+	/// </summary>
+	/// <param name="subHp"></param>
 	void SubHP(const int subHp)
 	{
 		m_hp -= subHp;
 	}
+
+	/// <summary>
+	/// HPを指定
+	/// </summary>
+	/// <param name="setHp"></param>
+	/// <returns></returns>
 	int SetHP(const int setHp)
 	{
 		m_hp = setHp;
 		return m_hp;
 	}
+
+	/// <summary>
+	/// HPの値を取得
+	/// </summary>
+	/// <returns></returns>
 	int GetHP() const
 	{
 		return m_hp;
 	}
+
 	Hp();
 	~Hp();
 	bool Start();
 	void Update();
 	void Render(RenderContext& rc);
+	
+private:
+
+	/// <summary>
+	/// ダメージを管理
+	/// </summary>
 	void Damage();
 
-private:
 	//画像
 	SpriteRender m_hpInside[3];
 	SpriteRender m_hpFrame[3];
@@ -38,6 +63,7 @@ private:
 
 	Game* m_game;
 
+	//一度だけ判定を取る
 	bool m_damage1Judge = true;
 	bool m_damage2Judge = true;
 	bool m_damage3Judge = true;

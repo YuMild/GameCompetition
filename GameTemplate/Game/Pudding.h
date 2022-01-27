@@ -5,22 +5,30 @@ class Map;
 class Player;
 class Score;
 
+/// <summary>
+/// プリン
+/// </summary>
 class Pudding :public IGameObject
 {
 public:
 
+	/// <summary>
+	/// 獲得したプリンの数を取得
+	/// </summary>
+	/// <returns></returns>
 	int GetGetPudding() const
 	{
 		return m_getPudding;
 	}
+
+	/// <summary>
+	/// 座標を指定
+	/// </summary>
+	/// <param name="position"></param>
 	void SetPosition(Vector3& position) {
 		m_position = position;
 	}
-	Pudding();
-	~Pudding();
-	bool Start();
-	void Update();
-	void MapMove();
+
 	void PuddingMap(RenderContext& rc)
 	{
 		if (m_isStart == false)
@@ -38,7 +46,17 @@ public:
 		m_puddingMapGray.Draw(rc);
 	}
 
+	Pudding();
+	~Pudding();
+	bool Start();
+	void Update();
+
 private:
+
+	/// <summary>
+	/// マップ上の動作
+	/// </summary>
+	void MapMove();
 
 	//画像
 	SpriteRender m_puddingMap;
