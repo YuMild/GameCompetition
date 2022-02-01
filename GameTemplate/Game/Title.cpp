@@ -23,7 +23,7 @@ namespace
 	const float SHINE_1_SIZE = 360.0f;
 	const float SHINE_2_SIZE = 800.0f;
 
-	//ポジション
+	//	ポジション
 	const float HEART_1_X = 800.0f;
 	const float HEART_1_Y = -440.0f;
 	const float HEART_2_X = -670.0f;
@@ -50,6 +50,7 @@ namespace
 
 Title::Title()
 {
+
 }
 
 Title::~Title() 
@@ -59,11 +60,13 @@ Title::~Title()
 
 bool Title::Start()
 {
-	//背景
+	//	背景
 	m_titleRender.Init("Assets/sprite/Windows/Title.dds", WIDTH, HEIGHT);
-	//PressStart
+
+	//	PressStart
 	m_pressStartRender.Init("Assets/sprite/Windows/PressStart.dds", SQUARE_WIDTH, SQUARE_HEIGHT);
-	//アイコン
+
+	//	アイコン
 	m_heart1.Init("Assets/sprite/Hp/HP1.DDS", HEART_1_SIZE, HEART_1_SIZE);
 	m_heart2.Init("Assets/sprite/Hp/HP2.DDS", HEART_2_SIZE, HEART_2_SIZE);
 	m_heart3.Init("Assets/sprite/Hp/HP3.DDS", HEART_3_SIZE, HEART_3_SIZE);
@@ -76,7 +79,7 @@ bool Title::Start()
 	m_shine1.Init("Assets/sprite/Magic/TypeShine.DDS", SHINE_1_SIZE, SHINE_1_SIZE);
 	m_shine2.Init("Assets/sprite/Magic/TypeShine.DDS", SHINE_2_SIZE, SHINE_2_SIZE);
 
-	//音声
+	//	音声
 	g_soundEngine->ResistWaveFileBank(0, "Assets/sound/Title.wav");
 	m_titleBGM = NewGO<SoundSource>(0);
 	m_titleBGM->Init(0);
@@ -97,16 +100,17 @@ void Title::Update()
 	if (m_isWaitFadeOut == true) {
 		if (!m_fade->IsFade()) {
 			NewGO<Game>(0, "game");
-			//自身を削除する。
+			//	自身を削除する。
 			DeleteGO(this);
 		}
 	}
+
 	else {
-		//Aボタンを押したら。
+		//	Aボタンを押したら。
 		if (g_pad[0]->IsTrigger(enButtonStart)) {
 			m_isWaitFadeOut = true;
 			m_fade->StartFadeOut();
-			//効果音を再生する。
+			//	効果音を再生する。
 			m_buttonSE = NewGO<SoundSource>(16);
 			m_buttonSE->Init(16);
 			m_buttonSE->Play(false);
@@ -114,7 +118,7 @@ void Title::Update()
 		}
 	}
 
-	//a値を変化させる。
+	//	a値を変化させる。
 	if (m_isWaitFadeOut == true)
 	{
 		m_alpha += g_gameTime->GetFrameDeltaTime() * 20.5f;
@@ -124,16 +128,16 @@ void Title::Update()
 		m_alpha += g_gameTime->GetFrameDeltaTime() * 1.2f;
 	}
 
-	//スタートボタンの画像のアルファ値を変更する。
+	//	スタートボタンの画像のアルファ値を変更する。
 	m_pressStartRender.SetMulColor(Vector4(1.0f, 1.0f, 1.0f, fabsf(sinf(m_alpha))));
 
-	//背景
+	//	背景
 	m_titleRender.Update();
 
-	//PressStart
+	//	PressStart
 	m_pressStartRender.Update();
 
-	//アイコン
+	//	アイコン
 	m_heart1Position = { HEART_1_X,HEART_1_Y + m_upDown1,0.0f };
 	m_heart1.SetPosition(m_heart1Position);
 	m_heart1.Update();
@@ -175,7 +179,7 @@ void Title::Update()
 
 void Title::State()
 {
-	//タイマー1
+	//	タイマー1
 	if (m_timer1 > 0.5f && m_timer1 < 0.7f)
 	{
 		m_upDown1 += 7.0f;
@@ -190,7 +194,7 @@ void Title::State()
 		m_upDown1 = 0;
 	}
 
-	//タイマー2
+	//	タイマー2
 	if (m_timer2 > 1.1f && m_timer2 < 1.3f)
 	{
 		m_upDown2 += 7.0f;
@@ -205,7 +209,7 @@ void Title::State()
 		m_upDown2 = 0;
 	}
 
-	//タイマー3
+	//	タイマー3
 	if (m_timer3 > 1.7f && m_timer3 < 1.9f)
 	{
 		m_upDown3 += 7.0f;
@@ -220,7 +224,7 @@ void Title::State()
 		m_upDown3 = 0;
 	}
 
-	//タイマー4
+	//	タイマー4
 	if (m_timer4 > 2.3f && m_timer4 < 2.5f)
 	{
 		m_upDown4 += 7.0f;
@@ -235,7 +239,7 @@ void Title::State()
 		m_upDown4 = 0;
 	}
 
-	//タイマー5
+	//	タイマー5
 	if (m_timer5 > 2.9f && m_timer5 < 3.1f)
 	{
 		m_upDown5 += 7.0f;
@@ -262,10 +266,10 @@ void Title::Timer()
 
 void Title::Render(RenderContext& rc)
 {
-	//背景
+	//	背景
 	m_titleRender.Draw(rc);
 
-	//アイコン
+	//	アイコン
 	m_fire2.Draw(rc);
 	m_water2.Draw(rc);
 	m_wind2.Draw(rc);
@@ -278,6 +282,6 @@ void Title::Render(RenderContext& rc)
 	m_shine1.Draw(rc);
 	m_fire1.Draw(rc);
 
-	//PressStart
+	//	PressStart
 	m_pressStartRender.Draw(rc);
 }

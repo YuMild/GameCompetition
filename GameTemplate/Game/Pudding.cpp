@@ -25,18 +25,18 @@ Pudding::~Pudding()
 
 bool Pudding::Start()
 {
-	//画像
+	//	画像
 	m_puddingMap.Init("Assets/sprite/Map/Pudding.DDS", SQUARE_WIDTH, SQUARE_HEIGHT);
 	m_puddingMapGray.Init("Assets/sprite/Map/PuddingGray.DDS", SQUARE_WIDTH, SQUARE_HEIGHT);
 
-	//エフェクト
+	//	エフェクト
 	EffectEngine::GetInstance()->ResistEffect(13, u"Assets/effect/Pudding.efk");
 	m_puddingEF = NewGO<EffectEmitter>(13);
 	m_puddingEF->Init(13);
 	m_puddingEF->SetScale(Vector3::One * 20.0f);
 	m_puddingEF->Play();
 
-	//サウンド
+	//	サウンド
 	g_soundEngine->ResistWaveFileBank(13, "Assets/sound/PuddingGet.wav");
 
 	m_game = FindGO<Game>("game");
@@ -62,15 +62,15 @@ void Pudding::Update()
 		DeleteGO(this);
 	}
 	if (m_diff.Length() <= PUDDING_COLLISION_JUDGE) {
-		//サウンド
+		//	サウンド
 		m_puddingGetSE = NewGO<SoundSource>(13);
 		m_puddingGetSE->Init(13);
 		m_puddingGetSE->Play(false);
-		//スコア加算
+		//	スコア加算
 		m_score->AddTotalScore(5.0f);
-		//個数計算
+		//	個数計算
 		m_score->AddPuddingScore(1);
-		//消去
+		//	消去
 		m_puddingEF->Stop();
 		DeleteGO(this);
 	}

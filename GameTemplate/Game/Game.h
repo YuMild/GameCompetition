@@ -92,15 +92,15 @@ private:
 	Score* m_score;
 	SkyCube* m_skyCube;
 
-	bool m_isStart = true;												//一度だけ判定を取る
+	bool m_isStart = true;												//	一度だけ判定を取る
 
-	float m_timer = 0;													//全体のタイマー
-	float m_levelTimer = 0;												//レベルアップ
-	float m_enemySpawnTimer = 0;										//敵機のスポーン
-	float m_magicPointSpawnTimer = 0;									//MagicPointのスポーン
-	float m_puddingSpawnTimer = 6.0;									//プリンのスポーン
-	float m_stateTimer = 0.0f;											//Stateの移行
+	float m_timer = 0;													//	全体のタイマー
+	float m_levelTimer = 0;												//	レベルアップ
+	float m_enemySpawnTimer = 0;										//	敵機のスポーン
+	float m_magicPointSpawnTimer = 0;									//	MagicPointのスポーン
+	float m_puddingSpawnTimer = 6.0;									//	プリンのスポーン
+	float m_stateTimer = 0.0f;											//	Stateの移行
 
-	int m_gameState = 0;												//シーンの移行
+	int m_gameState = 0;												//	シーンの移行
 };
 

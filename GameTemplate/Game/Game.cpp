@@ -289,9 +289,14 @@ void Game::ManageState()
 
 	//	トータルスコア表示
 	case 6:
-
-		if (m_stateTimer >= 1.5f)
+		
+		for (float totalScore = m_score->GetTotalScoreOld(); totalScore > 0.0f; totalScore - 5000.0f)
 		{
+			m_gameState + 1;
+		}
+		//m_stateTimer = 0;
+
+			/*
 			//	Dランク
 			if (m_score->GetTotalScoreOld() < 5000.0f)													
 			{
@@ -326,7 +331,7 @@ void Game::ManageState()
 				m_gameState = 11;
 				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
-		}
+			*/
 
 		break;
 	}

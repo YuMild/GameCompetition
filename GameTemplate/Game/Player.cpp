@@ -28,7 +28,7 @@ Player::~Player()
 
 bool Player::Start() 
 {
-	//アニメーションファイル
+	//	アニメーションファイル
 	m_animationClips[enAnimationClip_Idle].Load("Assets/animData/Idle.tka");
 	m_animationClips[enAnimationClip_Idle].SetLoopFlag(true);
 	m_animationClips[enAnimationClip_Walk].Load("Assets/animData/Walk.tka");
@@ -39,23 +39,23 @@ bool Player::Start()
 	m_animationClips[enAnimationClip_kneelDown].SetLoopFlag(false);
 	m_render.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClip_Num, enModelUpAxisY);
 
-	//当たり判定
+	//	当たり判定
 	m_characterController.Init(20.0f, 5.0f, m_position);
 
-	//音声
+	//	音声
 
-	//ダメージ音声
+	//	ダメージ音声
 	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/damage1.wav");									//	1回目のダメージ
 	g_soundEngine->ResistWaveFileBank(9, "Assets/sound/damage2.wav");									//	2回目のダメージ
 	g_soundEngine->ResistWaveFileBank(10, "Assets/sound/damage3.wav");									//	3回目のダメージ
 
-	//クールタイム終了時のエフェクト
+	//	クールタイム終了時のエフェクト
 	EffectEngine::GetInstance()->ResistEffect2D(100, u"Assets/effect/CoolTimeCompleteFire.efk");		//	炎
 	EffectEngine::GetInstance()->ResistEffect2D(101, u"Assets/effect/CoolTimeCompleteWater.efk");		//	水
 	EffectEngine::GetInstance()->ResistEffect2D(102, u"Assets/effect/CoolTimeCompleteWind.efk");		//	風
 	EffectEngine::GetInstance()->ResistEffect2D(103, u"Assets/effect/CoolTimeCompleteShine.efk");		//	光
 
-	//描画
+	//	描画
 	m_render.SetPosition(m_position);																	//	初期値だから実は書かなくてもいい
 	m_position.x = 0.0f;																				//	初期値だから実は書かなくてもいい
 	m_position.y = 0.0f;																				//	初期値だから実は書かなくてもいい

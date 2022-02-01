@@ -29,6 +29,10 @@ public:
 		m_position = position;
 	}
 
+	/// <summary>
+	/// マップ上に画像を生成する
+	/// </summary>
+	/// <param name="rc"></param>
 	void PuddingMap(RenderContext& rc)
 	{
 		if (m_isStart == false)
@@ -37,6 +41,11 @@ public:
 		}
 		m_puddingMap.Draw(rc);
 	}
+
+	/// <summary>
+	/// マップ上にグレー画像を生成する
+	/// </summary>
+	/// <param name="rc"></param>
 	void  PuddingMapGray(RenderContext& rc)
 	{
 		if (m_isStart == false)
