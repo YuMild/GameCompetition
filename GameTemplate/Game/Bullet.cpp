@@ -6,10 +6,16 @@
 #include "sound/SoundEngine.h"
 #include "graphics/effect/EffectEmitter.h"
 
-Bullet::Bullet() {
+Bullet::Bullet() 
+{
+
 }
-Bullet:: ~Bullet() {
+
+Bullet:: ~Bullet() 
+{
+
 }
+
 bool Bullet::Start() {
 
 	m_player = FindGO<Player>("player");
@@ -44,7 +50,8 @@ bool Bullet::Start() {
 	return true;
 }
 
-void Bullet::Update() {
+void Bullet::Update() 
+{
 
 	m_deleteTimer += g_gameTime->GetFrameDeltaTime();
 
@@ -59,11 +66,13 @@ void Bullet::Update() {
 	}
 }
 
-void Bullet::Render(RenderContext& rc) {
+void Bullet::Render(RenderContext& rc)
+{
 	m_render.Draw(rc);
 }
 
-void Bullet::Move() {
+void Bullet::Move()
+{
 	m_position += m_moveSpeed;
 	m_render.SetPosition(m_position);
 	m_render.Update();

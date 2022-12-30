@@ -28,7 +28,7 @@ Game::Game()
 
 Game::~Game()
 {
-	g_renderingEngine->SetIsAllGrayScale(false);														//	グレースケールをOFFに
+    g_renderingEngine->SetIsAllGrayScale(false);														//	グレースケールをOFFに
 	g_k2Engine->GetK2EngineLow()->SetFrameRateMode(K2EngineLow::enFrameRateMode_Variable, 60.0f);		//	FPSを元に戻す
 
 	//	DeleteGO
@@ -83,7 +83,7 @@ bool Game::Start()
 	//	背景
 
 	m_skyCube->SetScale({ 300.0f, 300.0f, 300.0f });													//	サイズ
-	m_skyCube->SetType(enSkyCubeType_NightToon);														//	SkyCubeの種類
+	m_skyCube->SetType(enSkyCubeType_Euro);														//	SkyCubeの種類
 	m_skyCube->SetLuminance(0.5);																		//	輝度
 
 	//	音声

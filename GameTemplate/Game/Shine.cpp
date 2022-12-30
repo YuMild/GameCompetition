@@ -11,13 +11,18 @@ namespace
 	const float MAGIC_CIRCLE_SIZE = 50.0f;
 }
 
-Shine::Shine() {
+Shine::Shine()
+{
 
 }
-Shine::~Shine() {
+
+Shine::~Shine() 
+{
 
 }
-bool Shine::Start() {
+
+bool Shine::Start() 
+{
 
 	m_player = FindGO<Player>("player");
 	m_position.y = 10.0f;
@@ -53,8 +58,8 @@ bool Shine::Start() {
 	return true;
 }
 
-void Shine::Update() {
-
+void Shine::Update() 
+{
 	m_aliveTimer += g_gameTime->GetFrameDeltaTime();
 
 	if (m_aliveTimer < 0.7f) {

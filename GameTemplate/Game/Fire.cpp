@@ -9,15 +9,18 @@ namespace
 	const float MAGIC_CIRCLE_SIZE = 50.0f;
 }
 
-Fire::Fire() {
+Fire::Fire() 
+{
 
 }
 
-Fire::~Fire() {
+Fire::~Fire() 
+{
 
 }
 
-bool Fire::Start() {
+bool Fire::Start() 
+{
 
 	m_player = FindGO<Player>("player");
 	

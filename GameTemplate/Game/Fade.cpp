@@ -18,7 +18,7 @@ Fade::~Fade()
 
 bool Fade::Start()
 {
-	m_spriteRender.Init("Assets/sprite/Windous/Fade.dds", SQUARE_WIDTH, SQUARE_HEIGHT);
+	//m_spriteRender.Init("Assets/sprite/Windows/Fade.dds", SQUARE_WIDTH, SQUARE_HEIGHT);
 	m_spriteRender.Update();
 	return true;
 }

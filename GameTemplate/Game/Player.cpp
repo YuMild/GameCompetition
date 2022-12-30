@@ -217,7 +217,7 @@ void Player::Magic()
 {
 	//通常攻撃
 	//クールタイム非活性化時
-	if (g_pad[0]->IsTrigger(enButtonRB2) && m_bulletMagazine == true)
+	if (g_pad[0]->IsTrigger(enButtonLB2) && m_bulletMagazine == true)
 	{
 		m_bullet = NewGO<Bullet>(0, "bullet");//砲丸を生成
 		m_bullet->SetPosition(m_position);//最初の1fだけステージ中央に判定が生じるのを防ぐ
