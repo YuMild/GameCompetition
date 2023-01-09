@@ -1,12 +1,14 @@
 #include "stdafx.h"
 #include "MagicPoint.h"
 
+#include "Game.h"
 #include "Map.h"
 #include "Mp.h"
 #include "Player.h"
 
 namespace
 {
+	const float ADD_MP = 15.0f;
 	const float SQUARE_WIDTH = 30.0f;
 	const float SQUARE_HEIGHT = 30.0f;
 }
@@ -34,7 +36,7 @@ bool MagicPoint::Start()
 
 	EffectEngine::GetInstance()->ResistEffect(12, u"Assets/effect/MagicPointDelete.efk");
 
-	g_soundEngine->ResistWaveFileBank(12, "Assets/sound/MagicPoint.wav");
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_MagicPoint, "Assets/sound/MagicPoint.wav");
 	
 	m_map = FindGO<Map>("map");
 	m_mp = FindGO<Mp>("mp");
@@ -71,8 +73,8 @@ void MagicPoint::Update()
 		m_magicPointDeleteEF->Play();
 		m_magicPointDeleteEF->SetPosition(m_position);
 		//âπê∫çƒê∂
-		m_magicPointSE = NewGO<SoundSource>(12);
-		m_magicPointSE->Init(12);
+		m_magicPointSE = NewGO<SoundSource>(0);
+		m_magicPointSE->Init(enInitSoundNumber_MagicPoint);
 		m_magicPointSE->Play(false);
 		m_magicPointEF->Stop();
 		//MPâ¡éZ

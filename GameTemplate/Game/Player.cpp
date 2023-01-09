@@ -13,7 +13,7 @@
 
 namespace
 {
-	
+	const float PLAYER_SIZE = 0.7f;
 }
 
 Player::Player() 
@@ -42,12 +42,10 @@ bool Player::Start()
 	//	当たり判定
 	m_characterController.Init(20.0f, 5.0f, m_position);
 
-	//	音声
-
 	//	ダメージ音声
-	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/damage1.wav");									//	1回目のダメージ
-	g_soundEngine->ResistWaveFileBank(9, "Assets/sound/damage2.wav");									//	2回目のダメージ
-	g_soundEngine->ResistWaveFileBank(10, "Assets/sound/damage3.wav");									//	3回目のダメージ
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Damage_First, "Assets/sound/damage1.wav");									//	1回目のダメージ
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Damage_Second, "Assets/sound/damage2.wav");									//	2回目のダメージ
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Damage_Third, "Assets/sound/damage3.wav");									//	3回目のダメージ
 
 	//	クールタイム終了時のエフェクト
 	EffectEngine::GetInstance()->ResistEffect2D(100, u"Assets/effect/CoolTimeCompleteFire.efk");		//	炎
@@ -60,7 +58,7 @@ bool Player::Start()
 	m_position.x = 0.0f;																				//	初期値だから実は書かなくてもいい
 	m_position.y = 0.0f;																				//	初期値だから実は書かなくてもいい
 	m_position.z = 0.0f;																				//	初期値だから実は書かなくてもいい
-	m_render.SetScale({ 0.7f,0.7f,0.7f });
+	m_render.SetScale({ PLAYER_SIZE,PLAYER_SIZE,PLAYER_SIZE });
 	m_render.Update();
 
 	m_game = FindGO<Game>("game");

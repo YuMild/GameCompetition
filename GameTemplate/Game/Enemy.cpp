@@ -13,39 +13,45 @@
 
 namespace
 {
-	const float ENEMYMAP_WIDTH = 200.0f;
-	const float ENEMYMAP_HEIGHT = 200.0f;
-	const float FIRE_COLLISION_JUDGE = 500.0f;
-	const float WIND_COLLISION_JUDGE = 300.0f;
-	const float BULLET_COLLISION_JUDGE = 75.0f;
-	const float PLAYER_COLLISION_JUDGE = 10.0f;
+	const float ENEMY_MOVESPEED = 0.5f;
+	const float ENEMY_WIND_ACTIVE_MOVESPEED = 2.0f;
+	const float ENEMY_SIZE = 0.5f;
+	const float ENEMY_MAP_WIDTH = 200.0f;
+	const float ENEMY_MAP_HEIGHT = 200.0f;
+	const float ENEMY_DEATH_SE_VOLUME = 1.5f;
+	const float COLLISION_JUDGE_FIRE = 500.0f;
+	const float COLLISION_JUDGE_WIND = 300.0f;
+	const float COLLISION_JUDGE_BULLET = 75.0f;
+	const float COLLISION_JUDGE_PLAYER = 10.0f;
 }
 
 Enemy::Enemy() 
 {
+
 }
 
 Enemy::~Enemy()
 {
+
 }
 
 bool Enemy::Start()
 {
-	m_render.Init("Assets/modelData/teddyBear.tkm");
-	m_enemyMap.Init("Assets/sprite/Map/EnemyMap.dds", ENEMYMAP_WIDTH, ENEMYMAP_HEIGHT);
-	m_enemyMapGray.Init("Assets/sprite/Map/EnemyMapGray.dds", ENEMYMAP_WIDTH, ENEMYMAP_HEIGHT);
+	m_enemyMR.Init("Assets/modelData/teddyBear.tkm");
+	m_enemyMap.Init("Assets/sprite/Map/EnemyMap.dds", ENEMY_MAP_WIDTH, ENEMY_MAP_HEIGHT);
+	m_enemyMapGray.Init("Assets/sprite/Map/EnemyMapGray.dds", ENEMY_MAP_WIDTH, ENEMY_MAP_HEIGHT);
 
 	m_game = FindGO<Game>("game");
 	m_hp = FindGO<Hp>("hp");
 	m_map = FindGO<Map>("map");
 	m_player = FindGO<Player>("player");
 
-	m_render.SetPosition(m_position);
-	m_render.SetScale({ 0.5f,0.5f,0.5f });
-	m_render.Update();
+	m_enemyMR.SetPosition(m_position);
+	m_enemyMR.SetScale({ ENEMY_SIZE,ENEMY_SIZE,ENEMY_SIZE });
+	m_enemyMR.Update();
 
 	//	音声
-	g_soundEngine->ResistWaveFileBank(11, "Assets/sound/EnemyDeath.wav");
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_EnemyDeath, "Assets/sound/EnemyDeath.wav");
 
 	m_isStart = true;
 
@@ -59,7 +65,7 @@ void Enemy::Update()
 		Move();
 		Magic();
 	}
-	m_render.Update();
+	m_enemyMR.Update();
 	MapMove();
 	Death();
 }
@@ -78,7 +84,7 @@ void Enemy::MapMove()
 
 void Enemy::Render(RenderContext& rc)
 {
-	m_render.Draw(rc);
+	m_enemyMR.Draw(rc);
 }
 
 void Enemy::Move() 
@@ -88,13 +94,13 @@ void Enemy::Move()
 	m_target.Normalize();
 	m_moveSpeed = m_target * 10.0f;
 	g_k2Engine->DrawVector(m_target, m_player->GetPosition());
-	m_render.SetPosition(m_position);
+	m_enemyMR.SetPosition(m_position);
 	Vector3 direction = m_moveSpeed;
 	direction.y = 0.0f;
 	direction.Normalize();
 	Quaternion quaternion;
 	quaternion.SetRotationY(atan2f(direction.x, direction.z));
-	m_render.SetRotation(quaternion);
+	m_enemyMR.SetRotation(quaternion);
 }
 
 void Enemy::Magic()
@@ -104,11 +110,11 @@ void Enemy::Magic()
 	int fireSize = fireList.size();
 	m_fireDiff = m_position - m_player->GetPosition();
 	for (m_fireUnit = 0; m_fireUnit < fireSize; m_fireUnit++) {
-		if (fireList[m_fireUnit]->GetMoving()==true && m_fireDiff.Length() <= FIRE_COLLISION_JUDGE) {
+		if (fireList[m_fireUnit]->GetMoving()==true && m_fireDiff.Length() <= COLLISION_JUDGE_FIRE) {
 			DeleteGO(this);
-			m_enemyDeathSE = NewGO<SoundSource>(11);
-			m_enemyDeathSE->Init(11);
-			m_enemyDeathSE->SetVolume(1.5f);
+			m_enemyDeathSE = NewGO<SoundSource>(0);
+			m_enemyDeathSE->Init(enInitSoundNumber_EnemyDeath);
+			m_enemyDeathSE->SetVolume(ENEMY_DEATH_SE_VOLUME);
 			m_enemyDeathSE->Play(false);
 		}
 	}
@@ -133,16 +139,16 @@ void Enemy::Magic()
 		m_windDiff = windList[m_windUnit]->GetPosition() - m_position;
 		m_target = windList[m_windUnit]->GetPosition() - m_position;
 		m_target.Normalize();
-		if (m_windDiff.Length() <= WIND_COLLISION_JUDGE) {
+		if (m_windDiff.Length() <= COLLISION_JUDGE_WIND) {
 			m_windMoving = true;
-			m_moveSpeed = m_target * 2.0f;
+			m_moveSpeed = m_target * ENEMY_WIND_ACTIVE_MOVESPEED;
 			m_position += m_moveSpeed;
 		}
 	}
 
 	//	光魔法が非活性化時、動作する
 	if (m_shineMoving == false) {
-		m_position += m_moveSpeed * 15.0f / 30.0f;
+		m_position += m_moveSpeed * ENEMY_MOVESPEED;
 	}
 }
 
@@ -153,17 +159,20 @@ void Enemy::Death()
 	int bulletSize = bulletList.size();
 	for (int i = 0; i < bulletSize; i++) {
 		Vector3 bulletdiff = bulletList[i]->GetPosition() - m_position;
-		if (bulletdiff.Length() <= BULLET_COLLISION_JUDGE) {
+		if (bulletdiff.Length() <= COLLISION_JUDGE_BULLET) {
 			DeleteGO(this);
-			m_enemyDeathSE = NewGO<SoundSource>(11);
-			m_enemyDeathSE->Init(11);
+			m_enemyDeathSE = NewGO<SoundSource>(0);
+			m_enemyDeathSE->Init(enInitSoundNumber_EnemyDeath);
 			m_enemyDeathSE->Play(false);
 		}
 	}
 
+	//	プレイヤーと衝突した時
 	Vector3 unitydiff = m_player->GetPosition() - m_position;
-	if (unitydiff.Length() <= PLAYER_COLLISION_JUDGE) {												//	プレイヤーと衝突した時
+	if (unitydiff.Length() <= COLLISION_JUDGE_PLAYER)
+	{
+		//	HPを減産する
+		m_hp->SubHP(1);
 		DeleteGO(this);
-		m_hp->SubHP(1);																				//	プレイヤーのHPを減算する
 	}
 }

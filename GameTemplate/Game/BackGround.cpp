@@ -8,17 +8,13 @@ namespace
 
 bool BackGround::Start()
 {
-	m_render.Init("Assets/modelData/stage.tkm");
-	m_render.SetScale({ STAGE_SIZE,STAGE_SIZE,STAGE_SIZE });
+	m_stageMR.Init("Assets/modelData/stage.tkm");
+	m_stageMR.SetScale(Vector3::One * STAGE_SIZE);
 
-	m_position.x = 0.0f;
-	m_position.y = -70.0f;
-	m_position.z = 0.0f;
+	m_stageMR.SetPosition({ 0.0f,-70.0f,0.0f });
+	m_stageMR.Update();
 
-	m_render.SetPosition(m_position);
-	m_render.Update();
-
-	m_physicsStaticObject.CreateFromModel(m_render.GetModel(), m_render.GetModel().GetWorldMatrix());
+	m_physicsStaticObject.CreateFromModel(m_stageMR.GetModel(), m_stageMR.GetModel().GetWorldMatrix());
 
 	return true;
 }
@@ -29,5 +25,5 @@ void BackGround::Update()
 
 void BackGround::Render(RenderContext& rc) 
 {
-	m_render.Draw(rc);
+	m_stageMR.Draw(rc);
 }

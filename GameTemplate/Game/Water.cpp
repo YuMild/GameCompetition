@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Water.h"
 
+#include "Game.h"
 #include "Player.h"
 
 namespace
@@ -37,9 +38,9 @@ bool Water::Start()
 	m_waterMagicCircleEF->Play();
 
 	//‰¹º
-	g_soundEngine->ResistWaveFileBank(5, "Assets/sound/Water.wav");
-	m_waterSE = NewGO<SoundSource>(5);
-	m_waterSE->Init(5);
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Water, "Assets/sound/Water.wav");
+	m_waterSE = NewGO<SoundSource>(0);
+	m_waterSE->Init(enInitSoundNumber_Water);
 	m_waterSE->Play(false);
 
 	return true;

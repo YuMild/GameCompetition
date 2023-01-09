@@ -44,9 +44,9 @@ bool Hp::Start()
 		m_hpFrameGray[m_num].Update();
 	}
 
-	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/Damage1.wav");
-	g_soundEngine->ResistWaveFileBank(9, "Assets/sound/Damage2.wav");
-	g_soundEngine->ResistWaveFileBank(10, "Assets/sound/Damage3.wav");
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Damage_First, "Assets/sound/Damage1.wav");
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Damage_Second, "Assets/sound/Damage2.wav");
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Damage_Third, "Assets/sound/Damage3.wav");
 
 	m_game = FindGO<Game>("game");
 
@@ -91,21 +91,21 @@ void Hp::Render(RenderContext& rc)
 void Hp::Damage()
 {
 	if (m_hp == 2 && m_damage1Judge) {
-		m_damage1SE = NewGO<SoundSource>(8);
-		m_damage1SE->Init(8);
+		m_damage1SE = NewGO<SoundSource>(0);
+		m_damage1SE->Init(enInitSoundNumber_Damage_First);
 		m_damage1SE->Play(false);
 		m_damage1Judge = false;
 	}
 	else if (m_hp == 1 && m_damage2Judge) {
-		m_damage1SE = NewGO<SoundSource>(9);
-		m_damage1SE->Init(9);
-		m_damage1SE->Play(false);
+		m_damage2SE = NewGO<SoundSource>(0);
+		m_damage2SE->Init(enInitSoundNumber_Damage_Second);
+		m_damage2SE->Play(false);
 		m_damage2Judge = false;
 	}
 	else if (m_hp == 0 && m_damage3Judge) {
-		m_damage1SE = NewGO<SoundSource>(10);
-		m_damage1SE->Init(10);
-		m_damage1SE->Play(false);
+		m_damage3SE = NewGO<SoundSource>(0);
+		m_damage3SE->Init(enInitSoundNumber_Damage_Third);
+		m_damage3SE->Play(false);
 		m_damage3Judge = false;
 	}
 }

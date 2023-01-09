@@ -20,12 +20,12 @@ public:
 private:
 
 	//	ベクトル
-	Vector3 m_position;
-	Vector3 m_target;
-	Vector3 m_toCameraPos = Vector3::One;
+	Vector3					m_position;
+	Vector3					m_target;
+	Vector3					m_toCameraPos = Vector3::One;
 
 	//	クラス
-	Game* m_game;
-	Player* m_player;
-	SpringCamera m_springCamera;
+	Game*					m_game;
+	Player*					m_player;
+	SpringCamera			m_springCamera;
 };

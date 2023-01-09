@@ -49,16 +49,16 @@ public:
 private:
 
 	enum EnState {
-		enState_FadeIn,			//フェードイン中
-		enState_FadeOut,		//フェードアウト中
-		enState_Idle,			//アイドル中
+		enState_FadeIn,											//フェードイン中
+		enState_FadeOut,										//フェードアウト中
+		enState_Idle,											//アイドル中
 	};
 
-	SpriteRender		m_spriteRender;				//スプライトレンダ―
+	SpriteRender		m_spriteRender;							//スプライトレンダ―
 
-	EnState				m_state = enState_Idle;		//状態
+	EnState				m_state				= enState_Idle;		//状態
 
-	float				m_currentAlpha = 1.0f;		//現在のα値
+	float				m_currentAlpha		= 1.0f;				//現在のα値
 };
 
 

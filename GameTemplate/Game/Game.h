@@ -17,6 +17,48 @@ class Pudding;
 class Result;
 class Score;
 
+/// <summary>
+/// GameState
+/// </summary>
+enum enGameState
+{
+	enGameState_PlayerAlive,
+	enGameState_Slow,
+	enGameState_GameFinish,
+	enGameState_Result,
+	enGameState_TimeScore,
+	enGameState_PuddingScore,
+	enGameState_TotalScore,
+	enGameState_RankD,
+	enGameState_RankC,
+	enGameState_RankB,
+	enGameState_RankA,
+	enGameState_RankS
+};
+
+/// <summary>
+/// SoundNumber
+/// </summary>
+enum enInitSoundNumber
+{
+	enInitSoundNumber_Title,
+	enInitSoundNumber_BackGround,
+	enInitSoundNumber_Bullet,
+	enInitSoundNumber_Fire,
+	enInitSoundNumber_Water,
+	enInitSoundNumber_Wind,
+	enInitSoundNumber_Shine,
+	enInitSoundNumber_Damage_First,
+	enInitSoundNumber_Damage_Second,
+	enInitSoundNumber_Damage_Third,
+	enInitSoundNumber_EnemyDeath,
+	enInitSoundNumber_MagicPoint,
+	enInitSoundNumber_Pudding,
+	enInitSoundNumber_DrumRoll,
+	enInitSoundNumber_Drum,
+	enInitSoundNumber_Button,
+};
+
 class Game : public IGameObject
 {
 public:
@@ -70,37 +112,37 @@ private:
 private:
 
 	//描画
-	ModelRender m_modelRender;
+	ModelRender			m_modelRender;
 
 	//音声
-	SoundSource* m_backGroundBGM;
+	SoundSource*		m_backGroundBGM;
 
 	//参照
-	Enemy* m_enemy;
-	BackGround* m_backGround;
-	Bullet* m_bullet;
-	Clock* m_clock;
-	GameCamera* m_gameCamera;
-	Hp* m_hp;
-	Magic* m_magic;
-	MagicPoint* m_magicPoint;
-	Map* m_map;
-	Mp* m_mp;
-	Player* m_player;
-	Pudding* m_pudding;
-	Result* m_result;
-	Score* m_score;
-	SkyCube* m_skyCube;
+	Enemy*				m_enemy					= nullptr;
+	BackGround*			m_backGround			= nullptr;
+	Bullet*				m_bullet				= nullptr;
+	Clock*				m_clock					= nullptr;
+	GameCamera*			m_gameCamera			= nullptr;
+	Hp*					m_hp					= nullptr;
+	Magic*				m_magic					= nullptr;
+	MagicPoint*			m_magicPoint			= nullptr;
+	Map*				m_map					= nullptr;
+	Mp*					m_mp					= nullptr;
+	Player*				m_player				= nullptr;
+	Pudding*			m_pudding				= nullptr;
+	Result*				m_result				= nullptr;
+	Score*				m_score					= nullptr;
+	SkyCube*			m_skyCube				= nullptr;
 
-	bool m_isStart = true;												//	一度だけ判定を取る
+	bool				m_isStart				= true;					//	一度だけ判定を取る
 
-	float m_timer = 0;													//	全体のタイマー
-	float m_levelTimer = 0;												//	レベルアップ
-	float m_enemySpawnTimer = 0;										//	敵機のスポーン
-	float m_magicPointSpawnTimer = 0;									//	MagicPointのスポーン
-	float m_puddingSpawnTimer = 6.0;									//	プリンのスポーン
-	float m_stateTimer = 0.0f;											//	Stateの移行
+	float				m_timer					= 0;					//	全体のタイマー
+	float				m_levelTimer			= 0;					//	レベルアップ
+	float				m_enemySpawnTimer		= 0;					//	敵機のスポーン
+	float				m_magicPointSpawnTimer	= 0;					//	MagicPointのスポーン
+	float				m_puddingSpawnTimer		= 6.0;					//	プリンのスポーン
+	float				m_stateTimer			= 0.0f;					//	Stateの移行
 
-	int m_gameState = 0;												//	シーンの移行
+	int					m_gameState				= 0;					//	シーンの移行
 };
 

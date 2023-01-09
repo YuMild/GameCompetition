@@ -93,12 +93,12 @@ bool Result::Start()
 	m_dRender.Update();
 
 	//	サウンド
-	g_soundEngine->ResistWaveFileBank(14, "Assets/sound/DrumRoll2.wav");
-	m_drumRollSE = NewGO<SoundSource>(14);
-	m_drumRollSE->Init(14);
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_DrumRoll, "Assets/sound/DrumRoll.wav");
+	m_drumRollSE = NewGO<SoundSource>(0);
+	m_drumRollSE->Init(enInitSoundNumber_DrumRoll);
 	m_drumRollSE->Play(false);
 
-	g_soundEngine->ResistWaveFileBank(15, "Assets/sound/Drum.wav");
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Drum, "Assets/sound/Drum.wav");
 
 	m_game = FindGO<Game>("game");
 	m_pudding = FindGO<Pudding>("pudding");
@@ -126,13 +126,13 @@ void Result::Update()
 void Result::Render(RenderContext& rc)
 {
 	//	リザルト表示
-	if (m_resultState >= 3)
+	if (m_resultState >= enGameState_Result)
 	{
 		m_resultBackGroundRender.Draw(rc);
 		m_resultRender.Draw(rc);
 		m_totalScoreRender.Draw(rc);
 
-		if (m_resultState <= 6)
+		if (m_resultState <= enGameState_TotalScore)
 		{
 			m_timeRender.Draw(rc);
 			m_puddingRender.Draw(rc);
@@ -140,80 +140,80 @@ void Result::Render(RenderContext& rc)
 	}
 
 	//	タイムスコア表示
-	if (m_resultState >= 4 && m_isStart4 == true)
+	if (m_resultState >= enGameState_TimeScore && m_isStart4 == true)
 	{
 		m_timeScoreFont = NewGO<FontBlueNumber>(0, "fontBlueNumber");
 		m_timeScoreFont->Init(m_timeScore);
 		m_timeScoreFont->SetPosition(Vector3(TIMESCORE_X, TIMESCORE_Y, 0.0f));
 		m_timeScoreFont->SetScale(Vector3(1.0f, 1.0f, 1.0f));
 
-		m_drumSE = NewGO<SoundSource>(15);
-		m_drumSE->Init(15);
+		m_drumSE = NewGO<SoundSource>(0);
+		m_drumSE->Init(enInitSoundNumber_Drum);
 		m_drumSE->Play(false);
 
 		m_isStart4 = false;
 	}
 
 	//	プリンスコア表示
-	if (m_resultState >= 5 && m_isStart5 == true)
+	if (m_resultState >= enGameState_PuddingScore && m_isStart5 == true)
 	{
 		m_puddingScoreFont = NewGO<FontBlueNumber>(0, "fontBlueNumber");
 		m_puddingScoreFont->Init(m_puddingScore);
 		m_puddingScoreFont->SetPosition(Vector3(PUDDINGSCORE_X, PUDDINGSCORE_Y, 0.0f));
 		m_puddingScoreFont->SetScale(Vector3(1.0f, 1.0f, 1.0f));
 
-		m_drumSE = NewGO<SoundSource>(15);
-		m_drumSE->Init(15);
+		m_drumSE = NewGO<SoundSource>(0);
+		m_drumSE->Init(enInitSoundNumber_Drum);
 		m_drumSE->Play(false);
 
 		m_isStart5 = false;
 	}
 
 	//	トータルスコア表示
-	if (m_resultState >= 6 && m_isStart6 == true)
+	if (m_resultState >= enGameState_TotalScore && m_isStart6 == true)
 	{
 		m_totalScoreFont = NewGO<FontPurpleNumber>(0, "fontPurpleNumber");
 		m_totalScoreFont->Init(m_totalScore);
 		m_totalScoreFont->SetPosition(Vector3(TOTALSCORE_FONT_X, TOTALSCORE_FONT_Y, 0.0f));
 		m_totalScoreFont->SetScale(Vector3(1.0f, 1.0f, 1.0f));
 
-		m_drumSE = NewGO<SoundSource>(15);
-		m_drumSE->Init(15);
+		m_drumSE = NewGO<SoundSource>(0);
+		m_drumSE->Init(enInitSoundNumber_Drum);
 		m_drumSE->Play(false);
 
 		m_isStart6 = false;
 	}
 
 	//	ランク表示
-	if (m_resultState == 7)
+	if (m_resultState == enGameState_RankD)
 	{
 		m_dRender.Draw(rc);
 		DeleteGO(m_timeScoreFont);
 		DeleteGO(m_puddingScoreFont);
 	}
 
-	if (m_resultState == 8)
+	if (m_resultState == enGameState_RankC)
 	{
 		m_cRender.Draw(rc);
 		DeleteGO(m_timeScoreFont);
 		DeleteGO(m_puddingScoreFont);
 	}
 
-	if (m_resultState == 9)
+	if (m_resultState == enGameState_RankB)
 	{
 		m_bRender.Draw(rc);
 		DeleteGO(m_timeScoreFont);
 		DeleteGO(m_puddingScoreFont);
 	}
 
-	if (m_resultState == 10)
+	if (m_resultState == enGameState_RankA)
 	{
 		m_aRender.Draw(rc);
 		DeleteGO(m_timeScoreFont);
 		DeleteGO(m_puddingScoreFont);
 	}
 
-	if (m_resultState == 11)
+	if (m_resultState == enGameState_RankS)
 	{
 		m_sRender.Draw(rc);
 		DeleteGO(m_timeScoreFont);
@@ -225,38 +225,38 @@ void Result::ManageState()
 {
 	switch (m_game->GetManageState())
 	{
-	case 1:
-		m_resultState = 1;
+	case enGameState_PlayerAlive:
+		m_resultState = enGameState_PlayerAlive;
 		break;
-	case 2:
-		m_resultState = 2;
+	case enGameState_Slow:
+		m_resultState = enGameState_Slow;
 		break;
-	case 3:
-		m_resultState = 3;
+	case enGameState_GameFinish:
+		m_resultState = enGameState_GameFinish;
 		break;
-	case 4:
-		m_resultState = 4;
+	case enGameState_Result:
+		m_resultState = enGameState_Result;
 		break;
-	case 5:
-		m_resultState = 5;
+	case enGameState_TimeScore:
+		m_resultState = enGameState_TimeScore;
 		break;
-	case 6:
-		m_resultState = 6;
+	case enGameState_PuddingScore:
+		m_resultState = enGameState_PuddingScore;
 		break;
-	case 7:
-		m_resultState = 7;
+	case enGameState_TotalScore:
+		m_resultState = enGameState_TotalScore;
 		break;
-	case 8:
-		m_resultState = 8;
+	case enGameState_RankD:
+		m_resultState = enGameState_RankD;
 		break;
-	case 9:
-		m_resultState = 9;
+	case enGameState_RankC:
+		m_resultState = enGameState_RankC;
 		break;
-	case 10:
-		m_resultState = 10;
+	case enGameState_RankB:
+		m_resultState = enGameState_RankB;
 		break;
-	case 11:
-		m_resultState = 11;
+	case enGameState_RankA:
+		m_resultState = enGameState_RankA;
 		break;
 	}
 }

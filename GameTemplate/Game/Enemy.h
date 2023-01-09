@@ -89,42 +89,42 @@ public:
 
 private:
 
-	Quaternion m_rotation;
-	ModelRender m_render;
-	SpriteRender m_enemyMap;
-	SpriteRender m_enemyMapGray;
-
-	//ベクトル
-	Vector3 m_enemyMapPosition;
-	Vector3 m_target;
-	Vector3 m_position;
-	Vector3 m_moveSpeed;
-	Vector3 m_forward;
-	Vector3 m_spawnDiff;
-	Vector3 m_fireDiff;
-	Vector3 m_waterDiff;
-	Vector3 m_windDiff;
-
-	//参照
-	Bullet* m_bullet;
-	Fire* m_fire;
-	Game* m_game;
-	Hp* m_hp;
-	Player* m_player;
-	Shine* m_shine;
-	Map* m_map;
-	Water* m_water;
-	Wind* m_wind;
+	Quaternion		m_rotation = Quaternion::Identity;
+	ModelRender		m_enemyMR;
+	SpriteRender	m_enemyMap;
+	SpriteRender	m_enemyMapGray;
 
 	//音声
-	SoundSource* m_enemyDeathSE;
+	SoundSource*	m_enemyDeathSE;
 
-	int m_fireUnit;
-	int m_waterUnit;
-	int m_windUnit;
-	bool m_shineMoving = false;
-	bool m_windMoving = false;
-	bool m_isStart = false;
-	float m_fireTimer = 0.0f;
+	//ベクトル
+	Vector3			m_enemyMapPosition	= Vector3::Zero;
+	Vector3			m_target			= Vector3::Zero;
+	Vector3			m_position			= Vector3::Zero;
+	Vector3			m_moveSpeed			= Vector3::Zero;
+	Vector3			m_forward			= Vector3::Zero;
+	Vector3			m_spawnDiff			= Vector3::Zero;
+	Vector3			m_fireDiff			= Vector3::Zero;
+	Vector3			m_waterDiff			= Vector3::Zero;
+	Vector3			m_windDiff			= Vector3::Zero;
+
+	//参照
+	Bullet*			m_bullet			= nullptr;
+	Fire*			m_fire				= nullptr;
+	Game*			m_game				= nullptr;
+	Hp*				m_hp				= nullptr;
+	Player*			m_player			= nullptr;
+	Shine*			m_shine				= nullptr;
+	Map*			m_map				= nullptr;
+	Water*			m_water				= nullptr;
+	Wind*			m_wind				= nullptr;
+
+	int				m_fireUnit			= 0;
+	int				m_waterUnit			= 0;
+	int				m_windUnit			= 0;
+	bool			m_shineMoving		= false;
+	bool			m_windMoving		= false;
+	bool			m_isStart			= false;
+	float			m_fireTimer			= 0.0f;
 };
 

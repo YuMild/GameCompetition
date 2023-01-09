@@ -21,6 +21,11 @@
 
 using namespace std;
 
+namespace
+{
+	const float BGM_VOLUME = 0.5f;
+}
+
 Game::Game()
 {
 
@@ -83,15 +88,15 @@ bool Game::Start()
 	//	背景
 
 	m_skyCube->SetScale({ 300.0f, 300.0f, 300.0f });													//	サイズ
-	m_skyCube->SetType(enSkyCubeType_Euro);														//	SkyCubeの種類
+	m_skyCube->SetType(enSkyCubeType_NightToon);														//	SkyCubeの種類
 	m_skyCube->SetLuminance(0.5);																		//	輝度
 
 	//	音声
 
-	g_soundEngine->ResistWaveFileBank(1, "Assets/sound/BackGround.wav");								//	BGM
-	m_backGroundBGM = NewGO<SoundSource>(1);
-	m_backGroundBGM->Init(1);
-	m_backGroundBGM->SetVolume(0.5f);
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_BackGround, "Assets/sound/BackGround.wav");		//	BGM
+	m_backGroundBGM = NewGO<SoundSource>(0);
+	m_backGroundBGM->Init(enInitSoundNumber_BackGround);
+	m_backGroundBGM->SetVolume(BGM_VOLUME);
 	m_backGroundBGM->Play(true);
 	g_sceneLight->SetDirectionLight(0, Vector3(0.5f,-0.5f,0.5f), Vector3(2.5f,2.5f,2.5f));				//	ディレクションライト
 	
@@ -123,6 +128,7 @@ void Game::Fall()
 void Game::Timer() 
 {
 	//	レベルアップ
+
 	if (m_timer > 12.0f)
 	{
 		if (m_levelTimer <= 1.5) {
@@ -204,9 +210,8 @@ void Game::PuddingGenerate()
 
 void Game::ManageState()
 {
-
 	//	死亡時
-	if (m_gameState >= 1)
+	if (m_gameState >= enGameState_Slow)
 	{
 		m_stateTimer += g_gameTime->GetFrameDeltaTime();												//	時間経過
 	}
@@ -215,124 +220,111 @@ void Game::ManageState()
 	{
 
 	//	生存時
-	case 0:
+	case enGameState_PlayerAlive:
 
 		if (m_hp->GetHP() == 0)																			//	HPが0になるかプレイヤーがステージ外に落下した時
 		{
 			m_player->SetState(3);																		//	プレイヤーの死亡アニメーションを再生させる
-			m_gameState = 1;																			//	スローに移行
+			m_gameState = enGameState_Slow;																//	スローに移行
 			m_backGroundBGM->Stop();																	//	BGMをストップさせる
 		}
 		break;
 
 	//	スロー時
-	case 1:
+	case enGameState_Slow:
 
 		g_renderingEngine->SetIsAllGrayScale(true);														//	モノクロ
 		g_k2Engine->GetK2EngineLow()->SetFrameRateMode(K2EngineLow::enFrameRateMode_Variable, 20.0f);	//	FPSを下げる
-
 		if (m_stateTimer >= 2.0f)																		//	フィニッシュまでのカウントアップ
 		{
-			m_gameState = 2;																			//	フィニッシュに移行
+			m_gameState = enGameState_GameFinish;																			//	フィニッシュに移行
 			m_stateTimer = 0.0f;																		//	タイマーのリセット
 		}
 		break;
 
 	//	フィニッシュ時
-	case 2:
+	case enGameState_GameFinish:
 
 		if (m_stateTimer >= 1.5f)																		//	リザルトまでのカウントアップ
 		{
-			m_gameState = 3;																			//	リザルトに移行
+			m_gameState = enGameState_Result;																			//	リザルトに移行
 			m_stateTimer = 0.0f;																		//	タイマーのリセット
 		}
 		break;
 
 	//	リザルト時
-	case 3:
+	case enGameState_Result:
 
 		if (m_isStart == true)																			//	一度だけ実行
 		{
 			m_result = NewGO<Result>(0, "result");
 			m_isStart = false;
 		}
-
 		if (m_stateTimer >= 1.0f)
 		{
-			m_gameState = 4;																			//	タイムスコアに移行
+			m_gameState = enGameState_TimeScore;														//	タイムスコアに移行
 			m_stateTimer = 0.0f;																		//	タイマーのリセット
 		}
-
 		break;
 
 	//	タイムスコア表示
-	case 4:
+	case enGameState_TimeScore:
 
 		if (m_stateTimer >= 0.8f)
 		{
-			m_gameState = 5;																			//	プリンスコアに移行
+			m_gameState = enGameState_PuddingScore;														//	プリンスコアに移行
 			m_stateTimer = 0.0f;																		//	タイマーのリセット
 		}
-
 		break;
 
 	//	プリンスコア表示
-	case 5:
+	case enGameState_PuddingScore:
 
 		if (m_stateTimer >= 0.8f)
 		{
-			m_gameState = 6;																			//	トータルスコアに移行
+			m_gameState = enGameState_TotalScore;														//	トータルスコアに移行
 			m_stateTimer = 0.0f;																		//	タイマーのリセット
 		}
-
 		break;
 
 	//	トータルスコア表示
-	case 6:
-		
+	case enGameState_TotalScore:
+
 		for (float totalScore = m_score->GetTotalScoreOld(); totalScore > 0.0f; totalScore - 5000.0f)
 		{
 			m_gameState + 1;
 		}
-		//m_stateTimer = 0;
-
-			/*
+		m_stateTimer = 0;	
 			//	Dランク
 			if (m_score->GetTotalScoreOld() < 5000.0f)													
 			{
 				m_gameState = 7;
 				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
-
 			//	Cランク
 			else if (m_score->GetTotalScoreOld() > 5001.0f && m_score->GetTotalScoreOld() < 10000.0f)
 			{
 				m_gameState = 8;
 				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
-
 			//	Bランク
 			else if (m_score->GetTotalScoreOld() > 10001.0f && m_score->GetTotalScoreOld() < 15000.0f)
 			{
 				m_gameState = 9;
 				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
-
 			//	Aランク
 			else if (m_score->GetTotalScoreOld() > 15001.0f && m_score->GetTotalScoreOld() < 20000.0f)
 			{
 				m_gameState = 10;
 				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
-
 			//	Sランク
 			else if (m_score->GetTotalScoreOld() > 20001.0f)
 			{
 				m_gameState = 11;
 				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
-			*/
-
 		break;
 	}
 }

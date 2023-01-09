@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Fire.h"
 
+#include "Game.h"
 #include "Player.h"
 
 namespace
@@ -37,9 +38,9 @@ bool Fire::Start()
 	m_fireMagicCircleEF->Play();
 
 	//‰¹º
-	g_soundEngine->ResistWaveFileBank(4, "Assets/sound/Fire.wav");
-	m_fireSE = NewGO<SoundSource>(4);
-	m_fireSE->Init(4);
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Fire, "Assets/sound/Fire.wav");
+	m_fireSE = NewGO<SoundSource>(0);
+	m_fireSE->Init(enInitSoundNumber_Fire);
 	m_fireSE->Play(false);
 
 	return true;

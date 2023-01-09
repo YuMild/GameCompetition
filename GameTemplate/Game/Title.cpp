@@ -80,9 +80,9 @@ bool Title::Start()
 	m_shine2.Init("Assets/sprite/Magic/TypeShine.DDS", SHINE_2_SIZE, SHINE_2_SIZE);
 
 	//	‰¹º
-	g_soundEngine->ResistWaveFileBank(0, "Assets/sound/Title.wav");
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Title, "Assets/sound/Title.wav");
 	m_titleBGM = NewGO<SoundSource>(0);
-	m_titleBGM->Init(0);
+	m_titleBGM->Init(enInitSoundNumber_Title);
 	m_titleBGM->Play(true);
 
 	g_soundEngine->ResistWaveFileBank(16, "Assets/sound/Button.wav");

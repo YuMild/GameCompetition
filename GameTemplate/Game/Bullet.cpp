@@ -13,7 +13,7 @@ Bullet::Bullet()
 
 Bullet:: ~Bullet() 
 {
-
+	DeleteGO(m_gunShotSE);
 }
 
 bool Bullet::Start() {
@@ -38,11 +38,11 @@ bool Bullet::Start() {
 	m_fireBallEF->Play();
 
 	//音声ファイル
-	g_soundEngine->ResistWaveFileBank(2, "Assets/sound/Bullet.wav");
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Bullet, "Assets/sound/Bullet.wav");
 
 	//音声
-	m_gunShotSE = NewGO<SoundSource>(2);
-	m_gunShotSE->Init(2);
+	m_gunShotSE = NewGO<SoundSource>(0);
+	m_gunShotSE->Init(enInitSoundNumber_Bullet);
 	m_gunShotSE->Play(false);
 
 	m_moveSpeed = m_forward * 20.0f;													//	移動速度

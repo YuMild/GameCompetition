@@ -34,9 +34,8 @@ void FontBlueNumber::Init(int number)
 
 	for (int i = 0; i < digit; i++)
 	{
-		char a = text[i];
 		filePath = "Assets/sprite/Result/BlueNumber/";
-		filePath += a;
+		filePath += text[i];
 		filePath += ".DDS";
 
 		std::unique_ptr<SpriteRender> aRender;

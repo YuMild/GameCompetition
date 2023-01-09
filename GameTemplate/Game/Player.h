@@ -162,55 +162,55 @@ private:
 private:
 
 	//描画
-	AnimationClip m_animationClips[enAnimationClip_Num];
-	CharacterController m_characterController;
-	Quaternion m_rotation;
-	ModelRender m_render;
+	AnimationClip			m_animationClips[enAnimationClip_Num];
+	CharacterController		m_characterController;
+	Quaternion				m_rotation;
+	ModelRender				m_render;
 
 	//ベクトル
-	Vector3 m_position;
-	Vector3 m_cameraPosition;
-	Vector3 m_cameraForward;
-	Vector3 m_cameraRight;
-	Vector3 m_bulletDirection;
-	Vector3 m_moveSpeed;
-	Vector3 m_forward;
-	Vector3 m_right;
+	Vector3					m_position;
+	Vector3					m_cameraPosition;
+	Vector3					m_cameraForward;
+	Vector3					m_cameraRight;
+	Vector3					m_bulletDirection;
+	Vector3					m_moveSpeed;
+	Vector3					m_forward;
+	Vector3					m_right;
 	
 	//エフェクト
-	EffectEmitter* m_coolTimeCompleteFireEF;
-	EffectEmitter* m_coolTimeCompleteWaterEF;
-	EffectEmitter* m_coolTimeCompleteWindEF;
-	EffectEmitter* m_coolTimeCompleteShineEF;
+	EffectEmitter*			m_coolTimeCompleteFireEF;
+	EffectEmitter*			m_coolTimeCompleteWaterEF;
+	EffectEmitter*			m_coolTimeCompleteWindEF;
+	EffectEmitter*			m_coolTimeCompleteShineEF;
 
 	//音声
-	SoundSource* m_dryFireSE;
-	SoundSource* m_enemyDeathSE;
+	SoundSource*			m_dryFireSE;
+	SoundSource*			m_enemyDeathSE;
 
 	//参照
-	Bullet* m_bullet;
-	Fire* m_fire;
-	Game* m_game;
-	Hp* m_hp;
-	Mp* m_mp;
-	Shine* m_shine;
-	Water* m_water;
-	Wind* m_wind;
+	Bullet*					m_bullet;
+	Fire*					m_fire;
+	Game*					m_game;
+	Hp*						m_hp;
+	Mp*						m_mp;
+	Shine*					m_shine;
+	Water*					m_water;
+	Wind*					m_wind;
 
-	bool m_bulletMagazine = true;
-	bool m_fireMagazine = true;
-	bool m_waterMagazine = true;
-	bool m_shineMagazine = true;
-	bool m_windMagazine = true;
-	bool m_waterIsExe = false;
+	bool					m_bulletMagazine	= true;
+	bool					m_fireMagazine		= true;
+	bool					m_waterMagazine		= true;
+	bool					m_shineMagazine		= true;
+	bool					m_windMagazine		= true;
+	bool					m_waterIsExe		= false;
 
-	float m_bulletCoolTimer = 1.0f;
-	float m_fireCoolTimer = 10.0f;
-	float m_waterCoolTimer = 5.0f;
-	float m_windCoolTimer = 5.0f;
-	float m_shineCoolTimer = 20.0f;
-	float m_waterExeTimer = 0.0f;
+	float					m_bulletCoolTimer	= 1.0f;
+	float					m_fireCoolTimer		= 10.0f;
+	float					m_waterCoolTimer	= 5.0f;
+	float					m_windCoolTimer		= 5.0f;
+	float					m_shineCoolTimer	= 20.0f;
+	float					m_waterExeTimer		= 0.0f;
 
-	int m_playerState = 0;
+	int						m_playerState		= 0;
 };
 

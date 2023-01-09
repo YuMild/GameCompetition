@@ -37,7 +37,7 @@ bool Pudding::Start()
 	m_puddingEF->Play();
 
 	//	ƒTƒEƒ“ƒh
-	g_soundEngine->ResistWaveFileBank(13, "Assets/sound/PuddingGet.wav");
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Pudding, "Assets/sound/Pudding.wav");
 
 	m_game = FindGO<Game>("game");
 	m_map = FindGO<Map>("map");
