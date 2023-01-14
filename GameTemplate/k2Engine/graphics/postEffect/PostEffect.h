@@ -58,14 +58,14 @@ namespace nsK2Engine {
         }
 
     private:
-        Bloom m_bloom;	    //ブルーム
-        Dof m_dof;		    //被写界深度
-        Fxaa m_fXaa;        //FXAA。
-        ToneMap m_tonemap;  //トーンマップ。
-        Ssao m_ssao;        //SSAO(スクリーンスペースアンビエントオクルージョン)。
-        Ssr m_ssr;          //SSR(スクリーンスペースリフレクション)。
+        Bloom   m_bloom;	    //ブルーム
+        Dof     m_dof;		    //被写界深度
+        Fxaa    m_fXaa;         //FXAA。
+        ToneMap m_tonemap;      //トーンマップ。
+        Ssao    m_ssao;         //SSAO(スクリーンスペースアンビエントオクルージョン)。
+        Ssr     m_ssr;          //SSR(スクリーンスペースリフレクション)。
 
-        bool m_isAllGrayScale = false;
-        bool m_isGrayScale = false;
+        bool    m_isAllGrayScale = false;
+        bool    m_isGrayScale = false;
     };
 }

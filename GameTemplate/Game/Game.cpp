@@ -23,7 +23,14 @@ using namespace std;
 
 namespace
 {
-	const float BGM_VOLUME = 0.5f;
+	const float BGM_VOLUME					= 0.5f;														//　BGMの音量
+	const float FALL_LINE					= -100.0f;													//　落下死の判定ライン
+	const float LEVELUP_TIME				= 12.0f;													//　レベルアップの間隔
+	const float ENEMY_SPAWNTIME				= 1.8f;														//　エネミーのスポーン間隔
+	const float PUDDING_SPAWNTIME			= 12.0f;													//　プリンのスポーン間隔
+	const float MAGICPOINT_SPAWNTIME		= 12.0f;													//　MagicPointのスポーン間隔
+	const Vector3 DIRECTIONLIGHT_DIRECTION	= { 0.5f, -0.5f, 0.5f };									//　ライトの射出方向
+	const Vector3 DIRECTIONLIGHT_COLOR		= { 2.5f,2.5f,2.5f };										//　ライトの色
 }
 
 Game::Game()
@@ -74,16 +81,16 @@ bool Game::Start()
 {
 	//	NewGO
 
-	m_backGround = NewGO<BackGround>(0, "backGround");													//	BackGround
-	m_clock = NewGO<Clock>(0, "clock");																	//	Clock
-	m_gameCamera = NewGO<GameCamera>(0, "gameCamera");													//	GameCamera
-	m_hp = NewGO<Hp>(0, "hp");																			//	HP
-	m_magic = NewGO<Magic>(0, "magic");																	//	Magic
-	m_map = NewGO<Map>(0, "map");																		//	Map
-	m_mp = NewGO<Mp>(0, "mp");																			//	MP
-	m_player = NewGO<Player>(0, "player");																//	Player
-	m_score = NewGO<Score>(0, "score");																	//	Score
-	m_skyCube = NewGO<SkyCube>(0, "skyCube");															//	SkyCube
+	m_backGround	= NewGO<BackGround>(0, "backGround");												//	BackGround
+	m_clock			= NewGO<Clock>(0, "clock");															//	Clock
+	m_gameCamera	= NewGO<GameCamera>(0, "gameCamera");												//	GameCamera
+	m_hp			= NewGO<Hp>(0, "hp");																//	HP
+	m_magic			= NewGO<Magic>(0, "magic");															//	Magic
+	m_map			= NewGO<Map>(0, "map");																//	Map
+	m_mp			= NewGO<Mp>(0, "mp");																//	MP
+	m_player		= NewGO<Player>(0, "player");														//	Player
+	m_score			= NewGO<Score>(0, "score");															//	Score
+	m_skyCube		= NewGO<SkyCube>(0, "skyCube");														//	SkyCube
 
 	//	背景
 
@@ -98,7 +105,10 @@ bool Game::Start()
 	m_backGroundBGM->Init(enInitSoundNumber_BackGround);
 	m_backGroundBGM->SetVolume(BGM_VOLUME);
 	m_backGroundBGM->Play(true);
-	g_sceneLight->SetDirectionLight(0, Vector3(0.5f,-0.5f,0.5f), Vector3(2.5f,2.5f,2.5f));				//	ディレクションライト
+
+	// ライト
+
+	g_sceneLight->SetDirectionLight(0, DIRECTIONLIGHT_DIRECTION, DIRECTIONLIGHT_COLOR);					//	ディレクションライト
 	
 	return true;
 }
@@ -119,7 +129,8 @@ void Game::Update()
 
 void Game::Fall()
 {
-	if (m_player->GetPosition().y <= -100.0f)
+	//　ステージ外に落下したらHPを0にする
+	if (m_player->GetPosition().y <= FALL_LINE)
 	{
 		m_hp->SetHP(0);
 	}
@@ -127,24 +138,25 @@ void Game::Fall()
 
 void Game::Timer() 
 {
-	//	レベルアップ
-
-	if (m_timer > 12.0f)
-	{
-		if (m_levelTimer <= 1.5) {
-			m_levelTimer += 0.1f;
-		}
-		m_timer = 0;
-	}
 	m_timer += g_gameTime->GetFrameDeltaTime();
 	m_enemySpawnTimer += g_gameTime->GetFrameDeltaTime();
 	m_magicPointSpawnTimer += g_gameTime->GetFrameDeltaTime();
 	m_puddingSpawnTimer += g_gameTime->GetFrameDeltaTime();
+
+	//	レベルアップ
+	if (m_timer > LEVELUP_TIME)
+	{
+		//　レベルを上げる(上限は15)
+		if (m_level < 15) {
+			m_level += 1;
+		}
+		m_timer = 0.0f;
+	}
 }
 
 void Game::EnemyGenerate()
 {
-	if (m_enemySpawnTimer > 2.0f - m_levelTimer)
+	if (m_enemySpawnTimer > ENEMY_SPAWNTIME - m_level / 10)
 	{
 		constexpr int MIN = -500;																		//	乱数の範囲最低値
 		constexpr int MAX = 500;																		//	乱数の範囲最大値
@@ -166,7 +178,7 @@ void Game::EnemyGenerate()
 
 void Game::MagicPointGenerate()
 {
-	if (m_magicPointSpawnTimer > 12.0f)
+	if (m_magicPointSpawnTimer > MAGICPOINT_SPAWNTIME)
 	{
 		constexpr int MIN = -500;																		//	乱数の範囲最低値
 		constexpr int MAX = 500;																		//	乱数の範囲最大値
@@ -188,7 +200,7 @@ void Game::MagicPointGenerate()
 
 void Game::PuddingGenerate()
 {
-	if (m_puddingSpawnTimer > 12.0f)
+	if (m_puddingSpawnTimer > PUDDING_SPAWNTIME)
 	{
 		constexpr int MIN = -500;																		//	乱数の範囲最低値
 		constexpr int MAX = 500;																		//	乱数の範囲最大値
@@ -204,7 +216,7 @@ void Game::PuddingGenerate()
 
 		m_pudding = NewGO<Pudding>(0, "pudding");
 		m_pudding->SetPosition(position);
-		m_puddingSpawnTimer = 0.0f;
+		m_puddingSpawnTimer = 0.0f;																		//　タイマーのリセット
 	}
 }
 
@@ -237,7 +249,7 @@ void Game::ManageState()
 		g_k2Engine->GetK2EngineLow()->SetFrameRateMode(K2EngineLow::enFrameRateMode_Variable, 20.0f);	//	FPSを下げる
 		if (m_stateTimer >= 2.0f)																		//	フィニッシュまでのカウントアップ
 		{
-			m_gameState = enGameState_GameFinish;																			//	フィニッシュに移行
+			m_gameState = enGameState_GameFinish;														//	フィニッシュに移行
 			m_stateTimer = 0.0f;																		//	タイマーのリセット
 		}
 		break;
@@ -247,7 +259,7 @@ void Game::ManageState()
 
 		if (m_stateTimer >= 1.5f)																		//	リザルトまでのカウントアップ
 		{
-			m_gameState = enGameState_Result;																			//	リザルトに移行
+			m_gameState = enGameState_Result;															//	リザルトに移行
 			m_stateTimer = 0.0f;																		//	タイマーのリセット
 		}
 		break;

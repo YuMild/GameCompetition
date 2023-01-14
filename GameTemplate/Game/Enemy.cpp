@@ -19,6 +19,7 @@ namespace
 	const float ENEMY_MAP_WIDTH = 200.0f;
 	const float ENEMY_MAP_HEIGHT = 200.0f;
 	const float ENEMY_DEATH_SE_VOLUME = 1.5f;
+	const float ENEMY_DEATH_EFFECT_SIZE = 5.0f;
 	const float COLLISION_JUDGE_FIRE = 500.0f;
 	const float COLLISION_JUDGE_WIND = 300.0f;
 	const float COLLISION_JUDGE_BULLET = 75.0f;
@@ -52,6 +53,9 @@ bool Enemy::Start()
 
 	//	音声
 	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_EnemyDeath, "Assets/sound/EnemyDeath.wav");
+
+	// エフェクト
+	EffectEngine::GetInstance()->ResistEffect(80, u"Assets/Effect/EnemyDeath.efk");
 
 	m_isStart = true;
 
@@ -112,10 +116,8 @@ void Enemy::Magic()
 	for (m_fireUnit = 0; m_fireUnit < fireSize; m_fireUnit++) {
 		if (fireList[m_fireUnit]->GetMoving()==true && m_fireDiff.Length() <= COLLISION_JUDGE_FIRE) {
 			DeleteGO(this);
-			m_enemyDeathSE = NewGO<SoundSource>(0);
-			m_enemyDeathSE->Init(enInitSoundNumber_EnemyDeath);
-			m_enemyDeathSE->SetVolume(ENEMY_DEATH_SE_VOLUME);
-			m_enemyDeathSE->Play(false);
+			PlayEnemyDeathSound();
+			PlayEnemyDeathEffect();
 		}
 	}
 
@@ -161,9 +163,8 @@ void Enemy::Death()
 		Vector3 bulletdiff = bulletList[i]->GetPosition() - m_position;
 		if (bulletdiff.Length() <= COLLISION_JUDGE_BULLET) {
 			DeleteGO(this);
-			m_enemyDeathSE = NewGO<SoundSource>(0);
-			m_enemyDeathSE->Init(enInitSoundNumber_EnemyDeath);
-			m_enemyDeathSE->Play(false);
+			PlayEnemyDeathSound();
+			PlayEnemyDeathEffect();
 		}
 	}
 
@@ -175,4 +176,21 @@ void Enemy::Death()
 		m_hp->SubHP(1);
 		DeleteGO(this);
 	}
+}
+
+void Enemy::PlayEnemyDeathSound()
+{
+	m_enemyDeathSE = NewGO<SoundSource>(0);
+	m_enemyDeathSE->Init(enInitSoundNumber_EnemyDeath);
+	m_enemyDeathSE->SetVolume(ENEMY_DEATH_SE_VOLUME);
+	m_enemyDeathSE->Play(false);
+}
+
+void Enemy::PlayEnemyDeathEffect()
+{
+	m_enemyDeathEF = NewGO<EffectEmitter>(0);
+	m_enemyDeathEF->Init(80);
+	m_enemyDeathEF->SetScale(Vector3::One * ENEMY_DEATH_EFFECT_SIZE);
+	m_enemyDeathEF->SetPosition(m_position);
+	m_enemyDeathEF->Play();
 }

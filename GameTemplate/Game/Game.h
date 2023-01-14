@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Level3DRender/LevelRender.h"
-
 class BackGround;
 class Bullet;
 class Clock;
@@ -137,7 +135,7 @@ private:
 	bool				m_isStart				= true;					//	一度だけ判定を取る
 
 	float				m_timer					= 0;					//	全体のタイマー
-	float				m_levelTimer			= 0;					//	レベルアップ
+	float				m_level					= 0;					//	レベルアップ
 	float				m_enemySpawnTimer		= 0;					//	敵機のスポーン
 	float				m_magicPointSpawnTimer	= 0;					//	MagicPointのスポーン
 	float				m_puddingSpawnTimer		= 6.0;					//	プリンのスポーン

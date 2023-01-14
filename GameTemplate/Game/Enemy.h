@@ -42,11 +42,6 @@ public:
 	void Render(RenderContext& rc);
 
 	/// <summary>
-	/// マップ上の動作
-	/// </summary>
-	void MapMove();
-
-	/// <summary>
 	/// マップ上の画像の動作
 	/// </summary>
 	/// <param name="rc"></param>
@@ -72,6 +67,13 @@ public:
 		m_enemyMapGray.Draw(rc);
 	}
 
+private:
+
+	/// <summary>
+	/// マップ上の動作
+	/// </summary>
+	void MapMove();
+
 	/// <summary>
 	/// 敵機の動作
 	/// </summary>
@@ -87,12 +89,23 @@ public:
 	/// </summary>
 	void Death();
 
-private:
+	/// <summary>
+	/// 死亡時の音声を再生
+	/// </summary>
+	void PlayEnemyDeathSound();
+
+	/// <summary>
+	/// 死亡時のエフェクトを再生
+	/// </summary>
+	void PlayEnemyDeathEffect();
 
 	Quaternion		m_rotation = Quaternion::Identity;
 	ModelRender		m_enemyMR;
 	SpriteRender	m_enemyMap;
 	SpriteRender	m_enemyMapGray;
+
+	//エフェクト
+	EffectEmitter*	m_enemyDeathEF;
 
 	//音声
 	SoundSource*	m_enemyDeathSE;
