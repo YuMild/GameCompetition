@@ -55,7 +55,7 @@ bool Enemy::Start()
 	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_EnemyDeath, "Assets/sound/EnemyDeath.wav");
 
 	// エフェクト
-	EffectEngine::GetInstance()->ResistEffect(80, u"Assets/Effect/EnemyDeath.efk");
+	EffectEngine::GetInstance()->ResistEffect(enInitEffectNumber_EnemyDeath, u"Assets/Effect/EnemyDeath.efk");
 
 	m_isStart = true;
 
@@ -189,7 +189,7 @@ void Enemy::PlayEnemyDeathSound()
 void Enemy::PlayEnemyDeathEffect()
 {
 	m_enemyDeathEF = NewGO<EffectEmitter>(0);
-	m_enemyDeathEF->Init(80);
+	m_enemyDeathEF->Init(enInitEffectNumber_EnemyDeath);
 	m_enemyDeathEF->SetScale(Vector3::One * ENEMY_DEATH_EFFECT_SIZE);
 	m_enemyDeathEF->SetPosition(m_position);
 	m_enemyDeathEF->Play();

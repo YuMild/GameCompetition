@@ -57,6 +57,30 @@ enum enInitSoundNumber
 	enInitSoundNumber_Button,
 };
 
+/// <summary>
+/// EffectNumber
+/// </summary>
+enum enInitEffectNumber
+{
+	enInitEffectNumber_Bullet,
+	enInitEffectNumber_Fire,
+	enInitEffectNumber_Water,
+	enInitEffectNumber_Wind,
+	enInitEffectNumber_Shine,
+	enInitEffectNumber_CoolTimeCompleteFire,
+	enInitEffectNumber_CoolTimeCompleteWater,
+	enInitEffectNumber_CoolTimeCompleteWind,
+	enInitEffectNumber_CoolTimeCompleteShine,
+	enInitEffectNumber_MagicCircleFire,
+	enInitEffectNumber_MagicCircleWater,
+	enInitEffectNumber_MagicCircleWind,
+	enInitEffectNumber_MagicCircleShine,
+	enInitEffectNumber_MagicPoint,
+	enInitEffectNumber_MagicPointDelete,
+	enInitEffectNumber_Pudding,
+	enInitEffectNumber_EnemyDeath,
+};
+
 class Game : public IGameObject
 {
 public:

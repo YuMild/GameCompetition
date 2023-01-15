@@ -6,6 +6,8 @@
 
 namespace
 {
+	const float BUTTON_SE_VOLUME = 0.5f;
+
 	//	‰æ‘œ
 	const float WIDTH = 1920.0f;
 	const float HEIGHT = 1080.0f;
@@ -85,7 +87,7 @@ bool Title::Start()
 	m_titleBGM->Init(enInitSoundNumber_Title);
 	m_titleBGM->Play(true);
 
-	g_soundEngine->ResistWaveFileBank(16, "Assets/sound/Button.wav");
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Button, "Assets/sound/Button.wav");
 
 	m_fade = FindGO<Fade>("fade");
 	m_fade->StartFadeIn();
@@ -111,10 +113,10 @@ void Title::Update()
 			m_isWaitFadeOut = true;
 			m_fade->StartFadeOut();
 			//	Œø‰Ê‰¹‚ğÄ¶‚·‚éB
-			m_buttonSE = NewGO<SoundSource>(16);
-			m_buttonSE->Init(16);
+			m_buttonSE = NewGO<SoundSource>(0);
+			m_buttonSE->Init(enInitSoundNumber_Button);
 			m_buttonSE->Play(false);
-			m_buttonSE->SetVolume(0.5f);
+			m_buttonSE->SetVolume(BUTTON_SE_VOLUME);
 		}
 	}
 

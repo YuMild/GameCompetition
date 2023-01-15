@@ -6,6 +6,13 @@
 #include "sound/SoundEngine.h"
 #include "graphics/effect/EffectEmitter.h"
 
+namespace
+{
+	const float EFFECT_SIZE = 20.0f;
+	const float BULLET_SPEED = 20.0f;
+	const float BULLET_SIZE = 0.5f;
+}
+
 Bullet::Bullet() 
 {
 
@@ -20,7 +27,7 @@ bool Bullet::Start() {
 
 	m_player = FindGO<Player>("player");
 	m_render.Init("Assets/modelData/bullet.tkm");
-	m_render.SetScale({ 0.5f,0.5f,0.5f });
+	m_render.SetScale(Vector3::One * BULLET_SIZE);
 	m_position = m_player->GetPosition();												//	プレイヤーの場所に生成される
 	m_position.y += 50.0f;																//	プレイヤーの上に生成される
 
@@ -30,11 +37,11 @@ bool Bullet::Start() {
 	m_forward.Normalize();
 
 	//エフェクト
-	EffectEngine::GetInstance()->ResistEffect(0, u"Assets/effect/Bullet.efk");
+	EffectEngine::GetInstance()->ResistEffect(enInitEffectNumber_Bullet, u"Assets/effect/Bullet.efk");
 
 	m_fireBallEF = NewGO<EffectEmitter>(0);
-	m_fireBallEF->Init(0);
-	m_fireBallEF->SetScale(Vector3::One * 20.0f);
+	m_fireBallEF->Init(enInitEffectNumber_Bullet);
+	m_fireBallEF->SetScale(Vector3::One * EFFECT_SIZE);
 	m_fireBallEF->Play();
 
 	//音声ファイル
@@ -45,19 +52,17 @@ bool Bullet::Start() {
 	m_gunShotSE->Init(enInitSoundNumber_Bullet);
 	m_gunShotSE->Play(false);
 
-	m_moveSpeed = m_forward * 20.0f;													//	移動速度
+	m_moveSpeed = m_forward * BULLET_SPEED;													//	移動速度
 
 	return true;
 }
 
 void Bullet::Update() 
 {
-
-	m_deleteTimer += g_gameTime->GetFrameDeltaTime();
-
+	Move();
 	m_fireBallEF->SetPosition(m_position);
 
-	Move();
+	m_deleteTimer += g_gameTime->GetFrameDeltaTime();
 
 	//タイマーが2.0以上の時
 	if (m_deleteTimer >= 2.0f)

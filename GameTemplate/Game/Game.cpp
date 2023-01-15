@@ -23,6 +23,7 @@ using namespace std;
 
 namespace
 {
+	const float SKYCUBE_SIZE				= 300.0f;													//	スカイキューブのサイズ
 	const float BGM_VOLUME					= 0.5f;														//　BGMの音量
 	const float FALL_LINE					= -100.0f;													//　落下死の判定ライン
 	const float LEVELUP_TIME				= 12.0f;													//　レベルアップの間隔
@@ -44,7 +45,6 @@ Game::~Game()
 	g_k2Engine->GetK2EngineLow()->SetFrameRateMode(K2EngineLow::enFrameRateMode_Variable, 60.0f);		//	FPSを元に戻す
 
 	//	DeleteGO
-
 	DeleteGO(m_backGround);																				//	BackGround
 	DeleteGO(m_backGroundBGM);																			//	BGM
 	const auto& bullets = FindGOs<Bullet>("bullet");													//	Bullet
@@ -80,7 +80,6 @@ Game::~Game()
 bool Game::Start()
 {
 	//	NewGO
-
 	m_backGround	= NewGO<BackGround>(0, "backGround");												//	BackGround
 	m_clock			= NewGO<Clock>(0, "clock");															//	Clock
 	m_gameCamera	= NewGO<GameCamera>(0, "gameCamera");												//	GameCamera
@@ -93,13 +92,11 @@ bool Game::Start()
 	m_skyCube		= NewGO<SkyCube>(0, "skyCube");														//	SkyCube
 
 	//	背景
-
-	m_skyCube->SetScale({ 300.0f, 300.0f, 300.0f });													//	サイズ
+	m_skyCube->SetScale(Vector3::One * 300.0f);															//	サイズ
 	m_skyCube->SetType(enSkyCubeType_NightToon);														//	SkyCubeの種類
 	m_skyCube->SetLuminance(0.5);																		//	輝度
 
 	//	音声
-
 	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_BackGround, "Assets/sound/BackGround.wav");		//	BGM
 	m_backGroundBGM = NewGO<SoundSource>(0);
 	m_backGroundBGM->Init(enInitSoundNumber_BackGround);
@@ -107,7 +104,6 @@ bool Game::Start()
 	m_backGroundBGM->Play(true);
 
 	// ライト
-
 	g_sceneLight->SetDirectionLight(0, DIRECTIONLIGHT_DIRECTION, DIRECTIONLIGHT_COLOR);					//	ディレクションライト
 	
 	return true;

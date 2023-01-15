@@ -8,6 +8,7 @@
 
 namespace
 {
+	const float EFFECT_SIZE = 20.0f;
 	const float SQUARE_WIDTH = 30.0f;
 	const float SQUARE_HEIGHT = 30.0f;
 	const float PUDDING_COLLISION_JUDGE = 70.0f;
@@ -30,10 +31,10 @@ bool Pudding::Start()
 	m_puddingMapGray.Init("Assets/sprite/Map/PuddingGray.DDS", SQUARE_WIDTH, SQUARE_HEIGHT);
 
 	//	エフェクト
-	EffectEngine::GetInstance()->ResistEffect(13, u"Assets/effect/Pudding.efk");
-	m_puddingEF = NewGO<EffectEmitter>(13);
-	m_puddingEF->Init(13);
-	m_puddingEF->SetScale(Vector3::One * 20.0f);
+	EffectEngine::GetInstance()->ResistEffect(enInitEffectNumber_Pudding, u"Assets/effect/Pudding.efk");
+	m_puddingEF = NewGO<EffectEmitter>(0);
+	m_puddingEF->Init(enInitEffectNumber_Pudding);
+	m_puddingEF->SetScale(Vector3::One * EFFECT_SIZE);
 	m_puddingEF->Play();
 
 	//	サウンド

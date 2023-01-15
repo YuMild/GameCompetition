@@ -49,9 +49,18 @@ public:
 	~MagicPoint();
 	bool Start();
 	void Update();
-	void MapMove();
 
 private:
+
+	/// <summary>
+	/// ƒ}ƒbƒvã‚Ì“®ì‚ğŠÇ—
+	/// </summary>
+	void MapMove();
+
+	/// <summary>
+	/// ‰¹º‚ğÄ¶
+	/// </summary>
+	void PlayMagicPointDeleteEffect();
 
 	//‰æ‘œ
 	SpriteRender m_magicPointMap;

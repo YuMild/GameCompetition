@@ -24,16 +24,16 @@ bool Water::Start()
 {
 	m_player = FindGO<Player>("player");
 	
-	EffectEngine::GetInstance()->ResistEffect(3, u"Assets/effect/Water.efk");
-	m_waterEF = NewGO<EffectEmitter>(3);
-	m_waterEF->Init(3);
+	EffectEngine::GetInstance()->ResistEffect(enInitEffectNumber_Water, u"Assets/effect/Water.efk");
+	m_waterEF = NewGO<EffectEmitter>(0);
+	m_waterEF->Init(enInitEffectNumber_Water);
 	m_waterEF->SetPosition(m_position);
 	m_waterEF->SetScale(Vector3::One * MAGIC_SIZE);
 	m_waterEF->Play();
 
-	EffectEngine::GetInstance()->ResistEffect(8, u"Assets/effect/MagicCircleWater.efk");
-	m_waterMagicCircleEF = NewGO<EffectEmitter>(8);
-	m_waterMagicCircleEF->Init(8);
+	EffectEngine::GetInstance()->ResistEffect(enInitEffectNumber_MagicCircleWind, u"Assets/effect/MagicCircleWater.efk");
+	m_waterMagicCircleEF = NewGO<EffectEmitter>(0);
+	m_waterMagicCircleEF->Init(enInitEffectNumber_MagicCircleWind);
 	m_waterMagicCircleEF->SetScale(Vector3::One * MAGIC_CIRCLE_SIZE);
 	m_waterMagicCircleEF->Play();
 
@@ -54,12 +54,14 @@ void Water::Update()
 
 	m_aliveTimer += g_gameTime->GetFrameDeltaTime();
 
-	if (m_aliveTimer < 0.7f) {
+	if (m_aliveTimer < 0.7f)
+	{
 		m_magicCirclePosition = m_player->GetPosition();
 		m_magicCirclePosition.y = 10.0f;
 		m_waterMagicCircleEF->SetPosition(m_magicCirclePosition);
 	}
-	if (m_aliveTimer > 3.5f) {
+	if (m_aliveTimer > 3.5f)
+	{
 		DeleteGO(this);
 	}
 }

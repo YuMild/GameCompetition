@@ -14,6 +14,8 @@
 namespace
 {
 	const float PLAYER_SIZE = 0.7f;
+	const float PLAYER_MOVESPEED = 170.0f;
+	const float PLAYER_FALL_SPEED = 10.0f;
 }
 
 Player::Player() 
@@ -43,15 +45,15 @@ bool Player::Start()
 	m_characterController.Init(20.0f, 5.0f, m_position);
 
 	//	ダメージ音声
-	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Damage_First, "Assets/sound/damage1.wav");									//	1回目のダメージ
-	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Damage_Second, "Assets/sound/damage2.wav");									//	2回目のダメージ
-	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Damage_Third, "Assets/sound/damage3.wav");									//	3回目のダメージ
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Damage_First, "Assets/sound/damage1.wav");											//	1回目のダメージ
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Damage_Second, "Assets/sound/damage2.wav");											//	2回目のダメージ
+	g_soundEngine->ResistWaveFileBank(enInitSoundNumber_Damage_Third, "Assets/sound/damage3.wav");											//	3回目のダメージ
 
 	//	クールタイム終了時のエフェクト
-	EffectEngine::GetInstance()->ResistEffect2D(100, u"Assets/effect/CoolTimeCompleteFire.efk");		//	炎
-	EffectEngine::GetInstance()->ResistEffect2D(101, u"Assets/effect/CoolTimeCompleteWater.efk");		//	水
-	EffectEngine::GetInstance()->ResistEffect2D(102, u"Assets/effect/CoolTimeCompleteWind.efk");		//	風
-	EffectEngine::GetInstance()->ResistEffect2D(103, u"Assets/effect/CoolTimeCompleteShine.efk");		//	光
+	EffectEngine::GetInstance()->ResistEffect2D(enInitEffectNumber_CoolTimeCompleteFire, u"Assets/effect/CoolTimeCompleteFire.efk");		//	炎
+	EffectEngine::GetInstance()->ResistEffect2D(enInitEffectNumber_CoolTimeCompleteWater, u"Assets/effect/CoolTimeCompleteWater.efk");		//	水
+	EffectEngine::GetInstance()->ResistEffect2D(enInitEffectNumber_CoolTimeCompleteWind, u"Assets/effect/CoolTimeCompleteWind.efk");		//	風
+	EffectEngine::GetInstance()->ResistEffect2D(enInitEffectNumber_CoolTimeCompleteShine, u"Assets/effect/CoolTimeCompleteShine.efk");		//	光
 
 	//	描画
 	m_render.SetPosition(m_position);																	//	初期値だから実は書かなくてもいい
@@ -163,15 +165,15 @@ void Player::Move()
 	float lStickX = g_pad[0]->GetLStickXF();
 	float lStickY = g_pad[0]->GetLStickYF();
 
-	m_cameraForward = g_camera3D->GetForward();//前後
-	m_cameraRight = g_camera3D->GetRight();//左右
-	m_cameraForward.y = 0.0f;//上には動かないように
+	m_cameraForward = g_camera3D->GetForward();								//前後
+	m_cameraRight = g_camera3D->GetRight();									//左右
+	m_cameraForward.y = 0.0f;												//上には動かないように
 	m_cameraRight.y = 0.0f;
 	m_cameraForward.Normalize();
 	m_cameraRight.Normalize();
 	if (m_hp->GetHP() >= 1) {
-		m_moveSpeed += m_cameraForward * lStickY * 170.0f;//前後
-		m_moveSpeed += m_cameraRight * lStickX * 170.0f;//左右
+		m_moveSpeed += m_cameraForward * lStickY * PLAYER_MOVESPEED;		//前後
+		m_moveSpeed += m_cameraRight * lStickX * PLAYER_MOVESPEED;			//左右
 	}
 
 	//水魔法
@@ -199,11 +201,13 @@ void Player::Move()
 		}
 	}
 
-	if (m_characterController.IsOnGround()) {//キャラが地面に立っている時
-		m_moveSpeed.y = 0.0f;//上には動かない
+	if (m_characterController.IsOnGround())									//キャラが地面に立っている時
+	{
+		m_moveSpeed.y = 0.0f;												//上には動かない
 	}
-	else {
-		m_moveSpeed.y -= 10.0f;//落下スピード
+	else
+	{
+		m_moveSpeed.y -= PLAYER_FALL_SPEED;									//落下
 	}
 
 	m_position = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
@@ -217,19 +221,19 @@ void Player::Magic()
 	//クールタイム非活性化時
 	if (g_pad[0]->IsTrigger(enButtonLB2) && m_bulletMagazine == true)
 	{
-		m_bullet = NewGO<Bullet>(0, "bullet");//砲丸を生成
-		m_bullet->SetPosition(m_position);//最初の1fだけステージ中央に判定が生じるのを防ぐ
-		m_bulletCoolTimer = 0;//クールタイマーのリセット
-		m_bulletMagazine = false;//クールタイムを活性化
+		m_bullet = NewGO<Bullet>(0, "bullet");								//砲丸を生成
+		m_bullet->SetPosition(m_position);									//最初の1fだけステージ中央に判定が生じるのを防ぐ
+		m_bulletCoolTimer = 0;												//クールタイマーのリセット
+		m_bulletMagazine = false;											//クールタイムを活性化
 	}
 
 	//炎魔法
 	//クールタイム非活性化時
 	if (g_pad[0]->IsTrigger(enButtonB) && m_fireMagazine == true)
 	{
-		m_fire = NewGO<Fire>(0, "fire");//炎魔法を生成
-		m_fireCoolTimer = 0;//クールタイムのリセット
-		m_fireMagazine = false;//クールタイムを活性化
+		m_fire = NewGO<Fire>(0, "fire");									//炎魔法を生成
+		m_fireCoolTimer = 0;												//クールタイムのリセット
+		m_fireMagazine = false;												//クールタイムを活性化
 		m_mp->SubMp(MP_FIRE);
 	}
 
@@ -237,9 +241,9 @@ void Player::Magic()
 	//クールタイム非活性化時
 	if (g_pad[0]->IsTrigger(enButtonA) && m_windMagazine == true)
 	{
-		m_wind = NewGO<Wind>(0, "wind");//風魔法を生成
-		m_windCoolTimer = 0;//クールタイマーのリセット
-		m_windMagazine = false;//クールタイムを活性化
+		m_wind = NewGO<Wind>(0, "wind");									//風魔法を生成
+		m_windCoolTimer = 0;												//クールタイマーのリセット
+		m_windMagazine = false;												//クールタイムを活性化
 		m_mp->SubMp(MP_WIND);
 	}
 
@@ -247,9 +251,9 @@ void Player::Magic()
 	//クールタイム非活性化時
 	if (g_pad[0]->IsTrigger(enButtonY) && m_shineMagazine == true)
 	{
-		m_shine = NewGO<Shine>(0, "shine");//光魔法を生成
-		m_shineCoolTimer = 0;//クールタイマーのリセット
-		m_shineMagazine = false;//クールタイムを活性化
+		m_shine = NewGO<Shine>(0, "shine");									//光魔法を生成
+		m_shineCoolTimer = 0;												//クールタイマーのリセット
+		m_shineMagazine = false;											//クールタイムを活性化
 		m_mp->SubMp(MP_SHINE);
 	}
 }
@@ -270,20 +274,20 @@ void Player::Rotation()
 void Player::ManageState() 
 {
 	//プレイヤーの状態
-	if (m_characterController.IsOnGround() == false) {//プレイヤーが地面の上に立っていない時
+	if (m_characterController.IsOnGround() == false) {						//プレイヤーが地面の上に立っていない時
 		m_moveSpeed.y -= 1.0f;
-		m_playerState = 1;//ジャンプアニメーションを再生する
+		m_playerState = 1;													//ジャンプアニメーションを再生する
 		return;
 	}
-	if (fabsf(m_moveSpeed.x) >= 0.10f || fabsf(m_moveSpeed.z) >= 0.1f) {//プレイヤーがxzの方向に動いている時
-		m_playerState = 2;//歩行アニメーションを再生する
+	if (fabsf(m_moveSpeed.x) >= 0.10f || fabsf(m_moveSpeed.z) >= 0.1f) {	//プレイヤーがxzの方向に動いている時
+		m_playerState = 2;													//歩行アニメーションを再生する
 	}
 	else if (m_hp->GetHP() <= 0)
 	{
 		m_playerState = 3;
 	}
-	else {//上以外の時
-		m_playerState = 0;//立ちアニメーションを再生する
+	else {																	//上以外の時
+		m_playerState = 0;													//待機アニメーションを再生する
 	}
 }
 
