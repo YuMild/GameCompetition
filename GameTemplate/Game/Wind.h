@@ -20,16 +20,17 @@ public:
 
 	Wind();
 	~Wind();
-	bool Start();
-	void Update();
+	bool Start()override;
+	void Update()override;
 
 private:
 
-	Vector3 m_position;
-	Vector3 m_magicCirclePosition;
-	EffectEmitter* m_windEF;
-	EffectEmitter* m_windMagicCircleEF;
-	SoundSource* m_windSE;
-	Player* m_player;
-	float m_aliveTimer = 0.0f;
+	Vector3				m_position;
+	Vector3				m_magicCirclePosition;
+	EffectEmitter*		m_windEF					= nullptr;
+	EffectEmitter*		m_windMagicCircleEF			= nullptr;
+	SoundSource*		m_windSE					= nullptr;
+	Player*				m_player					= nullptr;
+
+	float				m_aliveTimer				= 0.0f;
 };

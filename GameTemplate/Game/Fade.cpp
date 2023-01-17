@@ -3,8 +3,8 @@
 
 namespace
 {
-	const float SQUARE_WIDTH = 1000.0f;
-	const float SQUARE_HEIGHT = 1000.0f;
+	const float SQUARE_WIDTH	= 1000.0f;
+	const float SQUARE_HEIGHT	= 1000.0f;
 }
 
 Fade::Fade()

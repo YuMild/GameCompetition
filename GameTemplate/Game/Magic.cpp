@@ -7,21 +7,21 @@
 
 namespace
 {
-	const float WIDTH = 110.0f;
-	const float HEIGHT = 110.0f;
+	const float WIDTH			= 110.0f;
+	const float HEIGHT			= 110.0f;
 
-	const float FRAME_WIDTH = 130.0f;
-	const float FRAME_HEIGHT = 130.0f;
+	const float FRAME_WIDTH		= 130.0f;
+	const float FRAME_HEIGHT	= 130.0f;
 
-	const float FIRE_X = 840.0f;
-	const float WATER_X = 640.0f;
-	const float WIND_X = 740.0f;
-	const float SHINE_X = 740.0f;
+	const float FIRE_X			= 840.0f;
+	const float WATER_X			= 640.0f;
+	const float WIND_X			= 740.0f;
+	const float SHINE_X			= 740.0f;
 
-	const float FIRE_Y = -270.0f;
-	const float WATER_Y = -270.0f;
-	const float WIND_Y = -370.0f;
-	const float SHINE_Y = -170.0f;
+	const float FIRE_Y			= -270.0f;
+	const float WATER_Y			= -270.0f;
+	const float WIND_Y			= -370.0f;
+	const float SHINE_Y			= -170.0f;
 }
 
 Magic::Magic()

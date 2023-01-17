@@ -35,7 +35,7 @@ bool Mp::Start()
 
 void Mp::Update() 
 {
-	if (m_game->GetManageState() >= 1)
+	if (m_game->GetManageState() >= enGameState_Slow)
 	{
 		return;
 	}

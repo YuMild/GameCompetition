@@ -8,8 +8,8 @@
 
 namespace
 {
-	const float MAGIC_SIZE = 10.0f;
-	const float MAGIC_CIRCLE_SIZE = 50.0f;
+	const float MAGIC_SIZE			= 10.0f;
+	const float MAGIC_CIRCLE_SIZE	= 50.0f;
 }
 
 Shine::Shine()
@@ -24,7 +24,6 @@ Shine::~Shine()
 
 bool Shine::Start() 
 {
-
 	m_player = FindGO<Player>("player");
 	m_position.y = 10.0f;
 

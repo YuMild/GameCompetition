@@ -20,17 +20,17 @@ public:
 	//	他のクラスで使用しているのでpublicに
 
 	//	クールタイム
-	const float COOLTIME_BULLET = 1.0f;
-	const float COOLTIME_FIRE = 10.0f;
-	const float COOLTIME_WATER = 3.0f;
-	const float COOLTIME_WIND = 5.0f;
-	const float COOLTIME_SHINE = 20.0f;
+	const float COOLTIME_BULLET		= 1.0f;
+	const float COOLTIME_FIRE		= 10.0f;
+	const float COOLTIME_WATER		= 3.0f;
+	const float COOLTIME_WIND		= 5.0f;
+	const float COOLTIME_SHINE		= 20.0f;
 
 	//	MP消費量
-	const float MP_FIRE = 15.0f;
-	const float MP_WATER = 5.0f;
-	const float MP_WIND = 10.0f;
-	const float MP_SHINE = 20.0f;
+	const float MP_FIRE				= 15.0f;
+	const float MP_WATER			= 5.0f;
+	const float MP_WIND				= 10.0f;
+	const float MP_SHINE			= 20.0f;
 
 	/// <summary>
 	/// プレイヤーの座標を取得
@@ -113,10 +113,10 @@ public:
 
 	Player();
 	~Player();
-	bool Start() override;
-	void Update() override;
+	bool Start()override;
+	void Update()override;
 	
-	void Render(RenderContext& rc) override;
+	void Render(RenderContext& rc)override;
 
 private:
 
@@ -178,39 +178,39 @@ private:
 	Vector3					m_right;
 	
 	//エフェクト
-	EffectEmitter*			m_coolTimeCompleteFireEF;
-	EffectEmitter*			m_coolTimeCompleteWaterEF;
-	EffectEmitter*			m_coolTimeCompleteWindEF;
-	EffectEmitter*			m_coolTimeCompleteShineEF;
+	EffectEmitter*			m_coolTimeCompleteFireEF	= nullptr;
+	EffectEmitter*			m_coolTimeCompleteWaterEF	= nullptr;
+	EffectEmitter*			m_coolTimeCompleteWindEF	= nullptr;
+	EffectEmitter*			m_coolTimeCompleteShineEF	= nullptr;
 
 	//音声
-	SoundSource*			m_dryFireSE;
-	SoundSource*			m_enemyDeathSE;
+	SoundSource*			m_dryFireSE					= nullptr;
+	SoundSource*			m_enemyDeathSE				= nullptr;
 
 	//参照
-	Bullet*					m_bullet;
-	Fire*					m_fire;
-	Game*					m_game;
-	Hp*						m_hp;
-	Mp*						m_mp;
-	Shine*					m_shine;
-	Water*					m_water;
-	Wind*					m_wind;
+	Bullet*					m_bullet					= nullptr;
+	Fire*					m_fire						= nullptr;
+	Game*					m_game						= nullptr;
+	Hp*						m_hp						= nullptr;
+	Mp*						m_mp						= nullptr;
+	Shine*					m_shine						= nullptr;
+	Water*					m_water						= nullptr;
+	Wind*					m_wind						= nullptr;
 
-	bool					m_bulletMagazine	= true;
-	bool					m_fireMagazine		= true;
-	bool					m_waterMagazine		= true;
-	bool					m_shineMagazine		= true;
-	bool					m_windMagazine		= true;
-	bool					m_waterIsExe		= false;
+	bool					m_bulletMagazine			= true;
+	bool					m_fireMagazine				= true;
+	bool					m_waterMagazine				= true;
+	bool					m_shineMagazine				= true;
+	bool					m_windMagazine				= true;
+	bool					m_waterIsExe				= false;
 
-	float					m_bulletCoolTimer	= 1.0f;
-	float					m_fireCoolTimer		= 10.0f;
-	float					m_waterCoolTimer	= 5.0f;
-	float					m_windCoolTimer		= 5.0f;
-	float					m_shineCoolTimer	= 20.0f;
-	float					m_waterExeTimer		= 0.0f;
+	float					m_bulletCoolTimer			= 1.0f;
+	float					m_fireCoolTimer				= 10.0f;
+	float					m_waterCoolTimer			= 5.0f;
+	float					m_windCoolTimer				= 5.0f;
+	float					m_shineCoolTimer			= 20.0f;
+	float					m_waterExeTimer				= 0.0f;
 
-	int						m_playerState		= 0;
+	int						m_playerState				= 0;
 };
 

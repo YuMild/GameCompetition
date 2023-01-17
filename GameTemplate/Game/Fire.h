@@ -21,17 +21,18 @@ public:
 
 	Fire();
 	~Fire();
-	bool Start();
-	void Update();
+	bool Start()override;
+	void Update()override;
 
 private:
-	Vector3 m_position;
-	Vector3 m_magicCirclePosition;
-	SoundSource* m_fireSE;
-	EffectEmitter* m_fireEF;
-	EffectEmitter* m_fireMagicCircleEF;
+
+	Vector3				m_position;
+	Vector3				m_magicCirclePosition;
+	SoundSource*		m_fireSE					= nullptr;
+	EffectEmitter*		m_fireEF					= nullptr;
+	EffectEmitter*		m_fireMagicCircleEF			= nullptr;
 	
-	Player* m_player;
-	bool m_isMoving = false;
-	float m_aliveTimer = 0.0f;
+	Player*				m_player					= nullptr;
+	bool				m_isMoving					= false;
+	float				m_aliveTimer				= 0.0f;
 };

@@ -37,9 +37,9 @@ public:
 
 	Enemy();
 	~Enemy();
-	bool Start();
-	void Update();
-	void Render(RenderContext& rc);
+	bool Start()override;
+	void Update()override;
+	void Render(RenderContext& rc)override;
 
 	/// <summary>
 	/// マップ上の画像の動作
@@ -99,16 +99,16 @@ private:
 	/// </summary>
 	void PlayEnemyDeathEffect();
 
-	Quaternion		m_rotation = Quaternion::Identity;
+	Quaternion		m_rotation			= Quaternion::Identity;
 	ModelRender		m_enemyMR;
 	SpriteRender	m_enemyMap;
 	SpriteRender	m_enemyMapGray;
 
 	//エフェクト
-	EffectEmitter*	m_enemyDeathEF;
+	EffectEmitter*	m_enemyDeathEF		= nullptr;
 
 	//音声
-	SoundSource*	m_enemyDeathSE;
+	SoundSource*	m_enemyDeathSE		= nullptr;
 
 	//ベクトル
 	Vector3			m_enemyMapPosition	= Vector3::Zero;

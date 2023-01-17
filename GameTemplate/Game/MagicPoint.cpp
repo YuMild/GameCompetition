@@ -8,12 +8,12 @@
 
 namespace
 {
-	const float EFFECT_SIZE = 50.0f;
-	const float EFFECT_MAP_SIZE = 0.15f;
-	const float COLLISION_SIZE = 70.0f;
-	const float ADD_MP = 15.0f;
-	const float SQUARE_WIDTH = 30.0f;
-	const float SQUARE_HEIGHT = 30.0f;
+	const float EFFECT_SIZE			= 50.0f;
+	const float ONMAP_SIZE			= 0.15f;
+	const float COLLISION_SIZE		= 70.0f;
+	const float ADD_MP				= 15.0f;
+	const float SQUARE_WIDTH		= 30.0f;
+	const float SQUARE_HEIGHT		= 30.0f;
 }
 
 MagicPoint::MagicPoint()
@@ -84,10 +84,10 @@ void MagicPoint::Update()
 
 void MagicPoint::MapMove()
 {
-	m_magicPointMapGray.SetPosition({ m_position.x * -EFFECT_MAP_SIZE + m_map->GetMapCenterPosition().x,m_position.z * -EFFECT_MAP_SIZE + m_map->GetMapCenterPosition().y,0.0f });
+	m_magicPointMapGray.SetPosition({ m_position.x * -ONMAP_SIZE + m_map->GetMapCenterPosition().x,m_position.z * -ONMAP_SIZE + m_map->GetMapCenterPosition().y,0.0f });
 	m_magicPointMapGray.Update();
 
-	m_magicPointMap.SetPosition({ m_position.x * -EFFECT_MAP_SIZE + m_map->GetMapCenterPosition().x,m_position.z * -EFFECT_MAP_SIZE + m_map->GetMapCenterPosition().y,0.0f });
+	m_magicPointMap.SetPosition({ m_position.x * -ONMAP_SIZE + m_map->GetMapCenterPosition().x,m_position.z * -ONMAP_SIZE + m_map->GetMapCenterPosition().y,0.0f });
 	m_magicPointMap.Update();
 }
 

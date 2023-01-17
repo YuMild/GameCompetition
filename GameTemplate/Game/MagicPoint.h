@@ -47,8 +47,8 @@ public:
 
 	MagicPoint();
 	~MagicPoint();
-	bool Start();
-	void Update();
+	bool Start()override;
+	void Update()override;
 
 private:
 
@@ -63,25 +63,25 @@ private:
 	void PlayMagicPointDeleteEffect();
 
 	//画像
-	SpriteRender m_magicPointMap;
-	SpriteRender m_magicPointMapGray;
+	SpriteRender		m_magicPointMap;
+	SpriteRender		m_magicPointMapGray;
 
 	//ベクトル
-	Vector3 m_position;
-	Vector3 m_diff;
+	Vector3				m_position;
+	Vector3				m_diff;
 
 	//エフェクト
-	EffectEmitter* m_magicPointEF;
-	EffectEmitter* m_magicPointDeleteEF;
+	EffectEmitter*		m_magicPointEF			= nullptr;
+	EffectEmitter*		m_magicPointDeleteEF	= nullptr;
 
 	//サウンド
-	SoundSource* m_magicPointSE;
+	SoundSource*		m_magicPointSE			= nullptr;
 
 	//参照
-	Map* m_map;
-	Mp* m_mp;
-	Player* m_player;
+	Map*				m_map					= nullptr;
+	Mp*					m_mp					= nullptr;
+	Player*				m_player				= nullptr;
 
-	float m_aliveTimer = 0;
+	float				m_aliveTimer			= 0;
 };
 

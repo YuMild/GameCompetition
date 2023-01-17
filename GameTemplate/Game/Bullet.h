@@ -28,17 +28,6 @@ public:
 		m_position = position;
 	}
 
-	Bullet();
-	~Bullet();
-	bool Start();
-	void Update();
-	void Render(RenderContext& rc);
-
-	/// <summary>
-	/// 通常魔法の動作
-	/// </summary>
-	void Move();
-
 	/// <summary>
 	/// 通常魔法の移動速度を取得
 	/// </summary>
@@ -47,16 +36,30 @@ public:
 	{
 		return m_moveSpeed;
 	}
+
+	Bullet();
+	~Bullet();
+	bool Start()override;
+	void Update()override;
+	void Render(RenderContext& rc)override;
+
 private:
-	ModelRender m_render;
-	Vector3 m_position;
-	Vector3 m_moveSpeed;
-	Vector3 m_forward;
-	Vector3 collisionPosition;
-	CollisionObject* collisionObject;
-	EffectEmitter* m_fireBallEF;
-	SoundSource* m_gunShotSE;
-	Player* m_player;
-	//タイマー。
-	float m_deleteTimer = 0.0f;
+
+	/// <summary>
+	/// 通常魔法の動作
+	/// </summary>
+	void Move();
+
+	ModelRender				m_render;
+	Vector3					m_position;
+	Vector3					m_moveSpeed;
+	Vector3					m_forward;
+	Vector3					collisionPosition;
+
+	CollisionObject*		collisionObject			= nullptr;
+	EffectEmitter*			m_fireBallEF			= nullptr;
+	SoundSource*			m_gunShotSE				= nullptr;
+	Player*					m_player				= nullptr;
+
+	float					m_deleteTimer			= 0.0f;
 };

@@ -13,9 +13,9 @@
 
 namespace
 {
-	const float PLAYER_SIZE = 0.7f;
-	const float PLAYER_MOVESPEED = 170.0f;
-	const float PLAYER_FALL_SPEED = 10.0f;
+	const float PLAYER_SIZE			= 0.7f;
+	const float PLAYER_MOVESPEED	= 170.0f;
+	const float PLAYER_FALL_SPEED	= 10.0f;
 }
 
 Player::Player() 
@@ -78,7 +78,7 @@ void Player::Update()
 
 	m_render.Update();
 	
-	if (m_game->GetManageState() != 0)																	//	プレイヤーが死亡時
+	if (m_game->GetManageState() != enGameState_PlayerAlive)											//	プレイヤーが死亡時
 	{
 		m_moveSpeed.x = 0.0f;
 		m_moveSpeed.y = 0.0f;

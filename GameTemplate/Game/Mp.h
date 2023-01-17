@@ -44,9 +44,9 @@ public:
 
 	Mp();
 	~Mp();
-	bool Start();
-	void Update();
-	void Render(RenderContext& rc);
+	bool Start()override;
+	void Update()override;
+	void Render(RenderContext& rc)override;
 
 private:
 
@@ -60,14 +60,14 @@ private:
 	/// </summary>
 	void Heal();
 
-	SpriteRender m_mpBar;
-	SpriteRender m_mpBarGray;
-	SpriteRender m_mpFrame;
-	SpriteRender m_mpFrameGray;
+	SpriteRender			m_mpBar;
+	SpriteRender			m_mpBarGray;
+	SpriteRender			m_mpFrame;
+	SpriteRender			m_mpFrameGray;
 
-	Game* m_game;
+	Game*					m_game			= nullptr;
 
-	float m_mp = 100.0f;
-	float m_timer = 0.0f;
+	float					m_mp			= 100.0f;
+	float					m_timer			= 0.0f;
 };
 

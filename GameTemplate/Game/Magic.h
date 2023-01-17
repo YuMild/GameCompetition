@@ -12,9 +12,9 @@ class Magic :public IGameObject
 public:
 	Magic();
 	~Magic();
-	bool Start();
-	void Update();
-	void Render(RenderContext& rc);
+	bool Start()override;
+	void Update()override;
+	void Render(RenderContext& rc)override;
 
 private:
 
@@ -24,31 +24,31 @@ private:
 	void Cut();
 
 	//	フレーム
-	SpriteRender m_typeFrame[4];
-	SpriteRender m_typeFrameGray[4];
+	SpriteRender			m_typeFrame[4];
+	SpriteRender			m_typeFrameGray[4];
 
 	//	魔法
-	SpriteRender m_typeFire;
-	SpriteRender m_typeWater;
-	SpriteRender m_typeWind;
-	SpriteRender m_typeShine;
+	SpriteRender			m_typeFire;
+	SpriteRender			m_typeWater;
+	SpriteRender			m_typeWind;
+	SpriteRender			m_typeShine;
 
 	//	魔法のグレー
-	SpriteRender m_typeFireCoolTime;
-	SpriteRender m_typeWaterCoolTime;
-	SpriteRender m_typeWindCoolTime;
-	SpriteRender m_typeShineCoolTime;
+	SpriteRender			m_typeFireCoolTime;
+	SpriteRender			m_typeWaterCoolTime;
+	SpriteRender			m_typeWindCoolTime;
+	SpriteRender			m_typeShineCoolTime;
 
 	//	鎖
-	SpriteRender m_fireChain;
-	SpriteRender m_waterChain;
-	SpriteRender m_windChain;
-	SpriteRender m_shineChain;
+	SpriteRender			m_fireChain;
+	SpriteRender			m_waterChain;
+	SpriteRender			m_windChain;
+	SpriteRender			m_shineChain;
 
-	Game* m_game;
-	Mp* m_mp;
-	Player* m_player;
+	Game*					m_game				= nullptr;
+	Mp*						m_mp				= nullptr;
+	Player*					m_player			= nullptr;
 
-	int m_num = 4;
+	int						m_num				= 4;
 };
 

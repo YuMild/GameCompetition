@@ -20,17 +20,18 @@ public:
 
 	Shine();
 	~Shine();
-	bool Start();
-	void Update();
+	bool Start()override;
+	void Update()override;
 
 private:
 
-	Vector3 m_position;
-	Vector3 m_magicCirclePosition;
-	SoundSource* m_shineSE;
-	EffectEmitter* m_shineEF;
-	EffectEmitter* m_shineMagicCircleEF;
-	Player* m_player;
-	float m_aliveTimer = 0.0f;
-	bool m_isMoving = false;
+	Vector3				m_position;
+	Vector3				m_magicCirclePosition;
+	SoundSource*		m_shineSE					= nullptr;
+	EffectEmitter*		m_shineEF					= nullptr;
+	EffectEmitter*		m_shineMagicCircleEF		= nullptr;
+	Player*				m_player					= nullptr;
+
+	float				m_aliveTimer				= 0.0f;
+	bool				m_isMoving					= false;
 };

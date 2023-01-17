@@ -5,8 +5,8 @@
 
 namespace
 {
-	const float SQUARE_WIDTH = 300.0f;
-	const float SQUARE_HEIGHT = 300.0f;
+	const float SQUARE_WIDTH	= 300.0f;
+	const float SQUARE_HEIGHT	= 300.0f;
 }
 
 Clock::Clock()

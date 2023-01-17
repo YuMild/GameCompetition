@@ -8,9 +8,9 @@
 
 namespace
 {
-	const float EFFECT_SIZE = 20.0f;
-	const float BULLET_SPEED = 20.0f;
-	const float BULLET_SIZE = 0.5f;
+	const float EFFECT_SIZE		= 20.0f;
+	const float BULLET_SPEED	= 20.0f;
+	const float BULLET_SIZE		= 0.5f;
 }
 
 Bullet::Bullet() 

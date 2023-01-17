@@ -8,9 +8,9 @@ class Fade : public IGameObject
 public:
 	Fade();
 	~Fade();
-	bool Start() override;
-	void Update() override;
-	void Render(RenderContext& rc) override;
+	bool Start()override;
+	void Update()override;
+	void Render(RenderContext& rc)override;
 
 	/// <summary>
 	/// フェードイン

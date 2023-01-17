@@ -13,17 +13,18 @@
 
 namespace
 {
-	const float ENEMY_MOVESPEED = 0.5f;
-	const float ENEMY_WIND_ACTIVE_MOVESPEED = 2.0f;
-	const float ENEMY_SIZE = 0.5f;
-	const float ENEMY_MAP_WIDTH = 200.0f;
-	const float ENEMY_MAP_HEIGHT = 200.0f;
-	const float ENEMY_DEATH_SE_VOLUME = 1.5f;
-	const float ENEMY_DEATH_EFFECT_SIZE = 5.0f;
-	const float COLLISION_JUDGE_FIRE = 500.0f;
-	const float COLLISION_JUDGE_WIND = 300.0f;
-	const float COLLISION_JUDGE_BULLET = 75.0f;
-	const float COLLISION_JUDGE_PLAYER = 10.0f;
+	const float ENEMY_MOVESPEED					= 0.5f;
+	const float ENEMY_WIND_ACTIVE_MOVESPEED		= 2.0f;
+	const float ENEMY_SIZE						= 0.5f;
+	const float ENEMY_MAP_WIDTH					= 200.0f;
+	const float ENEMY_MAP_HEIGHT				= 200.0f;
+	const float ENEMY_DEATH_SE_VOLUME			= 2.0f;
+	const float ENEMY_DEATH_EFFECT_SIZE			= 5.0f;
+	const float COLLISION_JUDGE_FIRE			= 500.0f;
+	const float COLLISION_JUDGE_WIND			= 300.0f;
+	const float COLLISION_JUDGE_BULLET			= 75.0f;
+	const float COLLISION_JUDGE_PLAYER			= 10.0f;
+	const float ONMAP_SIZE						= 0.15f;
 }
 
 Enemy::Enemy() 
@@ -76,13 +77,13 @@ void Enemy::Update()
 
 void Enemy::MapMove()
 {
-	if (m_game->GetManageState() == 0)
+	if (m_game->GetManageState() == enGameState_PlayerAlive)
 	{
-		m_enemyMap.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
+		m_enemyMap.SetPosition({ m_position.x * -ONMAP_SIZE + m_map->GetMapCenterPosition().x,m_position.z * -ONMAP_SIZE + m_map->GetMapCenterPosition().y,0.0f });
 		m_enemyMap.Update();
 	}
 
-	m_enemyMapGray.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
+	m_enemyMapGray.SetPosition({ m_position.x * -ONMAP_SIZE + m_map->GetMapCenterPosition().x,m_position.z * -ONMAP_SIZE + m_map->GetMapCenterPosition().y,0.0f });
 	m_enemyMapGray.Update();
 }
 
@@ -191,6 +192,6 @@ void Enemy::PlayEnemyDeathEffect()
 	m_enemyDeathEF = NewGO<EffectEmitter>(0);
 	m_enemyDeathEF->Init(enInitEffectNumber_EnemyDeath);
 	m_enemyDeathEF->SetScale(Vector3::One * ENEMY_DEATH_EFFECT_SIZE);
-	m_enemyDeathEF->SetPosition(m_position);
+	m_enemyDeathEF->SetPosition({ m_position.x,m_position.y + 30.0f,m_position.z });
 	m_enemyDeathEF->Play();
 }

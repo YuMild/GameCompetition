@@ -8,7 +8,9 @@ public:
 
 	FontPurpleNumber();
 	~FontPurpleNumber();
-	bool Start();
+	bool Start()override;
+	void Update()override;
+	void Render(RenderContext& rc)override;
 
 	/// <summary>
 	/// •\¦‚³‚¹‚½‚¢”š‚ğ“ü—Í
@@ -34,13 +36,10 @@ public:
 		m_scale = scale;
 	}
 
-	void Update();
-	void Render(RenderContext& rc);
-
 private:
 
-	std::vector<std::unique_ptr<SpriteRender>>m_fontPurpleNumberList;		//‰Â•Ï’·”z—ñ
+	std::vector<std::unique_ptr<SpriteRender>>		m_fontPurpleNumberList;		//‰Â•Ï’·”z—ñ
 
-	Vector3 m_position;
-	Vector3 m_scale;
+	Vector3											m_position;
+	Vector3											m_scale;
 };

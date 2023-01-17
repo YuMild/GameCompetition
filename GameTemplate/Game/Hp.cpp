@@ -4,14 +4,14 @@
 
 namespace
 {
-	const float HP_WIDTH = 100.0f;
-	const float HP_HEIGHT = 100.0f;
+	const float HP_WIDTH				= 100.0f;
+	const float HP_HEIGHT				= 100.0f;
 
-	const float HP_LEFT_POSITION = -600.0f;
-	const float HP_CENTER_POSITION = -480.0f;
-	const float HP_RIGHT_POSITION = -360.0f;
+	const float HP_LEFT_POSITION		= -600.0f;
+	const float HP_CENTER_POSITION		= -480.0f;
+	const float HP_RIGHT_POSITION		= -360.0f;
 
-	const float HP_Y_POSITION = -290.0f;
+	const float HP_Y_POSITION			= -290.0f;
 }
 
 Hp::Hp()

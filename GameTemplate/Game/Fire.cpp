@@ -6,8 +6,8 @@
 
 namespace
 {
-	const float MAGIC_SIZE = 50.0f;
-	const float MAGIC_CIRCLE_SIZE = 50.0f;
+	const float MAGIC_SIZE			= 50.0f;
+	const float MAGIC_CIRCLE_SIZE	= 50.0f;
 }
 
 Fire::Fire() 
@@ -24,7 +24,7 @@ bool Fire::Start()
 {
 	m_player = FindGO<Player>("player");
 	
-	EffectEngine::GetInstance()->ResistEffect(enInitEffectNumber_Fire,u"Assets/effect/Fire.efk");
+	EffectEngine::GetInstance()->ResistEffect(enInitEffectNumber_Fire, u"Assets/effect/Fire.efk");
 	m_fireEF = NewGO<EffectEmitter>(0);
 	m_fireEF->Init(enInitEffectNumber_Fire);
 	m_fireEF->SetScale(Vector3::One * MAGIC_SIZE);

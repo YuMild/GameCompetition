@@ -96,8 +96,8 @@ public:
 
 	Game();
 	~Game();
-	bool Start();
-	void Update();
+	bool Start()override;
+	void Update()override;
 
 private:
 
@@ -137,7 +137,7 @@ private:
 	ModelRender			m_modelRender;
 
 	//âπê∫
-	SoundSource*		m_backGroundBGM;
+	SoundSource*		m_backGroundBGM			= nullptr;
 
 	//éQè∆
 	Enemy*				m_enemy					= nullptr;

@@ -9,10 +9,10 @@
 
 namespace
 {
-	const float MAP_WIDTH = 300.0f;
-	const float MAP_HEIGHT = 300.0f;
-	const float PLAYER_WIDTH = 200.0f;
-	const float PLAYER_HEIGHT = 200.0f;
+	const float MAP_WIDTH		= 300.0f;
+	const float MAP_HEIGHT		= 300.0f;
+	const float PLAYER_WIDTH	= 200.0f;
+	const float PLAYER_HEIGHT	= 200.0f;
 }
 
 Map::Map() 

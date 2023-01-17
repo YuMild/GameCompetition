@@ -40,9 +40,9 @@ public:
 
 	Hp();
 	~Hp();
-	bool Start();
-	void Update();
-	void Render(RenderContext& rc);
+	bool Start()override;
+	void Update()override;
+	void Render(RenderContext& rc)override;
 	
 private:
 
@@ -52,24 +52,24 @@ private:
 	void Damage();
 
 	//âÊëú
-	SpriteRender m_hpInside[3];
-	SpriteRender m_hpFrame[3];
-	SpriteRender m_hpFrameGray[3];
+	SpriteRender		m_hpInside[3];
+	SpriteRender		m_hpFrame[3];
+	SpriteRender		m_hpFrameGray[3];
 
 	//âπê∫
-	SoundSource* m_damage1SE;
-	SoundSource* m_damage2SE;
-	SoundSource* m_damage3SE;
+	SoundSource*		m_damage1SE			= nullptr;
+	SoundSource*		m_damage2SE			= nullptr;
+	SoundSource*		m_damage3SE			= nullptr;
 
-	Game* m_game;
+	Game*				m_game				= nullptr;
 
 	//àÍìxÇæÇØîªíËÇéÊÇÈ
-	bool m_damage1Judge = true;
-	bool m_damage2Judge = true;
-	bool m_damage3Judge = true;
+	bool				m_damage1Judge		= true;
+	bool				m_damage2Judge		= true;
+	bool				m_damage3Judge		= true;
 
-	int m_num = 0;
-	int m_hpFrameNum = 3;
-	int m_hpFrameGrayNum = 3;
-	int m_hp = 3;
+	int					m_num				= 0;
+	int					m_hpFrameNum		= 3;
+	int					m_hpFrameGrayNum	= 3;
+	int					m_hp				= 3;
 };

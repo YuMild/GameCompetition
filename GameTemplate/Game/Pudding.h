@@ -57,8 +57,8 @@ public:
 
 	Pudding();
 	~Pudding();
-	bool Start();
-	void Update();
+	bool Start()override;
+	void Update()override;
 
 private:
 
@@ -68,27 +68,27 @@ private:
 	void MapMove();
 
 	//画像
-	SpriteRender m_puddingMap;
-	SpriteRender m_puddingMapGray;
+	SpriteRender	m_puddingMap;
+	SpriteRender	m_puddingMapGray;
 
 	//ベクトル
-	Vector3 m_position;
-	Vector3 m_diff;
+	Vector3			m_position;
+	Vector3			m_diff;
 
 	//エフェクト
-	EffectEmitter* m_puddingEF;
+	EffectEmitter*	m_puddingEF				= nullptr;
 
 	//サウンド
-	SoundSource* m_puddingGetSE;
+	SoundSource*	m_puddingGetSE			= nullptr;
 
 	//参照
-	Game* m_game;
-	Map* m_map;
-	Player* m_player;
-	Score* m_score;
+	Game*			m_game					= nullptr;
+	Map*			m_map					= nullptr;
+	Player*			m_player				= nullptr;
+	Score*			m_score					= nullptr;
 
-	int m_getPudding = 0;
+	int				m_getPudding			= 0;
 
-	float m_aliveTimer = 0;
+	float			m_aliveTimer			= 0;
 };
 

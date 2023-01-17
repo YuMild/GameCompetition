@@ -20,24 +20,24 @@ public:
 
 	Map();
 	~Map();
-	bool Start();
-	void Update();
-	void Render(RenderContext& rc);
+	bool Start()override;
+	void Update()override;
+	void Render(RenderContext& rc)override;
 
 private:
 
-	SpriteRender m_mapBackGround;				//	背景
-	SpriteRender m_mapGradation;				//	グラデーション
-	SpriteRender m_mapFrame;					//	枠
-	SpriteRender m_mapFrameGray;				//	枠のグレー
-	SpriteRender m_playerMap;					//	プレイヤー
-	SpriteRender m_playerMapGray;				//	プレイヤーのグレー
+	SpriteRender		m_mapBackGround;				//	背景
+	SpriteRender		m_mapGradation;					//	グラデーション
+	SpriteRender		m_mapFrame;						//	枠
+	SpriteRender		m_mapFrameGray;					//	枠のグレー
+	SpriteRender		m_playerMap;					//	プレイヤー
+	SpriteRender		m_playerMapGray;				//	プレイヤーのグレー
 
-	Vector3 m_mapCenterPosition;
-	Vector3 m_playerMapPosition;
-	Vector3 m_playerMapGrayPosition;
+	Vector3				m_mapCenterPosition;
+	Vector3				m_playerMapPosition;
+	Vector3				m_playerMapGrayPosition;
 
-	Game* m_game;
-	Player* m_player;
+	Game*				m_game		= nullptr;
+	Player*				m_player	= nullptr;
 };
 

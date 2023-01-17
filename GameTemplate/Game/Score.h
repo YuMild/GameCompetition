@@ -61,26 +61,26 @@ public:
 		return m_totalScoreOld;
 	}
 
-	bool Start();
-	void Update();
+	bool Start()override;
+	void Update()override;
 
 private:
 
-	FontRender m_fontRender;
+	FontRender		m_fontRender;
 
-	Game* m_game;
-	Pudding* m_pudding;
+	Game*			m_game					= nullptr;
+	Pudding*		m_pudding				= nullptr;
 
-	int m_timeScore = 0;						//	タイムスコア
-	int m_timeScoreOld = 0;						//	最終タイムスコア
+	int				m_timeScore				= 0;					//	タイムスコア
+	int				m_timeScoreOld			= 0;					//	最終タイムスコア
 
-	int m_puddingScore = 0;						//	プリンスコア
-	int m_puddingScoreOld;						//	最終プリンスコア
+	int				m_puddingScore			= 0;					//	プリンスコア
+	int				m_puddingScoreOld		= 0;					//	最終プリンスコア
 
-	float m_totalScore = 0.0f;					//	トータルスコア
-	float m_totalScoreOld = 0.0f;				//	最終トータルスコア
+	float			m_totalScore			= 0.0f;					//	トータルスコア
+	float			m_totalScoreOld			= 0.0f;					//	最終トータルスコア
 
-	float m_timeScoreTimer = 0.0f;				//	タイムスコアが出るまでの時間を計る
-	float m_totalScoreTimer = 0.0f;				//	トータルスコアが出るまでの時間を計る
+	float			m_timeScoreTimer		= 0.0f;					//	タイムスコアが出るまでの時間を計る
+	float			m_totalScoreTimer		= 0.0f;					//	トータルスコアが出るまでの時間を計る
 };
 

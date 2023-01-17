@@ -6,48 +6,48 @@
 
 namespace
 {
-	const float BUTTON_SE_VOLUME = 0.5f;
+	const float BUTTON_SE_VOLUME	= 0.5f;
 
 	//	‰æ‘œ
-	const float WIDTH = 1920.0f;
-	const float HEIGHT = 1080.0f;
-	const float SQUARE_WIDTH = 1000.0f;
-	const float SQUARE_HEIGHT = 1000.0f;
-	const float HEART_1_SIZE = 650.0f;
-	const float HEART_2_SIZE = 460.0f;
-	const float HEART_3_SIZE = 300.0f;
-	const float FIRE_1_SIZE = 380.0f;
-	const float FIRE_2_SIZE = 520.0f;
-	const float WATER_1_SIZE = 330.0f;
-	const float WATER_2_SIZE = 370.0f;
-	const float WIND_1_SIZE = 550.0f;
-	const float WIND_2_SIZE = 340.0f;
-	const float SHINE_1_SIZE = 360.0f;
-	const float SHINE_2_SIZE = 800.0f;
+	const float WIDTH				= 1920.0f;
+	const float HEIGHT				= 1080.0f;
+	const float SQUARE_WIDTH		= 1000.0f;
+	const float SQUARE_HEIGHT		= 1000.0f;
+	const float HEART_1_SIZE		= 650.0f;
+	const float HEART_2_SIZE		= 460.0f;
+	const float HEART_3_SIZE		= 300.0f;
+	const float FIRE_1_SIZE			= 380.0f;
+	const float FIRE_2_SIZE			= 520.0f;
+	const float WATER_1_SIZE		= 330.0f;
+	const float WATER_2_SIZE		= 370.0f;
+	const float WIND_1_SIZE			= 550.0f;
+	const float WIND_2_SIZE			= 340.0f;
+	const float SHINE_1_SIZE		= 360.0f;
+	const float SHINE_2_SIZE		= 800.0f;
 
 	//	ƒ|ƒWƒVƒ‡ƒ“
-	const float HEART_1_X = 800.0f;
-	const float HEART_1_Y = -440.0f;
-	const float HEART_2_X = -670.0f;
-	const float HEART_2_Y = -500.0f;
-	const float HEART_3_X = 180.0f;
-	const float HEART_3_Y = -570.0f;
-	const float FIRE_1_X = 570.0f;
-	const float FIRE_1_Y = -530.0f;
-	const float FIRE_2_X = -460.0f;
-	const float FIRE_2_Y = -470.0f;
-	const float WATER_1_X = -420.0f;
-	const float WATER_1_Y = -560.0f;
-	const float WATER_2_X = 180.0f;
-	const float WATER_2_Y = -490.0f;
-	const float WIND_1_X = 450.0f;
-	const float WIND_1_Y = -520.0f;
-	const float WIND_2_X = -250.0f;
-	const float WIND_2_Y = -510.0f;
-	const float SHINE_1_X = -40.0f;
-	const float SHINE_1_Y = -520.0f;
-	const float SHINE_2_X = -850.0f;
-	const float SHINE_2_Y = -450.0f;
+	const float HEART_1_X			= 800.0f;
+	const float HEART_1_Y			= -440.0f;
+	const float HEART_2_X			= -670.0f;
+	const float HEART_2_Y			= -500.0f;
+	const float HEART_3_X			= 180.0f;
+	const float HEART_3_Y			= -570.0f;
+	const float FIRE_1_X			= 570.0f;
+	const float FIRE_1_Y			= -530.0f;
+	const float FIRE_2_X			= -460.0f;
+	const float FIRE_2_Y			= -470.0f;
+	const float WATER_1_X			= -420.0f;
+	const float WATER_1_Y			= -560.0f;
+	const float WATER_2_X			= 180.0f;
+	const float WATER_2_Y			= -490.0f;
+	const float WIND_1_X			= 450.0f;
+	const float WIND_1_Y			= -520.0f;
+	const float WIND_2_X			= -250.0f;
+	const float WIND_2_Y			= -510.0f;
+	const float SHINE_1_X			= -40.0f;
+	const float SHINE_1_Y			= -520.0f;
+	const float SHINE_2_X			= -850.0f;
+	const float SHINE_2_Y			= -450.0f;
 }
 
 Title::Title()

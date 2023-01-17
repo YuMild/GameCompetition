@@ -6,8 +6,8 @@
 
 namespace
 {
-	const float MAGIC_SIZE = 30.0f;
-	const float MAGIC_CIRCLE_SIZE = 50.0f;
+	const float MAGIC_SIZE			= 30.0f;
+	const float MAGIC_CIRCLE_SIZE	= 50.0f;
 }
 
 Water::Water()

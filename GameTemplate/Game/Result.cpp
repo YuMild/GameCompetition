@@ -12,38 +12,38 @@
 namespace
 {
 	//	‰æ‘œ‚Ì•‚Æ‚‚³
-	const float SQUARE_WIDTH = 1000.0f;
-	const float SQUARE_HEIGHT = 1000.0f;
-	const float RESULT_BACKGROUND_WIDTH = 1700.0f;
-	const float RESULT_BACKGROUND_HEIGHT = 900.0f;
-	const float RESULT_WIDTH = 600.0f;
-	const float RESULT_HEIGHT = 600.0f;
-	const float TIME_WIDTH = 300.0f;
-	const float TIME_HRIGHT = 300.0f;
-	const float PUDDING_WIDTH = 500.0f;
-	const float PUDDING_HEIGHT = 500.0f;
-	const float TOTALSCORE_WIDTH = 700.0f;
-	const float TOTALSCORE_HEIGHT = 700.0f;
+	const float SQUARE_WIDTH				= 1000.0f;
+	const float SQUARE_HEIGHT				= 1000.0f;
+	const float RESULT_BACKGROUND_WIDTH		= 1700.0f;
+	const float RESULT_BACKGROUND_HEIGHT	= 900.0f;
+	const float RESULT_WIDTH				= 600.0f;
+	const float RESULT_HEIGHT				= 600.0f;
+	const float TIME_WIDTH					= 300.0f;
+	const float TIME_HRIGHT					= 300.0f;
+	const float PUDDING_WIDTH				= 500.0f;
+	const float PUDDING_HEIGHT				= 500.0f;
+	const float TOTALSCORE_WIDTH			= 700.0f;
+	const float TOTALSCORE_HEIGHT			= 700.0f;
 
 	//	ƒ|ƒWƒVƒ‡ƒ“
-	const float RESULT_BACKGROUND_X = 0.0f;
-	const float RESULT_BACKGROUND_Y = -30.0f;
-	const float RESULT_X = 0.0f;
-	const float RESULT_Y = 420.0f;
-	const float TIME_X = -600.0F;
-	const float TIME_Y = 200.0F;
-	const float TIMESCORE_X = 650.0f;
-	const float TIMESCORE_Y = 200.0f;
-	const float PUDDING_X = -495.0f;
-	const float PUDDING_Y = 20.0f;
-	const float PUDDINGSCORE_X = 650.0f;
-	const float PUDDINGSCORE_Y = 20.0f;
-	const float TOTALSCORE_X = -400.0f;
-	const float TOTALSCORE_Y = -280.0f;
-	const float TOTALSCORE_FONT_X = 650.0f;
-	const float TOTALSCORE_FONT_Y = -280.0f;
-	const float RANK_X = 0.0f;
-	const float RANK_Y = 50.0f;
+	const float RESULT_BACKGROUND_X			= 0.0f;
+	const float RESULT_BACKGROUND_Y			= -30.0f;
+	const float RESULT_X					= 0.0f;
+	const float RESULT_Y					= 420.0f;
+	const float TIME_X						= -600.0F;
+	const float TIME_Y						= 200.0F;
+	const float TIMESCORE_X					= 650.0f;
+	const float TIMESCORE_Y					= 200.0f;
+	const float PUDDING_X					= -495.0f;
+	const float PUDDING_Y					= 20.0f;
+	const float PUDDINGSCORE_X				= 650.0f;
+	const float PUDDINGSCORE_Y				= 20.0f;
+	const float TOTALSCORE_X				= -400.0f;
+	const float TOTALSCORE_Y				= -280.0f;
+	const float TOTALSCORE_FONT_X			= 650.0f;
+	const float TOTALSCORE_FONT_Y			= -280.0f;
+	const float RANK_X						= 0.0f;
+	const float RANK_Y						= 50.0f;
 }
 
 Result::Result()
@@ -113,7 +113,7 @@ bool Result::Start()
 
 void Result::Update()
 {
-	if (m_resultState >=7 && g_pad[0]->IsTrigger(enButtonA))
+	if (m_resultState >=enGameState_TotalScore && g_pad[0]->IsTrigger(enButtonA))
 	{
 		NewGO<Title>(0, "title");
 		DeleteGO(m_totalScoreFont);
