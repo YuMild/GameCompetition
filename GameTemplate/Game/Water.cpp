@@ -31,9 +31,9 @@ bool Water::Start()
 	m_waterEF->SetScale(Vector3::One * MAGIC_SIZE);
 	m_waterEF->Play();
 
-	EffectEngine::GetInstance()->ResistEffect(enInitEffectNumber_MagicCircleWind, u"Assets/effect/MagicCircleWater.efk");
+	EffectEngine::GetInstance()->ResistEffect(enInitEffectNumber_CoolTimeCompleteWater, u"Assets/effect/MagicCircleWater.efk");
 	m_waterMagicCircleEF = NewGO<EffectEmitter>(0);
-	m_waterMagicCircleEF->Init(enInitEffectNumber_MagicCircleWind);
+	m_waterMagicCircleEF->Init(enInitEffectNumber_CoolTimeCompleteWater);
 	m_waterMagicCircleEF->SetScale(Vector3::One * MAGIC_CIRCLE_SIZE);
 	m_waterMagicCircleEF->Play();
 

@@ -113,26 +113,25 @@ bool Result::Start()
 
 void Result::Update()
 {
-	if (m_resultState >=enGameState_TotalScore && g_pad[0]->IsTrigger(enButtonA))
+	if (m_game->GetManageState() >=enGameState_TotalScore && g_pad[0]->IsTrigger(enButtonA))
 	{
 		NewGO<Title>(0, "title");
 		DeleteGO(m_totalScoreFont);
 		DeleteGO(m_game);
 		DeleteGO(this);
 	}
-	ManageState();
 }
 
 void Result::Render(RenderContext& rc)
 {
 	//	リザルト表示
-	if (m_resultState >= enGameState_Result)
+	if (m_game->GetManageState() >= enGameState_Result)
 	{
 		m_resultBackGroundRender.Draw(rc);
 		m_resultRender.Draw(rc);
 		m_totalScoreRender.Draw(rc);
 
-		if (m_resultState <= enGameState_TotalScore)
+		if (m_game->GetManageState() <= enGameState_TotalScore)
 		{
 			m_timeRender.Draw(rc);
 			m_puddingRender.Draw(rc);
@@ -140,7 +139,7 @@ void Result::Render(RenderContext& rc)
 	}
 
 	//	タイムスコア表示
-	if (m_resultState >= enGameState_TimeScore && m_isStart4 == true)
+	if (m_game->GetManageState() >= enGameState_TimeScore && m_isStart4 == true)
 	{
 		m_timeScoreFont = NewGO<FontBlueNumber>(0, "fontBlueNumber");
 		m_timeScoreFont->Init(m_timeScore);
@@ -155,7 +154,7 @@ void Result::Render(RenderContext& rc)
 	}
 
 	//	プリンスコア表示
-	if (m_resultState >= enGameState_PuddingScore && m_isStart5 == true)
+	if (m_game->GetManageState() >= enGameState_PuddingScore && m_isStart5 == true)
 	{
 		m_puddingScoreFont = NewGO<FontBlueNumber>(0, "fontBlueNumber");
 		m_puddingScoreFont->Init(m_puddingScore);
@@ -170,7 +169,7 @@ void Result::Render(RenderContext& rc)
 	}
 
 	//	トータルスコア表示
-	if (m_resultState >= enGameState_TotalScore && m_isStart6 == true)
+	if (m_game->GetManageState() >= enGameState_TotalScore && m_isStart6 == true)
 	{
 		m_totalScoreFont = NewGO<FontPurpleNumber>(0, "fontPurpleNumber");
 		m_totalScoreFont->Init(m_totalScore);
@@ -185,78 +184,38 @@ void Result::Render(RenderContext& rc)
 	}
 
 	//	ランク表示
-	if (m_resultState == enGameState_RankD)
+	if (m_game->GetManageState() == enGameState_RankD)
 	{
 		m_dRender.Draw(rc);
 		DeleteGO(m_timeScoreFont);
 		DeleteGO(m_puddingScoreFont);
 	}
 
-	if (m_resultState == enGameState_RankC)
+	if (m_game->GetManageState() == enGameState_RankC)
 	{
 		m_cRender.Draw(rc);
 		DeleteGO(m_timeScoreFont);
 		DeleteGO(m_puddingScoreFont);
 	}
 
-	if (m_resultState == enGameState_RankB)
+	if (m_game->GetManageState() == enGameState_RankB)
 	{
 		m_bRender.Draw(rc);
 		DeleteGO(m_timeScoreFont);
 		DeleteGO(m_puddingScoreFont);
 	}
 
-	if (m_resultState == enGameState_RankA)
+	if (m_game->GetManageState() == enGameState_RankA)
 	{
 		m_aRender.Draw(rc);
 		DeleteGO(m_timeScoreFont);
 		DeleteGO(m_puddingScoreFont);
 	}
 
-	if (m_resultState == enGameState_RankS)
+	if (m_game->GetManageState() == enGameState_RankS)
 	{
 		m_sRender.Draw(rc);
 		DeleteGO(m_timeScoreFont);
 		DeleteGO(m_puddingScoreFont);
-	}
-}
-
-void Result::ManageState()
-{
-	switch (m_game->GetManageState())
-	{
-	case enGameState_PlayerAlive:
-		m_resultState = enGameState_PlayerAlive;
-		break;
-	case enGameState_Slow:
-		m_resultState = enGameState_Slow;
-		break;
-	case enGameState_GameFinish:
-		m_resultState = enGameState_GameFinish;
-		break;
-	case enGameState_Result:
-		m_resultState = enGameState_Result;
-		break;
-	case enGameState_TimeScore:
-		m_resultState = enGameState_TimeScore;
-		break;
-	case enGameState_PuddingScore:
-		m_resultState = enGameState_PuddingScore;
-		break;
-	case enGameState_TotalScore:
-		m_resultState = enGameState_TotalScore;
-		break;
-	case enGameState_RankD:
-		m_resultState = enGameState_RankD;
-		break;
-	case enGameState_RankC:
-		m_resultState = enGameState_RankC;
-		break;
-	case enGameState_RankB:
-		m_resultState = enGameState_RankB;
-		break;
-	case enGameState_RankA:
-		m_resultState = enGameState_RankA;
-		break;
 	}
 }

@@ -35,7 +35,7 @@ bool Mp::Start()
 
 void Mp::Update() 
 {
-	if (m_game->GetManageState() >= enGameState_Slow)
+	if (m_game->GetManageState() != enGameState_PlayerAlive)
 	{
 		return;
 	}
@@ -69,7 +69,7 @@ void Mp::Render(RenderContext& rc)
 {
 	m_mpBarGray.Draw(rc);
 	m_mpFrameGray.Draw(rc);
-	if (m_game->GetManageState() == 0)
+	if (m_game->GetManageState() == enGameState_PlayerAlive)
 	{
 		m_mpBar.Draw(rc);
 		m_mpFrame.Draw(rc);

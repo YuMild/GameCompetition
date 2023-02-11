@@ -96,9 +96,14 @@ bool Title::Start()
 
 void Title::Update()
 {
+	SpriteFade();
+	SpriteMove();
 	State();
 	Timer();
+}
 
+void Title::SpriteFade()
+{
 	if (m_isWaitFadeOut == true) {
 		if (!m_fade->IsFade()) {
 			NewGO<Game>(0, "game");
@@ -138,7 +143,10 @@ void Title::Update()
 
 	//	PressStart
 	m_pressStartRender.Update();
+}
 
+void Title::SpriteMove()
+{
 	//	ÉAÉCÉRÉì
 	m_heart1Position = { HEART_1_X,HEART_1_Y + m_upDown1,0.0f };
 	m_heart1.SetPosition(m_heart1Position);

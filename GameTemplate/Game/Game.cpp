@@ -48,26 +48,23 @@ Game::~Game()
 	DeleteGO(m_backGround);																				//	BackGround
 	DeleteGO(m_backGroundBGM);																			//	BGM
 	const auto& bullets = FindGOs<Bullet>("bullet");													//	Bullet
-	int bulletSize = bullets.size();
-	for (int i = 0; i < bulletSize; i++)
+	for (auto& Bullet : bullets)
 	{
-		DeleteGO(bullets[i]);
+		DeleteGO(Bullet);
 	}
 	DeleteGO(m_clock);																					//	Clock
 	const auto& enemys = FindGOs<Enemy>("enemy");														//	Enemy
-	int enemySize = enemys.size();
-	for (int i = 0; i < enemySize; i++)
+	for (auto& Enemy : enemys)
 	{
-		DeleteGO(enemys[i]);
+		DeleteGO(Enemy);
 	}
 	DeleteGO(m_gameCamera);																				//	GameCamera
 	DeleteGO(m_hp);																						//	HP
 	DeleteGO(m_magic);																					//	Magic
 	const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");										//	MagicPoint
-	int magicPointSize = magicPoints.size();
-	for (int i = 0; i < magicPointSize; i++)
+	for (auto& MagicPoint : magicPoints)
 	{
-		DeleteGO(magicPoints[i]);
+		DeleteGO(MagicPoint);
 	}
 	DeleteGO(m_map);																					//	Map
 	DeleteGO(m_mp);																						//	MP
@@ -219,7 +216,7 @@ void Game::PuddingGenerate()
 void Game::ManageState()
 {
 	//	死亡時
-	if (m_gameState >= enGameState_Slow)
+	if (m_gameState != enGameState_PlayerAlive)
 	{
 		m_stateTimer += g_gameTime->GetFrameDeltaTime();												//	時間経過
 	}
@@ -297,42 +294,40 @@ void Game::ManageState()
 
 	//	トータルスコア表示
 	case enGameState_TotalScore:
-
-		for (float totalScore = m_score->GetTotalScoreOld(); totalScore > 0.0f; totalScore - 5000.0f)
+		if (m_stateTimer >= 1.5f)
 		{
-			m_gameState + 1;
-		}
-		m_stateTimer = 0;	
 			//	Dランク
-			if (m_score->GetTotalScoreOld() < 5000.0f)													
+			if (m_score->GetTotalScoreOld() < 5000.0f)
 			{
-				m_gameState = 7;
+				m_gameState = enGameState_RankD;
 				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
 			//	Cランク
 			else if (m_score->GetTotalScoreOld() > 5001.0f && m_score->GetTotalScoreOld() < 10000.0f)
 			{
-				m_gameState = 8;
+				m_gameState = enGameState_RankC;
 				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
 			//	Bランク
 			else if (m_score->GetTotalScoreOld() > 10001.0f && m_score->GetTotalScoreOld() < 15000.0f)
 			{
-				m_gameState = 9;
+				m_gameState = enGameState_RankB;
 				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
 			//	Aランク
 			else if (m_score->GetTotalScoreOld() > 15001.0f && m_score->GetTotalScoreOld() < 20000.0f)
 			{
-				m_gameState = 10;
+				m_gameState = enGameState_RankA;
 				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
 			//	Sランク
 			else if (m_score->GetTotalScoreOld() > 20001.0f)
 			{
-				m_gameState = 11;
+				m_gameState = enGameState_RankS;
 				m_stateTimer = 0.0f;																	//	タイマーのリセット
 			}
+		}
+			
 		break;
 	}
 }

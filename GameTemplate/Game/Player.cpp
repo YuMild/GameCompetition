@@ -105,8 +105,8 @@ void Player::Timer()
 		m_fireMagazine = true;																			//	クールタイムを非活性化
 
 		//	エフェクト生成
-		m_coolTimeCompleteFireEF = NewGO<EffectEmitter>(100);
-		m_coolTimeCompleteFireEF->Init2D(100);
+		m_coolTimeCompleteFireEF = NewGO<EffectEmitter>(0);
+		m_coolTimeCompleteFireEF->Init2D(enInitEffectNumber_CoolTimeCompleteFire);
 		m_coolTimeCompleteFireEF->SetScale(Vector3::One * 5.0f);
 		m_coolTimeCompleteFireEF->SetPosition(Vector3{ 700.0f,-225.0f,0.0f });
 		m_coolTimeCompleteFireEF->Play2D();
@@ -118,8 +118,8 @@ void Player::Timer()
 		m_waterMagazine = true;																			//	クールタイムを非活性化
 
 		//	エフェクト生成
-		m_coolTimeCompleteWaterEF = NewGO<EffectEmitter>(101);
-		m_coolTimeCompleteWaterEF->Init2D(101);
+		m_coolTimeCompleteWaterEF = NewGO<EffectEmitter>(0);
+		m_coolTimeCompleteWaterEF->Init2D(enInitEffectNumber_CoolTimeCompleteWater);
 		m_coolTimeCompleteWaterEF->SetScale(Vector3::One * 5.0f);
 		m_coolTimeCompleteWaterEF->SetPosition(Vector3{ 536.0f,-225.0f,0.0f });
 		m_coolTimeCompleteWaterEF->Play2D();
@@ -131,8 +131,8 @@ void Player::Timer()
 		m_windMagazine = true;																			//	クールタイムを非活性化
 
 		//	エフェクト生成
-		m_coolTimeCompleteWindEF = NewGO<EffectEmitter>(102);
-		m_coolTimeCompleteWindEF->Init2D(102);
+		m_coolTimeCompleteWindEF = NewGO<EffectEmitter>(0);
+		m_coolTimeCompleteWindEF->Init2D(enInitEffectNumber_CoolTimeCompleteWind);
 		m_coolTimeCompleteWindEF->SetScale(Vector3::One * 5.0f);
 		m_coolTimeCompleteWindEF->SetPosition(Vector3{ 618.0f, -310.0f, 0.0f });
 		m_coolTimeCompleteWindEF->Play2D();
@@ -144,8 +144,8 @@ void Player::Timer()
 		m_shineMagazine = true;																			//	クールタイムを非活性化
 
 		//	エフェクト生成
-		m_coolTimeCompleteShineEF = NewGO<EffectEmitter>(103);
-		m_coolTimeCompleteShineEF->Init2D(103);
+		m_coolTimeCompleteShineEF = NewGO<EffectEmitter>(0);
+		m_coolTimeCompleteShineEF->Init2D(enInitEffectNumber_CoolTimeCompleteShine);
 		m_coolTimeCompleteShineEF->SetScale(Vector3::One * 5.0f);
 		m_coolTimeCompleteShineEF->SetPosition(Vector3{ 618.0f, -140.0f, 0.0f });
 		m_coolTimeCompleteShineEF->Play2D();

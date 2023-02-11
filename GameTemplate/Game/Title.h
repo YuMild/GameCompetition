@@ -18,6 +18,16 @@ public:
 	void Render(RenderContext& rc)override;
 
 	/// <summary>
+	/// フェードを管理
+	/// </summary>
+	void SpriteFade();
+
+	/// <summary>
+	/// 画像の動作を管理
+	/// </summary>
+	void SpriteMove();
+
+	/// <summary>
 	/// ステート
 	/// </summary>
 	void State();

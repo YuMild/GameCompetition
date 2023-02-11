@@ -79,7 +79,7 @@ void Hp::Render(RenderContext& rc)
 		m_hpFrameGray[m_num].Draw(rc);
 	}
 
-	if (m_game->GetManageState() == 0)
+	if (m_game->GetManageState() == enGameState_PlayerAlive)
 	{
 		for (m_num = 0; m_num < m_hpFrameNum; m_num++)
 		{

@@ -12,6 +12,7 @@ namespace
 	const float SQUARE_WIDTH			= 30.0f;
 	const float SQUARE_HEIGHT			= 30.0f;
 	const float PUDDING_COLLISION_JUDGE = 70.0f;
+	const float ONMAP_SIZE				= 0.15f;
 }
 
 Pudding::Pudding()
@@ -82,9 +83,9 @@ void Pudding::MapMove()
 {
 	if (m_game->GetManageState() == enGameState_PlayerAlive)
 	{
-		m_puddingMap.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
+		m_puddingMap.SetPosition({ m_position.x * -ONMAP_SIZE + m_map->GetMapCenterPosition().x,m_position.z * -ONMAP_SIZE + m_map->GetMapCenterPosition().y,0.0f });
 		m_puddingMap.Update();
 	}
-	m_puddingMapGray.SetPosition({ m_position.x * -0.15f + m_map->GetMapCenterPosition().x,m_position.z * -0.15f + m_map->GetMapCenterPosition().y,0.0f });
+	m_puddingMapGray.SetPosition({ m_position.x * -ONMAP_SIZE + m_map->GetMapCenterPosition().x,m_position.z * -ONMAP_SIZE + m_map->GetMapCenterPosition().y,0.0f });
 	m_puddingMapGray.Update();
 }

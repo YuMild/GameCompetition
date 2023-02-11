@@ -140,7 +140,7 @@ void Magic::Render(RenderContext& rc)
 		m_typeFrameGray[j].Draw(rc);
 	}
 	
-	if (m_game->GetManageState() == 0)
+	if (m_game->GetManageState() == enGameState_PlayerAlive)
 	{
 		m_typeFire.Draw(rc);
 		m_typeWater.Draw(rc);

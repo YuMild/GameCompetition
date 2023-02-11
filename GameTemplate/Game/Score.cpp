@@ -24,7 +24,7 @@ void Score::Update()
 	m_timeScore = m_timeScoreTimer * INT_TO_FLOAT;
 	m_totalScore = m_totalScoreTimer * INT_TO_FLOAT;
 	
-	if (m_game->GetManageState() == enGameState_Slow)			//	プレイヤーが死亡した時
+	if (m_game->GetManageState() != enGameState_PlayerAlive)	//	プレイヤーが死亡した時
 	{
 		m_timeScoreOld = m_timeScore;							//	死亡時の経過時間を記録
 		m_puddingScoreOld = m_puddingScore;						//	死亡時の獲得プリン数を記録

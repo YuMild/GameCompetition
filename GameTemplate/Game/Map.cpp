@@ -72,16 +72,16 @@ void Map::Render(RenderContext& rc)
 	const auto& enemys = FindGOs<Enemy>("enemy");
 	const int enemySize = enemys.size();
 
-	for (int i = 0; i < enemySize; i++)
+	for (auto Enemy : enemys)
 	{
-		enemys[i]->EnemyMapGray(rc);
+		Enemy->EnemyMapGray(rc);
 	}
 
-	if (m_game->GetManageState() == 0)
+	if (m_game->GetManageState() == enGameState_PlayerAlive)
 	{
-		for (int i = 0; i < enemySize; i++)
+		for (auto Enemy : enemys)
 		{
-			enemys[i]->EnemyMap(rc);
+			Enemy->EnemyMap(rc);
 		}
 	}
 
@@ -89,16 +89,16 @@ void Map::Render(RenderContext& rc)
 	const auto& magicPoints = FindGOs<MagicPoint>("magicPoint");
 	const int magicSize = magicPoints.size();
 
-	for (int i = 0; i < magicSize; i++)
+	for (auto MagicPoint : magicPoints)
 	{
-		magicPoints[i]->MagicPointMapGray(rc);
+		MagicPoint->MagicPointMapGray(rc);
 	}
 
-	if (m_game->GetManageState() == 0)
+	if (m_game->GetManageState() == enGameState_PlayerAlive)
 	{
-		for (int i = 0; i < magicSize; i++)
+		for (auto MagicPoint : magicPoints)
 		{
-			magicPoints[i]->MagicPointMap(rc);
+			MagicPoint->MagicPointMap(rc);
 		}
 	}
 
@@ -106,16 +106,16 @@ void Map::Render(RenderContext& rc)
 	const auto& puddings = FindGOs<Pudding>("pudding");
 	const int puddingSize = puddings.size();
 
-	for (int i = 0; i < puddingSize; i++)
+	for (auto Pudding : puddings)
 	{
-		puddings[i]->PuddingMapGray(rc);
+		Pudding->PuddingMapGray(rc);
 	}
 
-	if (m_game->GetManageState() == 0)
+	if (m_game->GetManageState() == enGameState_PlayerAlive)
 	{
-		for (int i = 0; i < puddingSize; i++)
+		for (auto Pudding : puddings)
 		{
-			puddings[i]->PuddingMap(rc);
+			Pudding->PuddingMap(rc);
 		}
 	}
 
@@ -123,7 +123,7 @@ void Map::Render(RenderContext& rc)
 
 	m_playerMapGray.Draw(rc);
 
-	if (m_game->GetManageState() == 0)
+	if (m_game->GetManageState() == enGameState_PlayerAlive)
 	{
 		m_playerMap.Draw(rc);
 		m_mapFrame.Draw(rc);

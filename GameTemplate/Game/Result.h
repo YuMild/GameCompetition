@@ -19,11 +19,6 @@ public:
 	void Update()override;
 	void Render(RenderContext& rc)override;
 
-	/// <summary>
-	/// State‚ÌŠÇ—
-	/// </summary>
-	void ManageState();
-
 private:
 
 	SpriteRender		m_resultBackGroundRender;						//	ƒŠƒUƒ‹ƒg”wŒi
@@ -54,8 +49,6 @@ private:
 	int					m_100					= 0;
 	int					m_1000					= 0;
 	int					m_10000					= 0;
-
-	int					m_resultState			= 0;
 
 	bool				m_isStart4				= true;
 	bool				m_isStart5				= true;

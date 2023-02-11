@@ -46,7 +46,7 @@ bool Clock::Start()
 
 void Clock::Update() 
 {
-	if (m_game->GetManageState() == 0)//¶‘¶
+	if (m_game->GetManageState() == enGameState_PlayerAlive)//¶‘¶
 	{
 		m_clockBackGround.Update();
 		m_clockMinuteHund.Update();
@@ -67,7 +67,7 @@ void Clock::Render(RenderContext& rc)
 	m_clockMinuteHund.Draw(rc);
 	m_clockSecondHund.Draw(rc);
 
-	if (m_game->GetManageState() == 0)//¶‘¶
+	if (m_game->GetManageState() == enGameState_PlayerAlive)//¶‘¶
 	{
 		m_clockFrame.Draw(rc);
 	}

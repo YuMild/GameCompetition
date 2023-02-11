@@ -85,5 +85,4 @@ void GameCamera::Update()
 
 	//	ƒJƒƒ‰‚ÌXV
 	m_springCamera.Update();
-
 }
